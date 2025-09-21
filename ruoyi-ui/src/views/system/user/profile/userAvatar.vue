@@ -131,18 +131,27 @@ export default {
       }
     },
     // 上传图片
+    // 这是新的、修复了问题的代码，请复制并替换
+    // 这是“强制刷新”版的代码，请复制并替换
     uploadImg() {
       this.$refs.cropper.getCropBlob(data => {
-        let formData = new FormData()
-        formData.append("avatarfile", data, this.options.filename)
+        let formData = new FormData();
+        formData.append("avatarfile", data, this.options.filename);
         uploadAvatar(formData).then(response => {
-          this.open = false
-          this.options.img = process.env.VUE_APP_BASE_API + response.imgUrl
-          store.commit('SET_AVATAR', this.options.img)
-          this.$modal.msgSuccess("修改成功")
-          this.visible = false
-        })
-      })
+          if (response.code === 200) {
+            this.open = false;
+            this.options.img = process.env.VUE_APP_BASE_API + response.imgUrl;
+            this.$modal.msgSuccess("修改成功");
+            this.visible = false;
+
+            // 【关键修改】：在提示成功后，直接重新加载页面
+            window.location.reload();
+
+          } else {
+            this.$modal.msgError(response.msg);
+          }
+        });
+      });
     },
     // 实时预览
     realTime(data) {

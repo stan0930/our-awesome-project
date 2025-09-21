@@ -2,6 +2,9 @@ package com.ruoyi.campus.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.campus.domain.CampusTopicComment;
+import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +26,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 校园话题Controller
- * 
+ *
  * @author stan
  * @date 2025-09-21
  */
@@ -77,6 +80,8 @@ public class CampusTopicController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody CampusTopic campusTopic)
     {
+        // 新增代码：从安全工具类中获取当前登录用户的ID
+        campusTopic.setUserId(SecurityUtils.getUserId());
         return toAjax(campusTopicService.insertCampusTopic(campusTopic));
     }
 
@@ -100,5 +105,15 @@ public class CampusTopicController extends BaseController
     public AjaxResult remove(@PathVariable Long[] topicIds)
     {
         return toAjax(campusTopicService.deleteCampusTopicByTopicIds(topicIds));
+    }
+
+    /**
+     * 【新增】获取指定话题下的评论列表
+     */
+    @GetMapping("/comments/{topicId}")
+    public AjaxResult getComments(@PathVariable("topicId") Long topicId)
+    {
+        List<CampusTopicComment> list = campusTopicService.selectCommentsByTopicId(topicId);
+        return AjaxResult.success(list);
     }
 }

@@ -7,7 +7,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
 
 /**
  * 校园话题对象 campus_topic
- * 
+ *
  * @author stan
  * @date 2025-09-21
  */
@@ -37,62 +37,62 @@ public class CampusTopic extends BaseEntity
     /** 删除标志(0=代表存在, 2=代表删除) */
     private String delFlag;
 
-    public void setTopicId(Long topicId) 
+    public void setTopicId(Long topicId)
     {
         this.topicId = topicId;
     }
 
-    public Long getTopicId() 
+    public Long getTopicId()
     {
         return topicId;
     }
 
-    public void setUserId(Long userId) 
+    public void setUserId(Long userId)
     {
         this.userId = userId;
     }
 
-    public Long getUserId() 
+    public Long getUserId()
     {
         return userId;
     }
 
-    public void setContent(String content) 
+    public void setContent(String content)
     {
         this.content = content;
     }
 
-    public String getContent() 
+    public String getContent()
     {
         return content;
     }
 
-    public void setImageUrls(String imageUrls) 
+    public void setImageUrls(String imageUrls)
     {
         this.imageUrls = imageUrls;
     }
 
-    public String getImageUrls() 
+    public String getImageUrls()
     {
         return imageUrls;
     }
 
-    public void setStatus(String status) 
+    public void setStatus(String status)
     {
         this.status = status;
     }
 
-    public String getStatus() 
+    public String getStatus()
     {
         return status;
     }
 
-    public void setDelFlag(String delFlag) 
+    public void setDelFlag(String delFlag)
     {
         this.delFlag = delFlag;
     }
 
-    public String getDelFlag() 
+    public String getDelFlag()
     {
         return delFlag;
     }
@@ -112,5 +112,27 @@ public class CampusTopic extends BaseEntity
             .append("updateTime", getUpdateTime())
             .append("remark", getRemark())
             .toString();
+    }
+    /** 用户昵称 */
+    private String nickName;
+
+    /** 用户头像 */
+    private String avatar;
+
+    // --- 在这里添加getter和setter ---
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

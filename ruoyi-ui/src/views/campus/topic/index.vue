@@ -26,47 +26,15 @@
           v-hasPermi="['campus:topic:add']"
         >新增</el-button>
       </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="success"
-          plain
-          icon="el-icon-edit"
-          size="mini"
-          :disabled="single"
-          @click="handleUpdate"
-          v-hasPermi="['campus:topic:edit']"
-        >修改</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="mini"
-          :disabled="multiple"
-          @click="handleDelete"
-          v-hasPermi="['campus:topic:remove']"
-        >删除</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="el-icon-download"
-          size="mini"
-          @click="handleExport"
-          v-hasPermi="['campus:topic:export']"
-        >导出</el-button>
-      </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <div class="topic-list">
       <div class="topic-card" v-for="topic in topicList" :key="topic.topicId">
         <div class="topic-header">
-          <el-avatar src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"></el-avatar>
+          <el-avatar :src="topic.avatar ? topic.avatar : 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c672f1epng.png'"></el-avatar>
           <div class="user-info">
-            <div class="nickname">用户 {{ topic.userId }}</div>
+            <div class="nickname">{{ topic.nickName }}</div>
             <div class="create-time">{{ parseTime(topic.createTime, '{y}-{m}-{d} {h}:{i}') }}</div>
           </div>
         </div>
@@ -79,6 +47,18 @@
           <span><i class="el-icon-thumb"></i> 点赞</span>
           <span><i class="el-icon-chat-dot-round"></i> 评论</span>
         </div>
+
+        <div class="comment-section" v-if="commentList[topic.topicId] && commentList[topic.topicId].length > 0">
+          <div class="comment-item" v-for="comment in commentList[topic.topicId]" :key="comment.commentId">
+            <el-avatar class="comment-avatar" :src="comment.avatar ? comment.avatar : 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c672f1epng.png'"></el-avatar>
+            <div class="comment-body">
+              <span class="comment-nickname">{{ comment.nickName }}: </span>
+              <span class="comment-content">{{ comment.content }}</span>
+              <div class="comment-time">{{ parseTime(comment.createTime, '{y}-{m}-{d} {h}:{i}') }}</div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -89,22 +69,11 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
+
+    <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="用户ID" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入用户ID" />
-        </el-form-item>
-        <el-form-item label="话题内容">
-          <editor v-model="form.content" :min-height="192"/>
-        </el-form-item>
-        <el-form-item label="图片链接(多张用逗号分隔)" prop="imageUrls">
-          <el-input v-model="form.imageUrls" type="textarea" placeholder="请输入内容" />
-        </el-form-item>
-        <el-form-item label="删除标志(0=代表存在, 2=代表删除)" prop="delFlag">
-          <el-input v-model="form.delFlag" placeholder="请输入删除标志(0=代表存在, 2=代表删除)" />
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="话题内容" prop="content">
+          <el-input v-model="form.content" type="textarea" :rows="5" placeholder="请输入内容" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -116,45 +85,32 @@
 </template>
 
 <script>
-import { listTopic, getTopic, delTopic, addTopic, updateTopic } from "@/api/campus/topic";
+// 【修改】同时导入 listTopic 和 getComments
+import { listTopic, getTopic, delTopic, addTopic, updateTopic, getComments } from "@/api/campus/topic";
 
 export default {
   name: "Topic",
   data() {
     return {
-      // 遮罩层
       loading: true,
-      // 选中数组
       ids: [],
-      // 非单个禁用
       single: true,
-      // 非多个禁用
       multiple: true,
-      // 显示搜索条件
       showSearch: true,
-      // 总条数
       total: 0,
-      // 校园话题表格数据
       topicList: [],
-      // 弹出层标题
+      commentList: {}, // 【新增】用于存放评论列表
       title: "",
-      // 是否显示弹出层
       open: false,
-      // 查询参数
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        userId: null,
         content: null,
-        imageUrls: null,
-        status: null,
       },
-      // 表单参数
       form: {},
-      // 表单校验
       rules: {
-        userId: [
-          { required: true, message: "用户ID不能为空", trigger: "blur" }
+        content: [
+          { required: true, message: "话题内容不能为空", trigger: "blur" }
         ],
       }
     };
@@ -170,6 +126,17 @@ export default {
         this.topicList = response.rows;
         this.total = response.total;
         this.loading = false;
+        // 【新增】获取每个话题的评论
+        this.topicList.forEach(topic => {
+          this.handleGetComments(topic.topicId);
+        });
+      });
+    },
+    /** 【新增】获取指定话题的评论列表 */
+    handleGetComments(topicId) {
+      getComments(topicId).then(response => {
+        // 使用 $set 来确保Vue能够响应式地更新commentList对象
+        this.$set(this.commentList, topicId, response.data);
       });
     },
     // 取消按钮
@@ -184,8 +151,8 @@ export default {
         userId: null,
         content: null,
         imageUrls: null,
-        status: null,
-        delFlag: null,
+        status: "0",
+        delFlag: "0",
         createBy: null,
         createTime: null,
         updateBy: null,
@@ -204,27 +171,11 @@ export default {
       this.resetForm("queryForm");
       this.handleQuery();
     },
-    // 多选框选中数据
-    handleSelectionChange(selection) {
-      this.ids = selection.map(item => item.topicId);
-      this.single = selection.length!==1;
-      this.multiple = !selection.length;
-    },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加校园话题";
-    },
-    /** 修改按钮操作 */
-    handleUpdate(row) {
-      this.reset();
-      const topicId = row.topicId || this.ids;
-      getTopic(topicId).then(response => {
-        this.form = response.data;
-        this.open = true;
-        this.title = "修改校园话题";
-      });
+      this.title = "发布新话题";
     },
     /** 提交按钮 */
     submitForm() {
@@ -246,22 +197,6 @@ export default {
         }
       });
     },
-    /** 删除按钮操作 */
-    handleDelete(row) {
-      const topicIds = row.topicId || this.ids;
-      this.$modal.confirm('是否确认删除校园话题编号为"' + topicIds + '"的数据项？').then(function() {
-        return delTopic(topicIds);
-      }).then(() => {
-        this.getList();
-        this.$modal.msgSuccess("删除成功");
-      }).catch(() => {});
-    },
-    /** 导出按钮操作 */
-    handleExport() {
-      this.download('campus/topic/export', {
-        ...this.queryParams
-      }, `topic_${new Date().getTime()}.xlsx`);
-    }
   }
 };
 </script>
@@ -309,8 +244,6 @@ export default {
   display: flex;
   color: #888;
   font-size: 14px;
-  border-top: 1px solid #f0f0f0;
-  padding-top: 10px;
 }
 .topic-actions span {
   display: flex;
@@ -323,5 +256,37 @@ export default {
 }
 .topic-actions span:hover {
   color: #409EFF;
+}
+
+/* 【新增】评论区样式 */
+.comment-section {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #f0f0f0;
+}
+.comment-item {
+  display: flex;
+  margin-bottom: 10px;
+}
+.comment-avatar {
+  flex-shrink: 0; /* 防止头像被压缩 */
+  width: 32px;
+  height: 32px;
+}
+.comment-body {
+  margin-left: 10px;
+  font-size: 14px;
+}
+.comment-nickname {
+  font-weight: bold;
+  color: #555;
+}
+.comment-content {
+  color: #333;
+}
+.comment-time {
+  font-size: 12px;
+  color: #999;
+  margin-top: 2px;
 }
 </style>

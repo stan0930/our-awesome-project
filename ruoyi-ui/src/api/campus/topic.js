@@ -42,3 +42,11 @@ export function delTopic(topicId) {
     method: 'delete'
   })
 }
+
+// 新增：根据话题ID获取评论列表
+export function getComments(topicId) {
+  return request({
+    url: '/campus/topic/comments/' + topicId,
+    method: 'get'
+  })
+}

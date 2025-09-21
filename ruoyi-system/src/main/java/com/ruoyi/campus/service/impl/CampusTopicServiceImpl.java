@@ -1,6 +1,8 @@
 package com.ruoyi.campus.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.campus.domain.CampusTopicComment;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,19 +12,19 @@ import com.ruoyi.campus.service.ICampusTopicService;
 
 /**
  * 校园话题Service业务层处理
- * 
+ *
  * @author stan
  * @date 2025-09-21
  */
 @Service
-public class CampusTopicServiceImpl implements ICampusTopicService 
+public class CampusTopicServiceImpl implements ICampusTopicService
 {
     @Autowired
     private CampusTopicMapper campusTopicMapper;
 
     /**
      * 查询校园话题
-     * 
+     *
      * @param topicId 校园话题主键
      * @return 校园话题
      */
@@ -34,7 +36,7 @@ public class CampusTopicServiceImpl implements ICampusTopicService
 
     /**
      * 查询校园话题列表
-     * 
+     *
      * @param campusTopic 校园话题
      * @return 校园话题
      */
@@ -46,7 +48,7 @@ public class CampusTopicServiceImpl implements ICampusTopicService
 
     /**
      * 新增校园话题
-     * 
+     *
      * @param campusTopic 校园话题
      * @return 结果
      */
@@ -59,7 +61,7 @@ public class CampusTopicServiceImpl implements ICampusTopicService
 
     /**
      * 修改校园话题
-     * 
+     *
      * @param campusTopic 校园话题
      * @return 结果
      */
@@ -72,7 +74,7 @@ public class CampusTopicServiceImpl implements ICampusTopicService
 
     /**
      * 批量删除校园话题
-     * 
+     *
      * @param topicIds 需要删除的校园话题主键
      * @return 结果
      */
@@ -84,7 +86,7 @@ public class CampusTopicServiceImpl implements ICampusTopicService
 
     /**
      * 删除校园话题信息
-     * 
+     *
      * @param topicId 校园话题主键
      * @return 结果
      */
@@ -92,5 +94,10 @@ public class CampusTopicServiceImpl implements ICampusTopicService
     public int deleteCampusTopicByTopicId(Long topicId)
     {
         return campusTopicMapper.deleteCampusTopicByTopicId(topicId);
+    }
+
+    @Override
+    public List<CampusTopicComment> selectCommentsByTopicId(Long topicId) {
+        return campusTopicMapper.selectCommentsByTopicId(topicId);
     }
 }

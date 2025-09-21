@@ -17,7 +17,7 @@ import com.ruoyi.framework.interceptor.RepeatSubmitInterceptor;
 
 /**
  * 通用配置
- * 
+ *
  * @author ruoyi
  */
 @Configuration
@@ -26,12 +26,14 @@ public class ResourcesConfig implements WebMvcConfigurer
     @Autowired
     private RepeatSubmitInterceptor repeatSubmitInterceptor;
 
+    // 这是最终的、兼容Windows路径的解决方案
+    // 这是最终的、兼容Windows路径的解决方案，请完整复制替换
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry)
     {
         /** 本地文件上传路径 */
         registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/**")
-                .addResourceLocations("file:" + RuoYiConfig.getProfile() + "/");
+                .addResourceLocations("file:///" + RuoYiConfig.getProfile().replace("\\", "/") + "/");
 
         /** swagger配置 */
         registry.addResourceHandler("/swagger-ui/**")
