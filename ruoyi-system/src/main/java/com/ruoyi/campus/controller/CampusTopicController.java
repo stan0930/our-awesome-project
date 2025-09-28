@@ -2,9 +2,6 @@ package com.ruoyi.campus.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
-
-import com.ruoyi.campus.domain.CampusTopicComment;
-import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +17,7 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.campus.domain.CampusTopic;
+import com.ruoyi.campus.domain.CampusTopicComment;
 import com.ruoyi.campus.service.ICampusTopicService;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
@@ -27,8 +25,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 /**
  * 校园话题Controller
  *
- * @author stan
- * @date 2025-09-21
+ * @author ruoyi
  */
 @RestController
 @RequestMapping("/campus/topic")
@@ -45,21 +42,30 @@ public class CampusTopicController extends BaseController
     public TableDataInfo list(CampusTopic campusTopic)
     {
         startPage();
+        campusTopic.setUserId(getUserId());
         List<CampusTopic> list = campusTopicService.selectCampusTopicList(campusTopic);
         return getDataTable(list);
     }
 
     /**
-     * 导出校园话题列表
+     * 获取指定话题下的评论列表
      */
-    @PreAuthorize("@ss.hasPermi('campus:topic:export')")
-    @Log(title = "校园话题", businessType = BusinessType.EXPORT)
-    @PostMapping("/export")
-    public void export(HttpServletResponse response, CampusTopic campusTopic)
+    @GetMapping("/comments/{topicId}")
+    public AjaxResult getComments(@PathVariable("topicId") Long topicId)
     {
-        List<CampusTopic> list = campusTopicService.selectCampusTopicList(campusTopic);
-        ExcelUtil<CampusTopic> util = new ExcelUtil<CampusTopic>(CampusTopic.class);
-        util.exportExcel(response, list, "校园话题数据");
+        List<CampusTopicComment> list = campusTopicService.selectCommentsByTopicId(topicId);
+        return AjaxResult.success(list);
+    }
+
+    /**
+     * 点赞或取消点赞
+     */
+    @PutMapping("/toggleLike/{topicId}")
+    public AjaxResult toggleLike(@PathVariable("topicId") Long topicId)
+    {
+        Long userId = getUserId();
+        boolean isLiked = campusTopicService.toggleLike(topicId, userId);
+        return AjaxResult.success("操作成功", isLiked);
     }
 
     /**
@@ -80,8 +86,8 @@ public class CampusTopicController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody CampusTopic campusTopic)
     {
-        // 新增代码：从安全工具类中获取当前登录用户的ID
-        campusTopic.setUserId(SecurityUtils.getUserId());
+        campusTopic.setUserId(getUserId());
+        campusTopic.setCreateBy(getUsername());
         return toAjax(campusTopicService.insertCampusTopic(campusTopic));
     }
 
@@ -93,6 +99,7 @@ public class CampusTopicController extends BaseController
     @PutMapping
     public AjaxResult edit(@RequestBody CampusTopic campusTopic)
     {
+        campusTopic.setUpdateBy(getUsername());
         return toAjax(campusTopicService.updateCampusTopic(campusTopic));
     }
 
@@ -101,19 +108,9 @@ public class CampusTopicController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('campus:topic:remove')")
     @Log(title = "校园话题", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{topicIds}")
+    @DeleteMapping("/{topicIds}")
     public AjaxResult remove(@PathVariable Long[] topicIds)
     {
         return toAjax(campusTopicService.deleteCampusTopicByTopicIds(topicIds));
-    }
-
-    /**
-     * 【新增】获取指定话题下的评论列表
-     */
-    @GetMapping("/comments/{topicId}")
-    public AjaxResult getComments(@PathVariable("topicId") Long topicId)
-    {
-        List<CampusTopicComment> list = campusTopicService.selectCommentsByTopicId(topicId);
-        return AjaxResult.success(list);
     }
 }

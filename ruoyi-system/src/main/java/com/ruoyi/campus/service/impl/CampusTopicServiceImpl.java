@@ -1,20 +1,19 @@
 package com.ruoyi.campus.service.impl;
 
 import java.util.List;
-
-import com.ruoyi.campus.domain.CampusTopicComment;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.campus.mapper.CampusTopicMapper;
 import com.ruoyi.campus.domain.CampusTopic;
+import com.ruoyi.campus.domain.CampusTopicComment;
+import com.ruoyi.campus.domain.CampusTopicLike;
 import com.ruoyi.campus.service.ICampusTopicService;
 
 /**
  * 校园话题Service业务层处理
  *
- * @author stan
- * @date 2025-09-21
+ * @author ruoyi
  */
 @Service
 public class CampusTopicServiceImpl implements ICampusTopicService
@@ -22,36 +21,18 @@ public class CampusTopicServiceImpl implements ICampusTopicService
     @Autowired
     private CampusTopicMapper campusTopicMapper;
 
-    /**
-     * 查询校园话题
-     *
-     * @param topicId 校园话题主键
-     * @return 校园话题
-     */
     @Override
     public CampusTopic selectCampusTopicByTopicId(Long topicId)
     {
         return campusTopicMapper.selectCampusTopicByTopicId(topicId);
     }
 
-    /**
-     * 查询校园话题列表
-     *
-     * @param campusTopic 校园话题
-     * @return 校园话题
-     */
     @Override
     public List<CampusTopic> selectCampusTopicList(CampusTopic campusTopic)
     {
         return campusTopicMapper.selectCampusTopicList(campusTopic);
     }
 
-    /**
-     * 新增校园话题
-     *
-     * @param campusTopic 校园话题
-     * @return 结果
-     */
     @Override
     public int insertCampusTopic(CampusTopic campusTopic)
     {
@@ -59,12 +40,6 @@ public class CampusTopicServiceImpl implements ICampusTopicService
         return campusTopicMapper.insertCampusTopic(campusTopic);
     }
 
-    /**
-     * 修改校园话题
-     *
-     * @param campusTopic 校园话题
-     * @return 结果
-     */
     @Override
     public int updateCampusTopic(CampusTopic campusTopic)
     {
@@ -72,24 +47,12 @@ public class CampusTopicServiceImpl implements ICampusTopicService
         return campusTopicMapper.updateCampusTopic(campusTopic);
     }
 
-    /**
-     * 批量删除校园话题
-     *
-     * @param topicIds 需要删除的校园话题主键
-     * @return 结果
-     */
     @Override
     public int deleteCampusTopicByTopicIds(Long[] topicIds)
     {
         return campusTopicMapper.deleteCampusTopicByTopicIds(topicIds);
     }
 
-    /**
-     * 删除校园话题信息
-     *
-     * @param topicId 校园话题主键
-     * @return 结果
-     */
     @Override
     public int deleteCampusTopicByTopicId(Long topicId)
     {
@@ -99,5 +62,19 @@ public class CampusTopicServiceImpl implements ICampusTopicService
     @Override
     public List<CampusTopicComment> selectCommentsByTopicId(Long topicId) {
         return campusTopicMapper.selectCommentsByTopicId(topicId);
+    }
+
+    @Override
+    public boolean toggleLike(Long topicId, Long userId) {
+        CampusTopicLike like = campusTopicMapper.findLikeByTopicIdAndUserId(topicId, userId);
+        if (like == null) {
+            // 如果没点过赞，就新增一条记录
+            campusTopicMapper.insertLike(topicId, userId);
+            return true; // 返回true代表操作后是“已点赞”状态
+        } else {
+            // 如果点过赞，就删除记录
+            campusTopicMapper.deleteLike(topicId, userId);
+            return false; // 返回false代表操作后是“未点赞”状态
+        }
     }
 }
