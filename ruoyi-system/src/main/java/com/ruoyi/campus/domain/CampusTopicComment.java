@@ -21,6 +21,9 @@ public class CampusTopicComment extends BaseEntity
     private String nickName;
     private String avatar;
 
+    /** 被回复的用户昵称 */
+    private String replyToNickName; // <-- 【新增这一行】
+
     // Getters and Setters
     public Long getCommentId() {
         return commentId;
@@ -63,5 +66,11 @@ public class CampusTopicComment extends BaseEntity
     }
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+    public String getReplyToNickName() {
+        return replyToNickName;
+    }
+    public void setReplyToNickName(String replyToNickName) {
+        this.replyToNickName = replyToNickName;
     }
 }

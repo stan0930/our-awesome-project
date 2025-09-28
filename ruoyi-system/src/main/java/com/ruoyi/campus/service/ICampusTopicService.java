@@ -50,4 +50,7 @@ public interface ICampusTopicService
      * 处理点赞/取消点赞的业务
      */
     public boolean toggleLike(Long topicId, Long userId);
+    // ...
+    /** 【新增】新增评论 */
+    public int insertComment(CampusTopicComment comment);
 }

@@ -77,4 +77,14 @@ public class CampusTopicServiceImpl implements ICampusTopicService
             return false; // 返回false代表操作后是“未点赞”状态
         }
     }
+
+    @Override
+    public int insertComment(CampusTopicComment comment) {
+        comment.setCreateTime(DateUtils.getNowDate());
+        // 如果 parentId 为 null，则设置为 0，表示是主评论
+        if (comment.getParentId() == null) {
+            comment.setParentId(0L);
+        }
+        return campusTopicMapper.insertComment(comment);
+    }
 }

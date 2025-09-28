@@ -62,4 +62,7 @@ public interface CampusTopicMapper
      * 删除一条点赞记录
      */
     public int deleteLike(@Param("topicId") Long topicId, @Param("userId") Long userId);
+    // ...
+    /** 【新增】插入一条评论 */
+    public int insertComment(CampusTopicComment comment);
 }

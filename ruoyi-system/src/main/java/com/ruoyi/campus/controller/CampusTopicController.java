@@ -113,4 +113,14 @@ public class CampusTopicController extends BaseController
     {
         return toAjax(campusTopicService.deleteCampusTopicByTopicIds(topicIds));
     }
+    // ...
+    /**
+     * 【新增】发表评论或回复
+     */
+    @PostMapping("/comment")
+    public AjaxResult addComment(@RequestBody CampusTopicComment comment)
+    {
+        comment.setUserId(getUserId());
+        return toAjax(campusTopicService.insertComment(comment));
+    }
 }

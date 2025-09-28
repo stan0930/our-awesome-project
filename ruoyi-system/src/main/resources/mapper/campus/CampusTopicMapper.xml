@@ -105,17 +105,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="content"       column="content"        />
         <result property="createTime"    column="create_time"    />
         <result property="nickName"      column="nick_name"      />
-        <result property="avatar"        column="avatar"         />
+        <result property="replyToNickName" column="reply_to_nick_name" />
     </resultMap>
 
     <select id="selectCommentsByTopicId" parameterType="Long" resultMap="CampusCommentResult">
-        select c.comment_id, c.topic_id, c.user_id, c.parent_id, c.content, c.create_time,
-               u.nick_name,
-               CASE WHEN u.avatar IS NOT NULL AND u.avatar != '' THEN CONCAT(u.avatar, '?v=', u.update_time) ELSE u.avatar END as avatar
+        select
+            c.comment_id, c.topic_id, c.user_id, c.parent_id, c.content, c.create_time,
+            u.nick_name,
+            CASE WHEN u.avatar IS NOT NULL AND u.avatar != '' THEN CONCAT(u.avatar, '?v=', u.update_time) ELSE u.avatar END as avatar,
+            (select ru.nick_name from sys_user ru inner join campus_topic_comment rc on ru.user_id = rc.user_id where rc.comment_id = c.parent_id) as reply_to_nick_name
         from campus_topic_comment c
                  left join sys_user u on u.user_id = c.user_id
         where c.topic_id = #{topicId}
         order by c.create_time asc
     </select>
+
+    <insert id="insertComment" parameterType="com.ruoyi.campus.domain.CampusTopicComment">
+        insert into campus_topic_comment(topic_id, user_id, parent_id, content, create_time)
+        values(#{topicId}, #{userId}, #{parentId}, #{content}, #{createTime})
+    </insert>
 
 </mapper>
