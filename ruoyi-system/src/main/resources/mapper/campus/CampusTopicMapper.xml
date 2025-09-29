@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.campus.mapper.CampusTopicMapper">
 
     <resultMap type="com.ruoyi.campus.domain.CampusTopic" id="CampusTopicResult">
@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="userId"    column="user_id"    />
         <result property="content"    column="content"    />
         <result property="imageUrls"    column="image_urls"    />
+        <result property="topicType"  column="topic_type"  />
         <result property="status"    column="status"    />
         <result property="delFlag"    column="del_flag"    />
         <result property="createBy"    column="create_by"    />
@@ -18,67 +19,108 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="remark"    column="remark"    />
         <result property="nickName"   column="nick_name"   />
         <result property="avatar"     column="avatar"      />
+        <result property="likeCount"  column="like_count"  />
+        <result property="liked"      column="liked"       />
+    </resultMap>
+
+    <resultMap type="com.ruoyi.campus.domain.CampusTopicComment" id="CampusCommentResult">
+        <id     property="commentId"     column="comment_id"     />
+        <result property="topicId"       column="topic_id"       />
+        <result property="userId"        column="user_id"        />
+        <result property="parentId"      column="parent_id"      />
+        <result property="content"       column="content"        />
+        <result property="createTime"    column="create_time"    />
+        <result property="nickName"      column="nick_name"      />
+        <result property="avatar"        column="avatar"         />
+        <result property="replyToNickName" column="reply_to_nick_name" />
     </resultMap>
 
     <sql id="selectCampusTopicVo">
-        select topic_id, user_id, content, image_urls, status, del_flag, create_by, create_time, update_by, update_time, remark from campus_topic
+        select topic_id, user_id, content, image_urls, topic_type, status, del_flag, create_by, create_time, update_by, update_time, remark from campus_topic
     </sql>
 
     <select id="selectCampusTopicList" parameterType="com.ruoyi.campus.domain.CampusTopic" resultMap="CampusTopicResult">
-        select t.topic_id, t.user_id, t.content, t.image_urls, t.status, t.del_flag, t.create_by, t.create_time, t.update_by, t.update_time, t.remark,
+        select
+        t.topic_id, t.user_id, t.content, t.image_urls, t.status, t.del_flag, t.create_by, t.create_time, t.update_by, t.update_time, t.remark, t.topic_type,
         u.nick_name,
-        CASE WHEN u.avatar IS NOT NULL AND u.avatar != '' THEN CONCAT(u.avatar, '?v=', u.update_time) ELSE u.avatar END as avatar
+        CASE WHEN u.avatar IS NOT NULL AND u.avatar != '' THEN CONCAT(u.avatar, '?v=', u.update_time) ELSE u.avatar END as avatar,
+        (select count(*) from campus_topic_like l where l.topic_id = t.topic_id) as like_count,
+        (select count(*) from campus_topic_like l where l.topic_id = t.topic_id and l.user_id = #{userId}) as liked
         from campus_topic t
         left join sys_user u on u.user_id = t.user_id
         <where>
             <if test="content != null  and content != ''"> and t.content like concat('%', #{content}, '%')</if>
+            <if test="topicType != null and topicType != '' and topicType != 'all'"> and t.topic_type = #{topicType}</if>
         </where>
     </select>
+
+    <select id="selectCommentsByTopicId" parameterType="Long" resultMap="CampusCommentResult">
+        select
+            c.comment_id, c.topic_id, c.user_id, c.parent_id, c.content, c.create_time,
+            u.nick_name,
+            CASE WHEN u.avatar IS NOT NULL AND u.avatar != '' THEN CONCAT(u.avatar, '?v=', u.update_time) ELSE u.avatar END as avatar,
+            (select ru.nick_name from sys_user ru inner join campus_topic_comment rc on ru.user_id = rc.user_id where rc.comment_id = c.parent_id) as reply_to_nick_name
+        from campus_topic_comment c
+                 left join sys_user u on u.user_id = c.user_id
+        where c.topic_id = #{topicId}
+        order by c.create_time asc
+    </select>
+
+    <select id="findLikeByTopicIdAndUserId" resultType="com.ruoyi.campus.domain.CampusTopicLike">
+        select * from campus_topic_like where topic_id = #{topicId} and user_id = #{userId}
+    </select>
+
+    <insert id="insertLike">
+        insert into campus_topic_like(topic_id, user_id, create_time) values(#{topicId}, #{userId}, sysdate())
+    </insert>
+
+    <delete id="deleteLike">
+        delete from campus_topic_like where topic_id = #{topicId} and user_id = #{userId}
+    </delete>
+
+    <insert id="insertComment" parameterType="com.ruoyi.campus.domain.CampusTopicComment">
+        insert into campus_topic_comment(topic_id, user_id, parent_id, content, create_time)
+        values(#{topicId}, #{userId}, #{parentId}, #{content}, #{createTime})
+    </insert>
 
     <select id="selectCampusTopicByTopicId" parameterType="Long" resultMap="CampusTopicResult">
         <include refid="selectCampusTopicVo"/>
         where topic_id = #{topicId}
     </select>
 
-    <insert id="insertCampusTopic" parameterType="CampusTopic" useGeneratedKeys="true" keyProperty="topicId">
+    <insert id="insertCampusTopic" parameterType="com.ruoyi.campus.domain.CampusTopic" useGeneratedKeys="true" keyProperty="topicId">
         insert into campus_topic
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="userId != null">user_id,</if>
-            <if test="content != null">content,</if>
-            <if test="imageUrls != null">image_urls,</if>
-            <if test="status != null">status,</if>
-            <if test="delFlag != null">del_flag,</if>
-            <if test="createBy != null">create_by,</if>
+            <if test="content != null and content != ''">content,</if>
+            <if test="imageUrls != null and imageUrls != ''">image_urls,</if>
+            <if test="topicType != null and topicType != ''">topic_type,</if>
+            <if test="status != null and status != ''">status,</if>
+            <if test="createBy != null and createBy != ''">create_by,</if>
             <if test="createTime != null">create_time,</if>
-            <if test="updateBy != null">update_by,</if>
-            <if test="updateTime != null">update_time,</if>
             <if test="remark != null">remark,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">#{userId},</if>
-            <if test="content != null">#{content},</if>
-            <if test="imageUrls != null">#{imageUrls},</if>
-            <if test="status != null">#{status},</if>
-            <if test="delFlag != null">#{delFlag},</if>
-            <if test="createBy != null">#{createBy},</if>
+            <if test="content != null and content != ''">#{content},</if>
+            <if test="imageUrls != null and imageUrls != ''">#{imageUrls},</if>
+            <if test="topicType != null and topicType != ''">#{topicType},</if>
+            <if test="status != null and status != ''">#{status},</if>
+            <if test="createBy != null and createBy != ''">#{createBy},</if>
             <if test="createTime != null">#{createTime},</if>
-            <if test="updateBy != null">#{updateBy},</if>
-            <if test="updateTime != null">#{updateTime},</if>
             <if test="remark != null">#{remark},</if>
-         </trim>
+        </trim>
     </insert>
 
-    <update id="updateCampusTopic" parameterType="CampusTopic">
+    <update id="updateCampusTopic" parameterType="com.ruoyi.campus.domain.CampusTopic">
         update campus_topic
         <trim prefix="SET" suffixOverrides=",">
             <if test="userId != null">user_id = #{userId},</if>
-            <if test="content != null">content = #{content},</if>
+            <if test="content != null and content != ''">content = #{content},</if>
             <if test="imageUrls != null">image_urls = #{imageUrls},</if>
-            <if test="status != null">status = #{status},</if>
-            <if test="delFlag != null">del_flag = #{delFlag},</if>
-            <if test="createBy != null">create_by = #{createBy},</if>
-            <if test="createTime != null">create_time = #{createTime},</if>
-            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="topicType != null and topicType != ''">topic_type = #{topicType},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="remark != null">remark = #{remark},</if>
         </trim>
@@ -95,34 +137,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{topicId}
         </foreach>
     </delete>
-
-
-    <resultMap type="com.ruoyi.campus.domain.CampusTopicComment" id="CampusCommentResult">
-        <id     property="commentId"     column="comment_id"     />
-        <result property="topicId"       column="topic_id"       />
-        <result property="userId"        column="user_id"        />
-        <result property="parentId"      column="parent_id"      />
-        <result property="content"       column="content"        />
-        <result property="createTime"    column="create_time"    />
-        <result property="nickName"      column="nick_name"      />
-        <result property="replyToNickName" column="reply_to_nick_name" />
-    </resultMap>
-
-    <select id="selectCommentsByTopicId" parameterType="Long" resultMap="CampusCommentResult">
-        select
-            c.comment_id, c.topic_id, c.user_id, c.parent_id, c.content, c.create_time,
-            u.nick_name,
-            CASE WHEN u.avatar IS NOT NULL AND u.avatar != '' THEN CONCAT(u.avatar, '?v=', u.update_time) ELSE u.avatar END as avatar,
-            (select ru.nick_name from sys_user ru inner join campus_topic_comment rc on ru.user_id = rc.user_id where rc.comment_id = c.parent_id) as reply_to_nick_name
-        from campus_topic_comment c
-                 left join sys_user u on u.user_id = c.user_id
-        where c.topic_id = #{topicId}
-        order by c.create_time asc
-    </select>
-
-    <insert id="insertComment" parameterType="com.ruoyi.campus.domain.CampusTopicComment">
-        insert into campus_topic_comment(topic_id, user_id, parent_id, content, create_time)
-        values(#{topicId}, #{userId}, #{parentId}, #{content}, #{createTime})
-    </insert>
-
 </mapper>

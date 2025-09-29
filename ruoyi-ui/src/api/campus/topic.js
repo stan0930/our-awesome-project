@@ -43,10 +43,27 @@ export function delTopic(topicId) {
   })
 }
 
-// 新增：根据话题ID获取评论列表
+// 根据话题ID获取评论列表
 export function getComments(topicId) {
   return request({
     url: '/campus/topic/comments/' + topicId,
     method: 'get'
+  })
+}
+
+// 点赞或取消点赞
+export function toggleLike(topicId) {
+  return request({
+    url: '/campus/topic/toggleLike/' + topicId,
+    method: 'put'
+  })
+}
+
+// 新增评论或回复
+export function addComment(data) {
+  return request({
+    url: '/campus/topic/comment',
+    method: 'post',
+    data: data
   })
 }

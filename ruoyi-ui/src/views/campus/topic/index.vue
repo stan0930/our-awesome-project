@@ -126,7 +126,6 @@
 </template>
 
 <script>
-// 【修改】导入评论接口
 import { listTopic, addTopic, getComments, toggleLike, addComment } from "@/api/campus/topic";
 import ImageUpload from '@/components/ImageUpload';
 
@@ -157,7 +156,6 @@ export default {
         topicType: [ { required: true, message: "请选择一个分区", trigger: "change" } ],
         content: [ { required: true, message: "话题内容不能为空", trigger: "blur" } ],
       },
-      // 【新增】评论表单相关数据
       commentOpen: false,
       commentForm: {
         title: '',
@@ -255,9 +253,6 @@ export default {
       });
     },
 
-    // ================================================================
-    // 【新增】评论和回复相关方法
-    // ================================================================
     resetCommentForm() {
       this.commentForm = {
         title: '',
@@ -291,7 +286,6 @@ export default {
           addComment(this.commentForm).then(response => {
             this.$modal.msgSuccess("发表成功");
             this.commentOpen = false;
-            // 刷新对应话题的评论列表
             this.handleGetComments(this.commentForm.topicId);
           });
         }
@@ -302,7 +296,6 @@ export default {
 </script>
 
 <style scoped>
-/* ... 其他样式 ... */
 .topic-list {
   padding: 10px;
 }
@@ -401,7 +394,6 @@ export default {
 .comment-content {
   color: #333;
 }
-/* 【新增】回复文本样式 */
 .reply-text {
   font-size: 14px;
   color: #888;

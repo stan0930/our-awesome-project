@@ -22,11 +22,6 @@ import com.ruoyi.campus.service.ICampusTopicService;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 
-/**
- * 校园话题Controller
- *
- * @author ruoyi
- */
 @RestController
 @RequestMapping("/campus/topic")
 public class CampusTopicController extends BaseController
@@ -34,9 +29,6 @@ public class CampusTopicController extends BaseController
     @Autowired
     private ICampusTopicService campusTopicService;
 
-    /**
-     * 查询校园话题列表
-     */
     @PreAuthorize("@ss.hasPermi('campus:topic:list')")
     @GetMapping("/list")
     public TableDataInfo list(CampusTopic campusTopic)
@@ -47,9 +39,6 @@ public class CampusTopicController extends BaseController
         return getDataTable(list);
     }
 
-    /**
-     * 获取指定话题下的评论列表
-     */
     @GetMapping("/comments/{topicId}")
     public AjaxResult getComments(@PathVariable("topicId") Long topicId)
     {
@@ -57,9 +46,6 @@ public class CampusTopicController extends BaseController
         return AjaxResult.success(list);
     }
 
-    /**
-     * 点赞或取消点赞
-     */
     @PutMapping("/toggleLike/{topicId}")
     public AjaxResult toggleLike(@PathVariable("topicId") Long topicId)
     {
@@ -68,9 +54,13 @@ public class CampusTopicController extends BaseController
         return AjaxResult.success("操作成功", isLiked);
     }
 
-    /**
-     * 获取校园话题详细信息
-     */
+    @PostMapping("/comment")
+    public AjaxResult addComment(@RequestBody CampusTopicComment comment)
+    {
+        comment.setUserId(getUserId());
+        return toAjax(campusTopicService.insertComment(comment));
+    }
+
     @PreAuthorize("@ss.hasPermi('campus:topic:query')")
     @GetMapping(value = "/{topicId}")
     public AjaxResult getInfo(@PathVariable("topicId") Long topicId)
@@ -78,9 +68,6 @@ public class CampusTopicController extends BaseController
         return success(campusTopicService.selectCampusTopicByTopicId(topicId));
     }
 
-    /**
-     * 新增校园话题
-     */
     @PreAuthorize("@ss.hasPermi('campus:topic:add')")
     @Log(title = "校园话题", businessType = BusinessType.INSERT)
     @PostMapping
@@ -91,9 +78,6 @@ public class CampusTopicController extends BaseController
         return toAjax(campusTopicService.insertCampusTopic(campusTopic));
     }
 
-    /**
-     * 修改校园话题
-     */
     @PreAuthorize("@ss.hasPermi('campus:topic:edit')")
     @Log(title = "校园话题", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -103,24 +87,11 @@ public class CampusTopicController extends BaseController
         return toAjax(campusTopicService.updateCampusTopic(campusTopic));
     }
 
-    /**
-     * 删除校园话题
-     */
     @PreAuthorize("@ss.hasPermi('campus:topic:remove')")
     @Log(title = "校园话题", businessType = BusinessType.DELETE)
     @DeleteMapping("/{topicIds}")
     public AjaxResult remove(@PathVariable Long[] topicIds)
     {
         return toAjax(campusTopicService.deleteCampusTopicByTopicIds(topicIds));
-    }
-    // ...
-    /**
-     * 【新增】发表评论或回复
-     */
-    @PostMapping("/comment")
-    public AjaxResult addComment(@RequestBody CampusTopicComment comment)
-    {
-        comment.setUserId(getUserId());
-        return toAjax(campusTopicService.insertComment(comment));
     }
 }
