@@ -10,7 +10,7 @@
       <el-tab-pane label="校园八卦" name="gossip"></el-tab-pane>
     </el-tabs>
 
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px" @submit.native.prevent>
       <el-form-item label="帖子内容" prop="content">
         <el-input
           v-model="queryParams.content"

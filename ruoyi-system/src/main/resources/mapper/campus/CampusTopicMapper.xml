@@ -49,8 +49,12 @@
         from campus_topic t
         left join sys_user u on u.user_id = t.user_id
         <where>
-            <if test="content != null  and content != ''"> and t.content like concat('%', #{content}, '%')</if>
-            <if test="topicType != null and topicType != '' and topicType != 'all'"> and t.topic_type = #{topicType}</if>
+            <if test="content != null  and content != ''">
+                AND (t.content like concat('%', #{content}, '%') OR u.nick_name like concat('%', #{content}, '%'))
+            </if>
+            <if test="topicType != null and topicType != '' and topicType != 'all'">
+                and t.topic_type = #{topicType}
+            </if>
         </where>
     </select>
 
