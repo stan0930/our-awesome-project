@@ -11,7 +11,7 @@
  Target Server Version : 80041 (8.0.41)
  File Encoding         : 65001
 
- Date: 29/09/2025 12:48:45
+ Date: 29/09/2025 16:15:48
 */
 
 SET NAMES utf8mb4;
@@ -55,9 +55,9 @@ CREATE TABLE `campus_topic`  (
   `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
-  `topic_type` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT 'recommend' COMMENT '话题类型 (recommend=推荐, qa=问答, secondhand=二手)',
+  `topic_type` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT 'recommend',
   PRIMARY KEY (`topic_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 112 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '校园话题表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 115 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '校园话题表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of campus_topic
@@ -74,6 +74,9 @@ INSERT INTO `campus_topic` VALUES (108, 2, '1', '/profile/upload/2025/09/22/微�
 INSERT INTO `campus_topic` VALUES (109, 1, '？', '/profile/upload/2025/09/22/Screenshot 2025-08-29 190218_20250922155349A002.png', '0', '0', '', '2025-09-22 15:53:51', '', NULL, NULL, 'recommend');
 INSERT INTO `campus_topic` VALUES (110, 1, '有没有二手货', '/profile/upload/2025/09/29/Grounded_2025.09.22-19.53.20_20250929123454A001.png', '0', '0', 'admin', '2025-09-29 12:34:55', '', NULL, NULL, 'secondhand');
 INSERT INTO `campus_topic` VALUES (111, 1, '什么东西？', '/profile/upload/2025/09/29/Screenshot 2025-09-25 131510_20250929123742A002.png', '0', '0', 'admin', '2025-09-29 12:37:54', '', NULL, NULL, 'qa');
+INSERT INTO `campus_topic` VALUES (112, 1, '666', NULL, '0', '0', 'admin', '2025-09-29 14:42:40', '', NULL, NULL, 'recommend');
+INSERT INTO `campus_topic` VALUES (113, 1, 's', NULL, '0', '0', 'admin', '2025-09-29 14:53:26', '', NULL, NULL, 'recommend');
+INSERT INTO `campus_topic` VALUES (114, 1, '谭墨我爱你', NULL, '0', '0', 'admin', '2025-09-29 14:57:53', '', NULL, NULL, 'dating');
 
 -- ----------------------------
 -- Table structure for campus_topic_comment
@@ -108,7 +111,7 @@ CREATE TABLE `campus_topic_like`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '点赞时间',
   PRIMARY KEY (`like_id`) USING BTREE,
   UNIQUE INDEX `uk_topic_user`(`topic_id` ASC, `user_id` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '话题点赞记录表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '话题点赞记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of campus_topic_like
@@ -121,6 +124,7 @@ INSERT INTO `campus_topic_like` VALUES (5, 104, 1, '2025-09-22 16:03:46');
 INSERT INTO `campus_topic_like` VALUES (6, 109, 1, '2025-09-22 18:26:47');
 INSERT INTO `campus_topic_like` VALUES (7, 108, 1, '2025-09-22 18:26:48');
 INSERT INTO `campus_topic_like` VALUES (8, 111, 1, '2025-09-29 12:37:58');
+INSERT INTO `campus_topic_like` VALUES (9, 114, 1, '2025-09-29 14:59:47');
 
 -- ----------------------------
 -- Table structure for gen_table
@@ -636,7 +640,7 @@ CREATE TABLE `sys_logininfor`  (
   PRIMARY KEY (`info_id`) USING BTREE,
   INDEX `idx_sys_logininfor_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_logininfor_lt`(`login_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 147 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 149 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_logininfor
@@ -688,6 +692,8 @@ INSERT INTO `sys_logininfor` VALUES (143, 'admin', '10.67.61.65', '内网IP', 'C
 INSERT INTO `sys_logininfor` VALUES (144, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-09-22 18:45:31');
 INSERT INTO `sys_logininfor` VALUES (145, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-09-28 23:16:06');
 INSERT INTO `sys_logininfor` VALUES (146, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-09-29 11:18:09');
+INSERT INTO `sys_logininfor` VALUES (147, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-09-29 13:58:40');
+INSERT INTO `sys_logininfor` VALUES (148, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-09-29 14:37:25');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -858,7 +864,7 @@ CREATE TABLE `sys_oper_log`  (
   INDEX `idx_sys_oper_log_bt`(`business_type` ASC) USING BTREE,
   INDEX `idx_sys_oper_log_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_oper_log_ot`(`oper_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 154 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 157 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_oper_log
@@ -917,6 +923,9 @@ INSERT INTO `sys_oper_log` VALUES (150, '校园话题', 1, 'com.ruoyi.campus.con
 INSERT INTO `sys_oper_log` VALUES (151, '校园话题', 1, 'com.ruoyi.campus.controller.CampusTopicController.add()', 'POST', 1, 'admin', '研发部门', '/campus/topic', '127.0.0.1', '内网IP', '{\"content\":\"s\",\"createBy\":\"admin\",\"createTime\":\"2025-09-28 23:46:27\",\"imageUrls\":\"/profile/upload/2025/09/28/Grounded_2025.09.22-19.53.20_20250928234624A001.png\",\"liked\":false,\"params\":{},\"topicType\":\"qa\",\"userId\":1}', NULL, 1, 'nested exception is org.apache.ibatis.reflection.ReflectionException: There is no getter for property named \'delFlag\' in \'class com.ruoyi.campus.domain.CampusTopic\'', '2025-09-28 23:46:27', 32);
 INSERT INTO `sys_oper_log` VALUES (152, '校园话题', 1, 'com.ruoyi.campus.controller.CampusTopicController.add()', 'POST', 1, 'admin', '研发部门', '/campus/topic', '127.0.0.1', '内网IP', '{\"content\":\"有没有二手货\",\"createBy\":\"admin\",\"createTime\":\"2025-09-29 12:34:55\",\"imageUrls\":\"/profile/upload/2025/09/29/Grounded_2025.09.22-19.53.20_20250929123454A001.png\",\"liked\":false,\"params\":{},\"topicId\":110,\"topicType\":\"secondhand\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-29 12:34:55', 145);
 INSERT INTO `sys_oper_log` VALUES (153, '校园话题', 1, 'com.ruoyi.campus.controller.CampusTopicController.add()', 'POST', 1, 'admin', '研发部门', '/campus/topic', '127.0.0.1', '内网IP', '{\"content\":\"什么东西？\",\"createBy\":\"admin\",\"createTime\":\"2025-09-29 12:37:54\",\"imageUrls\":\"/profile/upload/2025/09/29/Screenshot 2025-09-25 131510_20250929123742A002.png\",\"liked\":false,\"params\":{},\"topicId\":111,\"topicType\":\"qa\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-29 12:37:54', 8);
+INSERT INTO `sys_oper_log` VALUES (154, '校园话题', 1, 'com.ruoyi.campus.controller.CampusTopicController.add()', 'POST', 1, 'admin', '研发部门', '/campus/topic', '127.0.0.1', '内网IP', '{\"content\":\"666\",\"createBy\":\"admin\",\"createTime\":\"2025-09-29 14:42:39\",\"liked\":false,\"params\":{},\"topicId\":112,\"topicType\":\"recommend\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-29 14:42:39', 26);
+INSERT INTO `sys_oper_log` VALUES (155, '校园话题', 1, 'com.ruoyi.campus.controller.CampusTopicController.add()', 'POST', 1, 'admin', '研发部门', '/campus/topic', '127.0.0.1', '内网IP', '{\"content\":\"s\",\"createBy\":\"admin\",\"createTime\":\"2025-09-29 14:53:25\",\"liked\":false,\"params\":{},\"topicId\":113,\"topicType\":\"recommend\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-29 14:53:25', 6);
+INSERT INTO `sys_oper_log` VALUES (156, '校园话题', 1, 'com.ruoyi.campus.controller.CampusTopicController.add()', 'POST', 1, 'admin', '研发部门', '/campus/topic', '127.0.0.1', '内网IP', '{\"content\":\"谭墨我爱你\",\"createBy\":\"admin\",\"createTime\":\"2025-09-29 14:57:52\",\"liked\":false,\"params\":{},\"topicId\":114,\"topicType\":\"dating\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-29 14:57:52', 5);
 
 -- ----------------------------
 -- Table structure for sys_post
@@ -1119,7 +1128,7 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', 'stan', '00', 'trzrzzh@icloud.com', '15257942123', '0', '/profile/avatar/2025/09/21/f5748c03e0e4452887ac214017fe6a7d.jpg', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2025-09-29 11:18:09', '2025-09-21 20:04:51', 'admin', '2025-09-21 20:04:51', '', '2025-09-21 22:22:25', '管理员');
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', 'stan', '00', 'trzrzzh@icloud.com', '15257942123', '0', '/profile/avatar/2025/09/21/f5748c03e0e4452887ac214017fe6a7d.jpg', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2025-09-29 14:37:26', '2025-09-21 20:04:51', 'admin', '2025-09-21 20:04:51', '', '2025-09-21 22:22:25', '管理员');
 INSERT INTO `sys_user` VALUES (2, 105, 'ry', 'ry', '00', 'ry@qq.com', '15666666666', '1', '/profile/avatar/2025/09/22/2cd6efbe672645258a4eac4cea69e045.JPG', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2025-09-22 00:17:32', '2025-09-21 20:04:51', 'admin', '2025-09-21 20:04:51', 'admin', '2025-09-22 14:39:54', '测试员');
 INSERT INTO `sys_user` VALUES (100, 100, 'stany', 'stany', '00', '3403368487@qq.com', '', '0', '/profile/avatar/2025/09/21/0b6194a629154a9aad6c1687e253f53a.JPG', '$2a$10$oed/BoxvGYRe69eCf0zZKOZGgY4iKtev2ODIHu3RoZESOPTvOfJxe', '0', '0', '127.0.0.1', '2025-09-21 22:19:17', NULL, 'admin', '2025-09-21 21:29:53', '', '2025-09-21 21:30:41', NULL);
 
