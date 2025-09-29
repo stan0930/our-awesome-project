@@ -5,7 +5,25 @@
       <el-tab-pane label="推荐" name="recommend"></el-tab-pane>
       <el-tab-pane label="问答" name="qa"></el-tab-pane>
       <el-tab-pane label="二手" name="secondhand"></el-tab-pane>
+      <el-tab-pane label="恋爱交友" name="dating"></el-tab-pane>
+      <el-tab-pane label="兼职信息" name="jobs"></el-tab-pane>
+      <el-tab-pane label="校园八卦" name="gossip"></el-tab-pane>
     </el-tabs>
+
+    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+      <el-form-item label="帖子内容" prop="content">
+        <el-input
+          v-model="queryParams.content"
+          placeholder="请输入帖子内容关键词"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+      </el-form-item>
+    </el-form>
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
@@ -135,7 +153,7 @@ export default {
   data() {
     return {
       loading: true,
-      showSearch: false,
+      showSearch: true, // 【修改】默认显示搜索框
       total: 0,
       topicList: [],
       commentList: {},
@@ -145,12 +163,16 @@ export default {
         pageNum: 1,
         pageSize: 10,
         topicType: 'all',
+        content: null, // 【新增】
       },
       form: {},
       topicTypeOptions: [
         { value: 'recommend', label: '推荐' },
         { value: 'qa', label: '问答' },
-        { value: 'secondhand', label: '二手' }
+        { value: 'secondhand', label: '二手' },
+        { value: 'dating', label: '恋爱交友' },
+        { value: 'jobs', label: '兼职信息' },
+        { value: 'gossip', label: '校园八卦' }
       ],
       rules: {
         topicType: [ { required: true, message: "请选择一个分区", trigger: "change" } ],
@@ -230,7 +252,9 @@ export default {
       this.getList();
     },
 
+    // 【修改】
     resetQuery() {
+      this.resetForm("queryForm");
       this.queryParams.topicType = 'all';
       this.handleQuery();
     },
