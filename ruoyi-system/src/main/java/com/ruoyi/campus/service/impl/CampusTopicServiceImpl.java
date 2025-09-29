@@ -65,4 +65,16 @@ public class CampusTopicServiceImpl implements ICampusTopicService
         }
         return campusTopicMapper.insertComment(comment);
     }
+
+    // --- 【新增】查询“我的”相关列表的方法实现 ---
+    @Override
+    public List<CampusTopic> selectMyLikedTopics(Long userId) {
+        return campusTopicMapper.selectMyLikedTopics(userId);
+    }
+
+    @Override
+    public List<CampusTopic> selectMyCommentedTopics(Long userId) {
+        return campusTopicMapper.selectMyCommentedTopics(userId);
+    }
+    // --- 【新增结束】 ---
 }

@@ -19,4 +19,6 @@ public interface CampusTopicMapper
     public int insertLike(@Param("topicId") Long topicId, @Param("userId") Long userId);
     public int deleteLike(@Param("topicId") Long topicId, @Param("userId") Long userId);
     public int insertComment(CampusTopicComment comment);
+    public List<CampusTopic> selectMyLikedTopics(@Param("userId") Long userId);
+    public List<CampusTopic> selectMyCommentedTopics(@Param("userId") Long userId);
 }

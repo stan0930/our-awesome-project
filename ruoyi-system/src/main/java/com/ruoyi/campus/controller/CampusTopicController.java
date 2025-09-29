@@ -39,6 +39,46 @@ public class CampusTopicController extends BaseController
         return getDataTable(list);
     }
 
+    // --- 【新增】获取“我的”相关列表的三个接口 ---
+    /**
+     * 获取我发布的话题列表
+     */
+    @GetMapping("/my-list")
+    public TableDataInfo myList(CampusTopic campusTopic)
+    {
+        startPage();
+        // 只查询当前登录用户发布的
+        campusTopic.setUserId(getUserId());
+        List<CampusTopic> list = campusTopicService.selectCampusTopicList(campusTopic);
+        return getDataTable(list);
+    }
+
+    /**
+     * 获取我点赞的话题列表
+     */
+    @GetMapping("/my-likes")
+    public TableDataInfo myLikes(CampusTopic campusTopic)
+    {
+        startPage();
+        campusTopic.setUserId(getUserId()); // 用于判断liked状态
+        List<CampusTopic> list = campusTopicService.selectMyLikedTopics(getUserId());
+        return getDataTable(list);
+    }
+
+    /**
+     * 获取我评论的话题列表
+     */
+    @GetMapping("/my-comments")
+    public TableDataInfo myComments(CampusTopic campusTopic)
+    {
+        startPage();
+        campusTopic.setUserId(getUserId()); // 用于判断liked状态
+        List<CampusTopic> list = campusTopicService.selectMyCommentedTopics(getUserId());
+        return getDataTable(list);
+    }
+    // --- 【新增结束】 ---
+
+
     @GetMapping("/comments/{topicId}")
     public AjaxResult getComments(@PathVariable("topicId") Long topicId)
     {

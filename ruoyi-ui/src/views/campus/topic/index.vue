@@ -11,10 +11,10 @@
     </el-tabs>
 
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px" @submit.native.prevent>
-      <el-form-item label="帖子内容" prop="content">
+      <el-form-item label="关键词" prop="content">
         <el-input
           v-model="queryParams.content"
-          placeholder="请输入帖子内容关键词"
+          placeholder="帖子内容或作者昵称"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -51,7 +51,7 @@
         </div>
 
         <div class="topic-content">
-          <p v-html="topic.content.replace(/\n/g, '<br>')"></p>
+          <p v-if="topic.content" v-html="topic.content.replace(/\n/g, '<br>')"></p>
           <div class="image-list" v-if="topic.imageUrls">
             <el-image
               v-for="(url, index) in topic.imageUrls.split(',')"
@@ -153,7 +153,7 @@ export default {
   data() {
     return {
       loading: true,
-      showSearch: true, // 【修改】默认显示搜索框
+      showSearch: true,
       total: 0,
       topicList: [],
       commentList: {},
@@ -163,7 +163,7 @@ export default {
         pageNum: 1,
         pageSize: 10,
         topicType: 'all',
-        content: null, // 【新增】
+        content: null,
       },
       form: {},
       topicTypeOptions: [
@@ -252,7 +252,6 @@ export default {
       this.getList();
     },
 
-    // 【修改】
     resetQuery() {
       this.resetForm("queryForm");
       this.queryParams.topicType = 'all';

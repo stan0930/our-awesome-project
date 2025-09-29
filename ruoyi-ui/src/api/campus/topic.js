@@ -67,3 +67,31 @@ export function addComment(data) {
     data: data
   })
 }
+// --- 【新增代码】 ---
+
+// 查询我发布的话题列表
+export function listMyTopic(query) {
+  return request({
+    url: '/campus/topic/my-list',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询我点赞的话题列表
+export function listMyLikes(query) {
+  return request({
+    url: '/campus/topic/my-likes',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询我评论的话题列表
+export function listMyComments(query) {
+  return request({
+    url: '/campus/topic/my-comments',
+    method: 'get',
+    params: query
+  })
+}

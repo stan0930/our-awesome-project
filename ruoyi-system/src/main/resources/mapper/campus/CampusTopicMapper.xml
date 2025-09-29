@@ -141,4 +141,28 @@
             #{topicId}
         </foreach>
     </delete>
+    <select id="selectMyLikedTopics" parameterType="Long" resultMap="CampusTopicResult">
+        select
+            t.topic_id, t.user_id, t.content, t.image_urls, t.status, t.del_flag, t.create_by, t.create_time, t.update_by, t.update_time, t.remark, t.topic_type,
+            u.nick_name,
+            u.avatar,
+            (select count(*) from campus_topic_like l where l.topic_id = t.topic_id) as like_count,
+            1 as liked  -- 我点赞的列表里，liked一定为true(1)
+        from campus_topic t
+                 left join sys_user u on u.user_id = t.user_id
+        where t.topic_id in (select topic_id from campus_topic_like where user_id = #{userId})
+    </select>
+
+    <select id="selectMyCommentedTopics" parameterType="Long" resultMap="CampusTopicResult">
+        select
+            t.topic_id, t.user_id, t.content, t.image_urls, t.status, t.del_flag, t.create_by, t.create_time, t.update_by, t.update_time, t.remark, t.topic_type,
+            u.nick_name,
+            u.avatar,
+            (select count(*) from campus_topic_like l where l.topic_id = t.topic_id) as like_count,
+            (select count(*) from campus_topic_like l where l.topic_id = t.topic_id and l.user_id = #{userId}) as liked
+        from campus_topic t
+                 left join sys_user u on u.user_id = t.user_id
+        where t.topic_id in (select distinct topic_id from campus_topic_comment where user_id = #{userId})
+    </select>
+
 </mapper>

@@ -34,6 +34,13 @@
           <router-link to="/user/profile">
             <el-dropdown-item>个人中心</el-dropdown-item>
           </router-link>
+
+          <!-- 【新增】“我的圈子”的链接 -->
+          <router-link to="/user/my-topics">
+            <el-dropdown-item>我的圈子</el-dropdown-item>
+          </router-link>
+          <!-- 【新增结束】 -->
+
           <el-dropdown-item @click.native="setLayout" v-if="setting">
             <span>布局设置</span>
           </el-dropdown-item>

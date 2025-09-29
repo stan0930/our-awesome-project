@@ -15,4 +15,20 @@ public interface ICampusTopicService
     public List<CampusTopicComment> selectCommentsByTopicId(Long topicId);
     public boolean toggleLike(Long topicId, Long userId);
     public int insertComment(CampusTopicComment comment);
+
+    // --- 【新增】查询“我的”相关列表的方法声明 ---
+    /**
+     * 查询我点赞的话题
+     * @param userId 用户ID
+     * @return 话题列表
+     */
+    public List<CampusTopic> selectMyLikedTopics(Long userId);
+
+    /**
+     * 查询我评论过的话题
+     * @param userId 用户ID
+     * @return 话题列表
+     */
+    public List<CampusTopic> selectMyCommentedTopics(Long userId);
+    // --- 【新增结束】 ---
 }
