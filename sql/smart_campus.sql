@@ -11,7 +11,7 @@
  Target Server Version : 80041 (8.0.41)
  File Encoding         : 65001
 
- Date: 29/09/2025 16:15:48
+ Date: 29/09/2025 23:57:42
 */
 
 SET NAMES utf8mb4;
@@ -57,15 +57,13 @@ CREATE TABLE `campus_topic`  (
   `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
   `topic_type` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT 'recommend',
   PRIMARY KEY (`topic_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 115 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '校园话题表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 116 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '校园话题表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of campus_topic
 -- ----------------------------
-INSERT INTO `campus_topic` VALUES (100, 1, '<p>test001哈哈哈</p>', NULL, '0', '0', '', '2025-09-21 21:22:17', '', NULL, NULL, 'recommend');
-INSERT INTO `campus_topic` VALUES (101, 1, '<p>test002哈哈哈<img src=\"/dev-api/profile/upload/2025/09/21/微信图片_20230823145137_20250921214858A001.jpg\"></p>', NULL, '0', '0', '', '2025-09-21 21:49:00', '', NULL, NULL, 'recommend');
+INSERT INTO `campus_topic` VALUES (100, 1, '<p>test001哈哈哈666</p>', NULL, '0', '0', '', '2025-09-21 21:22:17', 'admin', '2025-09-29 20:10:18', NULL, 'recommend');
 INSERT INTO `campus_topic` VALUES (102, 1, '<p><img src=\"/dev-api/profile/upload/2025/09/21/微信图片_20230823145137_20250921215308A002.jpg\"></p>', NULL, '0', '0', '', '2025-09-21 21:53:12', '', NULL, NULL, 'recommend');
-INSERT INTO `campus_topic` VALUES (103, 1, '<p><img src=\"/dev-api/profile/upload/2025/09/21/微信图片_20250701131615_20250921221823A003.jpg\"></p>', NULL, '0', '0', '', '2025-09-21 22:18:26', '', NULL, NULL, 'recommend');
 INSERT INTO `campus_topic` VALUES (104, 1, '<p>1</p>', NULL, '0', '0', '', '2025-09-21 23:27:30', '', NULL, NULL, 'recommend');
 INSERT INTO `campus_topic` VALUES (105, 1, '1', NULL, '0', '0', '', '2025-09-21 23:52:34', '', NULL, NULL, 'recommend');
 INSERT INTO `campus_topic` VALUES (106, 2, '666', NULL, '0', '0', '', '2025-09-22 14:37:38', '', NULL, NULL, 'recommend');
@@ -77,6 +75,7 @@ INSERT INTO `campus_topic` VALUES (111, 1, '什么东西？', '/profile/upload/2
 INSERT INTO `campus_topic` VALUES (112, 1, '666', NULL, '0', '0', 'admin', '2025-09-29 14:42:40', '', NULL, NULL, 'recommend');
 INSERT INTO `campus_topic` VALUES (113, 1, 's', NULL, '0', '0', 'admin', '2025-09-29 14:53:26', '', NULL, NULL, 'recommend');
 INSERT INTO `campus_topic` VALUES (114, 1, '谭墨我爱你', NULL, '0', '0', 'admin', '2025-09-29 14:57:53', '', NULL, NULL, 'dating');
+INSERT INTO `campus_topic` VALUES (115, 1, 'bot', '/profile/upload/2025/09/29/Screenshot 2025-09-07 151720_20250929210155A001.png,/profile/upload/2025/09/29/Screenshot 2025-08-29 190218_20250929210217A002.png', '0', '0', 'admin', '2025-09-29 21:02:21', '', NULL, NULL, 'qa');
 
 -- ----------------------------
 -- Table structure for campus_topic_comment
@@ -90,7 +89,7 @@ CREATE TABLE `campus_topic_comment`  (
   `content` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '评论内容',
   `create_time` datetime NULL DEFAULT NULL COMMENT '评论时间',
   PRIMARY KEY (`comment_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '话题评论表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '话题评论表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of campus_topic_comment
@@ -99,6 +98,28 @@ INSERT INTO `campus_topic_comment` VALUES (1, 100, 2, 0, '这是来自用户ry�
 INSERT INTO `campus_topic_comment` VALUES (2, 100, 1, 1, '这是admin回复ry的内容。', '2025-09-28 23:45:01');
 INSERT INTO `campus_topic_comment` VALUES (3, 101, 1, 0, '。。\n\n', '2025-09-29 12:35:12');
 INSERT INTO `campus_topic_comment` VALUES (4, 111, 1, 0, 'good\n', '2025-09-29 12:38:03');
+INSERT INTO `campus_topic_comment` VALUES (5, 100, 1, 1, '666', '2025-09-29 19:19:34');
+INSERT INTO `campus_topic_comment` VALUES (6, 114, 1, 0, 's\n', '2025-09-29 20:28:45');
+INSERT INTO `campus_topic_comment` VALUES (7, 106, 1, 0, '6', '2025-09-29 20:29:25');
+
+-- ----------------------------
+-- Table structure for campus_topic_favorite
+-- ----------------------------
+DROP TABLE IF EXISTS `campus_topic_favorite`;
+CREATE TABLE `campus_topic_favorite`  (
+  `favorite_id` bigint NOT NULL AUTO_INCREMENT COMMENT '收藏ID',
+  `topic_id` bigint NOT NULL COMMENT '话题ID',
+  `user_id` bigint NOT NULL COMMENT '用户ID',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '收藏时间',
+  PRIMARY KEY (`favorite_id`) USING BTREE,
+  UNIQUE INDEX `uk_user_topic`(`user_id` ASC, `topic_id` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '话题收藏表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of campus_topic_favorite
+-- ----------------------------
+INSERT INTO `campus_topic_favorite` VALUES (1, 115, 1, '2025-09-29 23:09:37');
+INSERT INTO `campus_topic_favorite` VALUES (2, 107, 1, '2025-09-29 23:36:07');
 
 -- ----------------------------
 -- Table structure for campus_topic_like
@@ -111,7 +132,7 @@ CREATE TABLE `campus_topic_like`  (
   `create_time` datetime NULL DEFAULT NULL COMMENT '点赞时间',
   PRIMARY KEY (`like_id`) USING BTREE,
   UNIQUE INDEX `uk_topic_user`(`topic_id` ASC, `user_id` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '话题点赞记录表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '话题点赞记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of campus_topic_like
@@ -125,6 +146,8 @@ INSERT INTO `campus_topic_like` VALUES (6, 109, 1, '2025-09-22 18:26:47');
 INSERT INTO `campus_topic_like` VALUES (7, 108, 1, '2025-09-22 18:26:48');
 INSERT INTO `campus_topic_like` VALUES (8, 111, 1, '2025-09-29 12:37:58');
 INSERT INTO `campus_topic_like` VALUES (9, 114, 1, '2025-09-29 14:59:47');
+INSERT INTO `campus_topic_like` VALUES (10, 105, 1, '2025-09-29 20:10:02');
+INSERT INTO `campus_topic_like` VALUES (11, 110, 1, '2025-09-29 23:52:37');
 
 -- ----------------------------
 -- Table structure for gen_table
@@ -640,7 +663,7 @@ CREATE TABLE `sys_logininfor`  (
   PRIMARY KEY (`info_id`) USING BTREE,
   INDEX `idx_sys_logininfor_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_logininfor_lt`(`login_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 149 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 155 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_logininfor
@@ -694,6 +717,12 @@ INSERT INTO `sys_logininfor` VALUES (145, 'admin', '127.0.0.1', '内网IP', 'Chr
 INSERT INTO `sys_logininfor` VALUES (146, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-09-29 11:18:09');
 INSERT INTO `sys_logininfor` VALUES (147, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-09-29 13:58:40');
 INSERT INTO `sys_logininfor` VALUES (148, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-09-29 14:37:25');
+INSERT INTO `sys_logininfor` VALUES (149, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-09-29 16:39:37');
+INSERT INTO `sys_logininfor` VALUES (150, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-09-29 19:02:06');
+INSERT INTO `sys_logininfor` VALUES (151, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-09-29 20:58:10');
+INSERT INTO `sys_logininfor` VALUES (152, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-09-29 21:36:11');
+INSERT INTO `sys_logininfor` VALUES (153, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-09-29 23:02:17');
+INSERT INTO `sys_logininfor` VALUES (154, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-09-29 23:35:30');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -864,7 +893,7 @@ CREATE TABLE `sys_oper_log`  (
   INDEX `idx_sys_oper_log_bt`(`business_type` ASC) USING BTREE,
   INDEX `idx_sys_oper_log_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_oper_log_ot`(`oper_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 157 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 161 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_oper_log
@@ -926,6 +955,10 @@ INSERT INTO `sys_oper_log` VALUES (153, '校园话题', 1, 'com.ruoyi.campus.con
 INSERT INTO `sys_oper_log` VALUES (154, '校园话题', 1, 'com.ruoyi.campus.controller.CampusTopicController.add()', 'POST', 1, 'admin', '研发部门', '/campus/topic', '127.0.0.1', '内网IP', '{\"content\":\"666\",\"createBy\":\"admin\",\"createTime\":\"2025-09-29 14:42:39\",\"liked\":false,\"params\":{},\"topicId\":112,\"topicType\":\"recommend\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-29 14:42:39', 26);
 INSERT INTO `sys_oper_log` VALUES (155, '校园话题', 1, 'com.ruoyi.campus.controller.CampusTopicController.add()', 'POST', 1, 'admin', '研发部门', '/campus/topic', '127.0.0.1', '内网IP', '{\"content\":\"s\",\"createBy\":\"admin\",\"createTime\":\"2025-09-29 14:53:25\",\"liked\":false,\"params\":{},\"topicId\":113,\"topicType\":\"recommend\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-29 14:53:25', 6);
 INSERT INTO `sys_oper_log` VALUES (156, '校园话题', 1, 'com.ruoyi.campus.controller.CampusTopicController.add()', 'POST', 1, 'admin', '研发部门', '/campus/topic', '127.0.0.1', '内网IP', '{\"content\":\"谭墨我爱你\",\"createBy\":\"admin\",\"createTime\":\"2025-09-29 14:57:52\",\"liked\":false,\"params\":{},\"topicId\":114,\"topicType\":\"dating\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-29 14:57:52', 5);
+INSERT INTO `sys_oper_log` VALUES (157, '校园话题', 2, 'com.ruoyi.campus.controller.CampusTopicController.edit()', 'PUT', 1, 'admin', '研发部门', '/campus/topic', '127.0.0.1', '内网IP', '{\"content\":\"<p>test001哈哈哈666</p>\",\"createBy\":\"\",\"createTime\":\"2025-09-21 21:22:17\",\"delFlag\":\"0\",\"liked\":false,\"params\":{},\"status\":\"0\",\"topicId\":100,\"topicType\":\"recommend\",\"updateBy\":\"admin\",\"updateTime\":\"2025-09-29 20:10:18\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-29 20:10:18', 35);
+INSERT INTO `sys_oper_log` VALUES (158, '校园话题', 3, 'com.ruoyi.campus.controller.CampusTopicController.remove()', 'DELETE', 1, 'admin', '研发部门', '/campus/topic/101', '127.0.0.1', '内网IP', '[101]', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-29 20:10:22', 11);
+INSERT INTO `sys_oper_log` VALUES (159, '校园话题', 3, 'com.ruoyi.campus.controller.CampusTopicController.remove()', 'DELETE', 1, 'admin', '研发部门', '/campus/topic/103', '127.0.0.1', '内网IP', '[103]', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-29 20:10:26', 7);
+INSERT INTO `sys_oper_log` VALUES (160, '校园话题', 1, 'com.ruoyi.campus.controller.CampusTopicController.add()', 'POST', 1, 'admin', '研发部门', '/campus/topic', '127.0.0.1', '内网IP', '{\"content\":\"bot\",\"createBy\":\"admin\",\"createTime\":\"2025-09-29 21:02:21\",\"imageUrls\":\"/profile/upload/2025/09/29/Screenshot 2025-09-07 151720_20250929210155A001.png,/profile/upload/2025/09/29/Screenshot 2025-08-29 190218_20250929210217A002.png\",\"liked\":false,\"params\":{},\"topicId\":115,\"topicType\":\"qa\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-09-29 21:02:21', 20);
 
 -- ----------------------------
 -- Table structure for sys_post
@@ -1128,7 +1161,7 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', 'stan', '00', 'trzrzzh@icloud.com', '15257942123', '0', '/profile/avatar/2025/09/21/f5748c03e0e4452887ac214017fe6a7d.jpg', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2025-09-29 14:37:26', '2025-09-21 20:04:51', 'admin', '2025-09-21 20:04:51', '', '2025-09-21 22:22:25', '管理员');
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', 'stan', '00', 'trzrzzh@icloud.com', '15257942123', '0', '/profile/avatar/2025/09/21/f5748c03e0e4452887ac214017fe6a7d.jpg', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2025-09-29 23:35:30', '2025-09-21 20:04:51', 'admin', '2025-09-21 20:04:51', '', '2025-09-21 22:22:25', '管理员');
 INSERT INTO `sys_user` VALUES (2, 105, 'ry', 'ry', '00', 'ry@qq.com', '15666666666', '1', '/profile/avatar/2025/09/22/2cd6efbe672645258a4eac4cea69e045.JPG', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2025-09-22 00:17:32', '2025-09-21 20:04:51', 'admin', '2025-09-21 20:04:51', 'admin', '2025-09-22 14:39:54', '测试员');
 INSERT INTO `sys_user` VALUES (100, 100, 'stany', 'stany', '00', '3403368487@qq.com', '', '0', '/profile/avatar/2025/09/21/0b6194a629154a9aad6c1687e253f53a.JPG', '$2a$10$oed/BoxvGYRe69eCf0zZKOZGgY4iKtev2ODIHu3RoZESOPTvOfJxe', '0', '0', '127.0.0.1', '2025-09-21 22:19:17', NULL, 'admin', '2025-09-21 21:29:53', '', '2025-09-21 21:30:41', NULL);
 
