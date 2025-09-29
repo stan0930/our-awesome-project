@@ -71,6 +71,9 @@
           <span @click="handleShowComment(topic.topicId, 0, '')">
             <i class="el-icon-chat-dot-round"></i> 评论
           </span>
+          <span @click="handleFavorite(topic)" :class="{ 'favorited': topic.favorited }">
+            <i class="el-icon-star-off"></i> 收藏
+          </span>
         </div>
 
         <div class="comment-section" v-if="commentList[topic.topicId] && commentList[topic.topicId].length > 0">
@@ -144,7 +147,7 @@
 </template>
 
 <script>
-import { listTopic, addTopic, getComments, toggleLike, addComment } from "@/api/campus/topic";
+import { listTopic, addTopic, getComments, toggleLike, addComment, toggleFavorite } from "@/api/campus/topic";
 import ImageUpload from '@/components/ImageUpload';
 
 export default {
@@ -228,6 +231,17 @@ export default {
         } else {
           topic.likeCount--;
           this.$modal.msgSuccess("取消点赞");
+        }
+      });
+    },
+
+    handleFavorite(topic) {
+      toggleFavorite(topic.topicId).then(response => {
+        topic.favorited = response.data;
+        if (topic.favorited) {
+          this.$modal.msgSuccess("收藏成功");
+        } else {
+          this.$modal.msgSuccess("取消收藏");
         }
       });
     },
@@ -384,6 +398,9 @@ export default {
 }
 .topic-actions span.liked {
   color: #409EFF;
+}
+.topic-actions span.favorited {
+  color: #E6A23C;
 }
 .topic-actions span i {
   margin-right: 5px;

@@ -96,3 +96,22 @@ export function listMyComments(query) {
     params: query
   })
 }
+
+// --- 【新增】收藏功能相关API ---
+
+// 切换收藏状态
+export function toggleFavorite(topicId) {
+  return request({
+    url: '/campus/topic/toggle-favorite/' + topicId,
+    method: 'put'
+  })
+}
+
+// 查询我收藏的话题列表
+export function listMyFavorites(query) {
+  return request({
+    url: '/campus/topic/my-favorites',
+    method: 'get',
+    params: query
+  })
+}

@@ -31,4 +31,7 @@ public interface ICampusTopicService
      */
     public List<CampusTopic> selectMyCommentedTopics(Long userId);
     // --- 【新增结束】 ---
+    // --- 【新增】收藏相关 ---
+    boolean toggleFavorite(Long topicId, Long userId);
+    List<CampusTopic> selectMyFavoriteTopics(Long userId);
 }

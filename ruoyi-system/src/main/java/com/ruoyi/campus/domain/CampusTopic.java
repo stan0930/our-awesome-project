@@ -41,6 +41,9 @@ public class CampusTopic extends BaseEntity
     /** 当前登录用户是否已点赞 */
     private boolean liked;
 
+    /** 【新增】当前登录用户是否已收藏 */
+    private boolean favorited;
+
     // --- Getters and Setters ---
 
     public Long getTopicId() {
@@ -130,5 +133,12 @@ public class CampusTopic extends BaseEntity
 
     public void setLiked(boolean liked) {
         this.liked = liked;
+    }
+    public boolean isFavorited() {
+        return favorited;
+    }
+
+    public void setFavorited(boolean favorited) {
+        this.favorited = favorited;
     }
 }

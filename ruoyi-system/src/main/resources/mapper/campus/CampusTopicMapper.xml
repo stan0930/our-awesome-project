@@ -21,6 +21,7 @@
         <result property="avatar"     column="avatar"      />
         <result property="likeCount"  column="like_count"  />
         <result property="liked"      column="liked"       />
+        <result property="favorited"  column="favorited"   />
     </resultMap>
 
     <resultMap type="com.ruoyi.campus.domain.CampusTopicComment" id="CampusCommentResult">
@@ -45,7 +46,8 @@
         u.nick_name,
         u.avatar,
         (select count(*) from campus_topic_like l where l.topic_id = t.topic_id) as like_count,
-        (select count(*) from campus_topic_like l where l.topic_id = t.topic_id and l.user_id = #{userId}) as liked
+        (select count(*) from campus_topic_like l where l.topic_id = t.topic_id and l.user_id = #{userId}) as liked,
+        (select count(*) from campus_topic_favorite f where f.topic_id = t.topic_id and f.user_id = #{userId}) as favorited
         from campus_topic t
         left join sys_user u on u.user_id = t.user_id
         <where>
@@ -166,6 +168,32 @@
         from campus_topic t
                  left join sys_user u on u.user_id = t.user_id
         where t.topic_id in (select distinct topic_id from campus_topic_comment where user_id = #{userId})
+        order by t.create_time desc
+    </select>
+
+    <select id="findFavoriteByTopicIdAndUserId" resultType="com.ruoyi.campus.domain.CampusTopicFavorite">
+        select * from campus_topic_favorite where topic_id = #{topicId} and user_id = #{userId}
+    </select>
+
+    <insert id="insertFavorite">
+        insert into campus_topic_favorite(topic_id, user_id, create_time) values(#{topicId}, #{userId}, sysdate())
+    </insert>
+
+    <delete id="deleteFavorite">
+        delete from campus_topic_favorite where topic_id = #{topicId} and user_id = #{userId}
+    </delete>
+
+    <select id="selectMyFavoriteTopics" parameterType="Long" resultMap="CampusTopicResult">
+        select
+            t.topic_id, t.user_id, t.content, t.image_urls, t.status, t.del_flag, t.create_by, t.create_time, t.update_by, t.update_time, t.remark, t.topic_type,
+            u.nick_name,
+            u.avatar,
+            (select count(*) from campus_topic_like l where l.topic_id = t.topic_id) as like_count,
+            (select count(*) from campus_topic_like l where l.topic_id = t.topic_id and l.user_id = #{userId}) as liked,
+            1 as favorited
+        from campus_topic t
+                 left join sys_user u on u.user_id = t.user_id
+        where t.topic_id in (select topic_id from campus_topic_favorite where user_id = #{userId})
         order by t.create_time desc
     </select>
 

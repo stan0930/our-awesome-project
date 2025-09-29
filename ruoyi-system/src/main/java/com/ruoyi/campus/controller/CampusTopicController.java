@@ -134,4 +134,25 @@ public class CampusTopicController extends BaseController
     {
         return toAjax(campusTopicService.deleteCampusTopicByTopicIds(topicIds));
     }
+    // ... 在 myComments 方法之后 ...
+
+    /**
+     * 【新增】切换收藏状态
+     */
+    @PutMapping("/toggle-favorite/{topicId}")
+    public AjaxResult toggleFavorite(@PathVariable("topicId") Long topicId) {
+        Long userId = getUserId();
+        boolean isFavorited = campusTopicService.toggleFavorite(topicId, userId);
+        return AjaxResult.success("操作成功", isFavorited);
+    }
+
+    /**
+     * 【新增】获取我收藏的话题列表
+     */
+    @GetMapping("/my-favorites")
+    public TableDataInfo myFavorites() {
+        startPage();
+        List<CampusTopic> list = campusTopicService.selectMyFavoriteTopics(getUserId());
+        return getDataTable(list);
+    }
 }

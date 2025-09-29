@@ -1,6 +1,8 @@
 package com.ruoyi.campus.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.campus.domain.CampusTopicFavorite;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -77,4 +79,23 @@ public class CampusTopicServiceImpl implements ICampusTopicService
         return campusTopicMapper.selectMyCommentedTopics(userId);
     }
     // --- 【新增结束】 ---
+    // ... 在文件末尾 } 之前 ...
+
+    // --- 【新增】收藏相关 ---
+    @Override
+    public boolean toggleFavorite(Long topicId, Long userId) {
+        CampusTopicFavorite favorite = campusTopicMapper.findFavoriteByTopicIdAndUserId(topicId, userId);
+        if (favorite == null) {
+            campusTopicMapper.insertFavorite(topicId, userId);
+            return true; // 返回true表示已收藏
+        } else {
+            campusTopicMapper.deleteFavorite(topicId, userId);
+            return false; // 返回false表示未收藏
+        }
+    }
+
+    @Override
+    public List<CampusTopic> selectMyFavoriteTopics(Long userId) {
+        return campusTopicMapper.selectMyFavoriteTopics(userId);
+    }
 }

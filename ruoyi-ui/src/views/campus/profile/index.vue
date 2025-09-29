@@ -4,6 +4,7 @@
       <el-tab-pane label="我的发布" name="my-posts"></el-tab-pane>
       <el-tab-pane label="我的点赞" name="my-likes"></el-tab-pane>
       <el-tab-pane label="我的评论" name="my-comments"></el-tab-pane>
+      <el-tab-pane label="我的收藏" name="my-favorites"></el-tab-pane>
     </el-tabs>
 
     <div class="topic-list" v-loading="loading">
@@ -39,6 +40,9 @@
           </span>
           <span @click="handleShowComment(topic.topicId, 0, '')">
             <i class="el-icon-chat-dot-round"></i> 评论
+          </span>
+          <span @click="handleFavorite(topic)" :class="{ 'favorited': topic.favorited }">
+            <i class="el-icon-star-off"></i> 收藏
           </span>
 
           <div v-if="activeTab === 'my-posts'" class="manage-actions">
@@ -118,7 +122,7 @@
 </template>
 
 <script>
-import { listMyTopic, listMyLikes, listMyComments, toggleLike, getTopic, updateTopic, delTopic, getComments, addComment } from "@/api/campus/topic";
+import { listMyTopic, listMyLikes, listMyComments, listMyFavorites, toggleLike, getTopic, updateTopic, delTopic, getComments, addComment, toggleFavorite } from "@/api/campus/topic";
 import ImageUpload from '@/components/ImageUpload';
 
 export default {
@@ -169,6 +173,7 @@ export default {
         case 'my-posts': return '您还没有发布过任何话题';
         case 'my-likes': return '您还没有点赞过任何话题';
         case 'my-comments': return '您还没有评论过任何话题';
+        case 'my-favorites': return '您还没有收藏过任何话题';
         default: return '暂无数据';
       }
     }
@@ -186,6 +191,8 @@ export default {
         apiCall = listMyLikes(this.queryParams);
       } else if (this.activeTab === 'my-comments') {
         apiCall = listMyComments(this.queryParams);
+      } else if (this.activeTab === 'my-favorites') {
+        apiCall = listMyFavorites(this.queryParams);
       }
 
       apiCall.then(response => {
@@ -212,6 +219,22 @@ export default {
           topic.likeCount--;
           this.$modal.msgSuccess("取消点赞");
           if (this.activeTab === 'my-likes') {
+            this.topicList = this.topicList.filter(item => item.topicId !== topic.topicId);
+            if(this.topicList.length === 0){
+              this.getList()
+            }
+          }
+        }
+      });
+    },
+    handleFavorite(topic) {
+      toggleFavorite(topic.topicId).then(response => {
+        topic.favorited = response.data;
+        if (topic.favorited) {
+          this.$modal.msgSuccess("收藏成功");
+        } else {
+          this.$modal.msgSuccess("取消收藏");
+          if (this.activeTab === 'my-favorites') {
             this.topicList = this.topicList.filter(item => item.topicId !== topic.topicId);
             if(this.topicList.length === 0){
               this.getList()
@@ -329,6 +352,7 @@ export default {
 .topic-actions { display: flex; color: #888; font-size: 14px; align-items: center; }
 .topic-actions span { display: flex; align-items: center; margin-right: 25px; cursor: pointer; }
 .topic-actions span.liked { color: #409EFF; }
+.topic-actions span.favorited { color: #E6A23C; }
 .topic-actions span i { margin-right: 5px; }
 .topic-actions span:hover { color: #409EFF; }
 .empty-state { display: flex; justify-content: center; align-items: center; height: 400px; }
