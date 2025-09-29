@@ -43,7 +43,7 @@
         select
         t.topic_id, t.user_id, t.content, t.image_urls, t.status, t.del_flag, t.create_by, t.create_time, t.update_by, t.update_time, t.remark, t.topic_type,
         u.nick_name,
-        CASE WHEN u.avatar IS NOT NULL AND u.avatar != '' THEN CONCAT(u.avatar, '?v=', u.update_time) ELSE u.avatar END as avatar,
+        u.avatar,
         (select count(*) from campus_topic_like l where l.topic_id = t.topic_id) as like_count,
         (select count(*) from campus_topic_like l where l.topic_id = t.topic_id and l.user_id = #{userId}) as liked
         from campus_topic t
@@ -56,13 +56,14 @@
                 and t.topic_type = #{topicType}
             </if>
         </where>
+        order by t.create_time desc
     </select>
 
     <select id="selectCommentsByTopicId" parameterType="Long" resultMap="CampusCommentResult">
         select
             c.comment_id, c.topic_id, c.user_id, c.parent_id, c.content, c.create_time,
             u.nick_name,
-            CASE WHEN u.avatar IS NOT NULL AND u.avatar != '' THEN CONCAT(u.avatar, '?v=', u.update_time) ELSE u.avatar END as avatar,
+            u.avatar,
             (select ru.nick_name from sys_user ru inner join campus_topic_comment rc on ru.user_id = rc.user_id where rc.comment_id = c.parent_id) as reply_to_nick_name
         from campus_topic_comment c
                  left join sys_user u on u.user_id = c.user_id
@@ -141,16 +142,18 @@
             #{topicId}
         </foreach>
     </delete>
+
     <select id="selectMyLikedTopics" parameterType="Long" resultMap="CampusTopicResult">
         select
             t.topic_id, t.user_id, t.content, t.image_urls, t.status, t.del_flag, t.create_by, t.create_time, t.update_by, t.update_time, t.remark, t.topic_type,
             u.nick_name,
             u.avatar,
             (select count(*) from campus_topic_like l where l.topic_id = t.topic_id) as like_count,
-            1 as liked  -- 我点赞的列表里，liked一定为true(1)
+            1 as liked
         from campus_topic t
                  left join sys_user u on u.user_id = t.user_id
         where t.topic_id in (select topic_id from campus_topic_like where user_id = #{userId})
+        order by t.create_time desc
     </select>
 
     <select id="selectMyCommentedTopics" parameterType="Long" resultMap="CampusTopicResult">
@@ -163,6 +166,7 @@
         from campus_topic t
                  left join sys_user u on u.user_id = t.user_id
         where t.topic_id in (select distinct topic_id from campus_topic_comment where user_id = #{userId})
+        order by t.create_time desc
     </select>
 
 </mapper>

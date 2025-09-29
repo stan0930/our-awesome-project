@@ -67,7 +67,8 @@ export function addComment(data) {
     data: data
   })
 }
-// --- 【新增代码】 ---
+
+// --- “我的”模块相关API ---
 
 // 查询我发布的话题列表
 export function listMyTopic(query) {
