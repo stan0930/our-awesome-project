@@ -44,6 +44,9 @@ public class CampusTopic extends BaseEntity
     /** 【新增】当前登录用户是否已收藏 */
     private boolean favorited;
 
+    /** 【新增】是否允许评论 (0=允许, 1=禁止) */
+    private String commentEnabled;
+
     // --- Getters and Setters ---
 
     public Long getTopicId() {
@@ -141,4 +144,14 @@ public class CampusTopic extends BaseEntity
     public void setFavorited(boolean favorited) {
         this.favorited = favorited;
     }
+
+    public String getCommentEnabled() {
+        return commentEnabled;
+    }
+
+    public void setCommentEnabled(String commentEnabled) {
+        this.commentEnabled = commentEnabled;
+    }
+
+
 }

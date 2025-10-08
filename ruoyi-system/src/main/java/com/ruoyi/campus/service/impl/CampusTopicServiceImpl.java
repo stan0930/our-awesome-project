@@ -11,6 +11,7 @@ import com.ruoyi.campus.domain.CampusTopic;
 import com.ruoyi.campus.domain.CampusTopicComment;
 import com.ruoyi.campus.domain.CampusTopicLike;
 import com.ruoyi.campus.service.ICampusTopicService;
+import com.ruoyi.common.exception.ServiceException; // 【新增】导入异常类
 
 @Service
 public class CampusTopicServiceImpl implements ICampusTopicService
@@ -61,6 +62,16 @@ public class CampusTopicServiceImpl implements ICampusTopicService
     }
     @Override
     public int insertComment(CampusTopicComment comment) {
+        // 【修改】先查询主贴信息
+        CampusTopic topic = campusTopicMapper.selectCampusTopicByTopicId(comment.getTopicId());
+        if (topic == null) {
+            throw new ServiceException("评论的话题不存在");
+        }
+        // 【修改】判断帖子是否禁止评论
+        if ("1".equals(topic.getCommentEnabled())) {
+            throw new ServiceException("该话题作者已关闭评论");
+        }
+
         comment.setCreateTime(DateUtils.getNowDate());
         if (comment.getParentId() == null) {
             comment.setParentId(0L);

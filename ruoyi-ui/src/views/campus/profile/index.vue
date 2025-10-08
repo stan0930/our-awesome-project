@@ -38,7 +38,7 @@
            <span @click="handleLike(topic)" :class="{ 'liked': topic.liked }">
             <i class="el-icon-thumb"></i> {{ topic.likeCount }}
           </span>
-          <span @click="handleShowComment(topic.topicId, 0, '')">
+          <span v-if="topic.commentEnabled == '0'" @click="handleShowComment(topic.topicId, 0, '')">
             <i class="el-icon-chat-dot-round"></i> 评论
           </span>
           <span @click="handleFavorite(topic)" :class="{ 'favorited': topic.favorited }">
@@ -51,7 +51,7 @@
           </div>
         </div>
 
-        <div class="comment-section" v-if="commentList[topic.topicId] && commentList[topic.topicId].length > 0">
+        <div class="comment-section" v-if="topic.commentEnabled == '0' && commentList[topic.topicId] && commentList[topic.topicId].length > 0">
           <div class="comment-item" v-for="comment in commentList[topic.topicId]" :key="comment.commentId">
             <el-avatar class="comment-avatar" :src="comment.avatar ? comment.avatar : 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c672f1epng.png'"></el-avatar>
             <div class="comment-body">
@@ -98,6 +98,12 @@
         </el-form-item>
         <el-form-item label="上传图片" prop="imageUrls">
           <image-upload v-model="form.imageUrls"/>
+        </el-form-item>
+        <el-form-item label="评论设置">
+          <el-radio-group v-model="form.commentEnabled">
+            <el-radio label="0">允许评论</el-radio>
+            <el-radio label="1">禁止评论</el-radio>
+          </el-radio-group>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -252,7 +258,8 @@ export default {
         topicId: null,
         content: null,
         imageUrls: null,
-        topicType: 'recommend'
+        topicType: 'recommend',
+        commentEnabled: '0'
       };
       this.resetForm("form");
     },
@@ -330,7 +337,7 @@ export default {
             this.$modal.msgSuccess("发表成功");
             this.commentOpen = false;
             this.handleGetComments(this.commentForm.topicId);
-          });
+          }).catch(()=>{});
         }
       });
     }
