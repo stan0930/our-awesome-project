@@ -59,4 +59,18 @@ public interface ICampusErrandOrderService
      * @return 结果
      */
     public int takeOrder(Long orderId, Long takerId);
+
+    /**
+     * 【新增】查询我发布的跑腿订单列表
+     * @param campusErrandOrder 查询条件
+     * @return 跑腿订单集合
+     */
+    public List<CampusErrandOrder> selectMyPublishedErrandOrderList(CampusErrandOrder campusErrandOrder);
+
+    /**
+     * 【新增】查询我接受的跑腿订单列表
+     * @param campusErrandOrder 查询条件
+     * @return 跑腿订单集合
+     */
+    public List<CampusErrandOrder> selectMyTakenErrandOrderList(CampusErrandOrder campusErrandOrder);
 }

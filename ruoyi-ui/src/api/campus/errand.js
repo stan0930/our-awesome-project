@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-// 查询跑腿代办列表
+// 查询跑腿订单列表
 export function listErrand(query) {
   return request({
     url: '/campus/errand/list',
@@ -9,7 +9,7 @@ export function listErrand(query) {
   })
 }
 
-// 查询跑腿代办详细
+// 查询跑腿订单详细
 export function getErrand(orderId) {
   return request({
     url: '/campus/errand/' + orderId,
@@ -17,7 +17,7 @@ export function getErrand(orderId) {
   })
 }
 
-// 新增跑腿代办
+// 新增跑腿订单
 export function addErrand(data) {
   return request({
     url: '/campus/errand',
@@ -26,7 +26,7 @@ export function addErrand(data) {
   })
 }
 
-// 修改跑腿代办
+// 修改跑腿订单
 export function updateErrand(data) {
   return request({
     url: '/campus/errand',
@@ -35,10 +35,38 @@ export function updateErrand(data) {
   })
 }
 
-// 删除跑腿代办
+// 删除跑腿订单
 export function delErrand(orderId) {
   return request({
     url: '/campus/errand/' + orderId,
     method: 'delete'
+  })
+}
+
+// 接单接口
+export function takeErrandOrder(orderId) {
+  return request({
+    url: '/campus/errand/take/' + orderId,
+    method: 'put'
+  })
+}
+
+// --- 【新增】“我的跑腿”相关API ---
+
+// 查询我发布的跑腿订单列表
+export function listMyPublished(query) {
+  return request({
+    url: '/campus/errand/my-published',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询我接受的跑腿订单列表
+export function listMyTaken(query) {
+  return request({
+    url: '/campus/errand/my-taken',
+    method: 'get',
+    params: query
   })
 }

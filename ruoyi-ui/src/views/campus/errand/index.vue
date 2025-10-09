@@ -32,8 +32,8 @@
         </div>
         <div class="card-footer">
           <span class="publisher-info">
-            <el-avatar size="small" :src=" 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c672f1epng.png' "></el-avatar>
-            <span class="nickname">发布人：{{ order.createBy }}</span>
+            <el-avatar size="small" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c672f1epng.png"></el-avatar>
+            <span class="nickname">{{ order.publisherNickName }}</span>
           </span>
           <el-button type="primary" size="mini" round @click="handleTakeOrder(order)">立即接单</el-button>
         </div>
@@ -55,13 +55,14 @@
             <el-option label="快递代取" value="快递代取"></el-option>
             <el-option label="外卖代拿" value="外卖代拿"></el-option>
             <el-option label="校园跑腿" value="校园跑腿"></el-option>
+            <el-option label="其他" value="其他"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="任务标题" prop="title">
           <el-input v-model="form.title" placeholder="一句话描述你的需求" />
         </el-form-item>
         <el-form-item label="详细描述" prop="detail">
-          <el-input v-model="form.detail" type="textarea" :rows="3" placeholder="例如取件码、具体商品等" />
+          <el-input v-model="form.detail" type="textarea" :rows="3" placeholder="例如取件码、具体商品、期望送达时间等" />
         </el-form-item>
         <el-form-item label="送达地址" prop="deliveryAddress">
           <el-input v-model="form.deliveryAddress" placeholder="请输入宿舍楼、教室等" />
@@ -79,33 +80,25 @@
 </template>
 
 <script>
-import { listErrand, addErrand } from "@/api/campus/errand";
+// 【修改】导入 takeErrandOrder 接口
+import { listErrand, addErrand, takeErrandOrder } from "@/api/campus/errand";
 
 export default {
-  name: "Errand",
+  name: "ErrandHall",
   data() {
     return {
-      // 遮罩层
       loading: true,
-      // 显示搜索条件
       showSearch: true,
-      // 总条数
       total: 0,
-      // 跑腿订单表格数据
       orderList: [],
-      // 弹出层标题
       title: "",
-      // 是否显示弹出层
       open: false,
-      // 查询参数
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        status: '0' // 只查询待接单的
+        status: '0'
       },
-      // 表单参数
       form: {},
-      // 表单校验
       rules: {
         orderType: [
           { required: true, message: "任务类型不能为空", trigger: "change" }
@@ -123,7 +116,6 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询跑腿订单列表 */
     getList() {
       this.loading = true;
       listErrand(this.queryParams).then(response => {
@@ -132,12 +124,10 @@ export default {
         this.loading = false;
       });
     },
-    // 取消按钮
     cancel() {
       this.open = false;
       this.reset();
     },
-    // 表单重置
     reset() {
       this.form = {
         orderId: null,
@@ -149,13 +139,11 @@ export default {
       };
       this.resetForm("form");
     },
-    /** 发布按钮操作 */
     handlePublish() {
       this.reset();
       this.open = true;
       this.title = "发布跑腿任务";
     },
-    /** 提交按钮 */
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
@@ -167,11 +155,14 @@ export default {
         }
       });
     },
-    /** 接单按钮操作 */
+    /** 【修改】实现接单逻辑 */
     handleTakeOrder(row) {
       this.$modal.confirm('是否确认接收这个跑腿任务？').then(() => {
-        // 这里我们暂时只给一个提示，后续再开发接单接口
-        this.$modal.msgSuccess("接单成功！请尽快完成任务。");
+        return takeErrandOrder(row.orderId);
+      }).then(() => {
+        this.$modal.msgSuccess("接单成功！");
+        // 刷新列表，这样被接单的任务就会消失
+        this.getList();
       }).catch(() => {});
     }
   }
@@ -179,28 +170,34 @@ export default {
 </script>
 
 <style scoped>
+/* 样式部分无需修改 */
 .errand-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 15px;
+  gap: 20px;
 }
 .errand-card {
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  padding: 15px;
+  padding: 15px 20px;
   display: flex;
   flex-direction: column;
+  transition: all 0.3s ease;
+}
+.errand-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 .card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 .reward {
   color: #ff4949;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
 }
 .card-body .title {
@@ -209,24 +206,28 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 600;
 }
 .card-body .detail {
   font-size: 14px;
   color: #666;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  min-height: 40px;
+  min-height: 42px; /* 保持两行的高度 */
 }
 .card-body .address {
   font-size: 13px;
   color: #999;
 }
+.card-body .address i {
+  margin-right: 5px;
+}
 .card-footer {
-  margin-top: auto; /* 将footer推到底部 */
+  margin-top: auto;
   padding-top: 15px;
   border-top: 1px solid #f0f0f0;
   display: flex;
@@ -243,7 +244,7 @@ export default {
   margin-left: 8px;
 }
 .empty-state {
-  grid-column: 1 / -1; /* 占据整行 */
+  grid-column: 1 / -1;
   display: flex;
   justify-content: center;
   align-items: center;

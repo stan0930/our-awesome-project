@@ -88,7 +88,7 @@ public class CampusErrandOrderServiceImpl implements ICampusErrandOrderService
     }
 
     /**
-     * 【新增】接单逻辑
+     * 接单逻辑
      */
     @Override
     public int takeOrder(Long orderId, Long takerId) {
@@ -112,5 +112,21 @@ public class CampusErrandOrderServiceImpl implements ICampusErrandOrderService
         order.setTakeTime(DateUtils.getNowDate()); // 记录接单时间
 
         return campusErrandOrderMapper.updateCampusErrandOrder(order);
+    }
+
+    /**
+     * 查询我发布的跑腿订单
+     */
+    @Override
+    public List<CampusErrandOrder> selectMyPublishedErrandOrderList(CampusErrandOrder campusErrandOrder) {
+        return campusErrandOrderMapper.selectCampusErrandOrderList(campusErrandOrder);
+    }
+
+    /**
+     * 查询我接受的跑腿订单
+     */
+    @Override
+    public List<CampusErrandOrder> selectMyTakenErrandOrderList(CampusErrandOrder campusErrandOrder) {
+        return campusErrandOrderMapper.selectCampusErrandOrderList(campusErrandOrder);
     }
 }

@@ -116,4 +116,29 @@ public class CampusErrandOrderController extends BaseController
     {
         return toAjax(campusErrandOrderService.takeOrder(orderId, getUserId()));
     }
+    /**
+     * 【新增】获取我发布的跑腿订单列表
+     */
+    @GetMapping("/my-published")
+    public TableDataInfo myPublishedList(CampusErrandOrder campusErrandOrder)
+    {
+        startPage();
+        // 关键：设置查询条件为当前用户ID
+        campusErrandOrder.setPublisherId(getUserId());
+        List<CampusErrandOrder> list = campusErrandOrderService.selectMyPublishedErrandOrderList(campusErrandOrder);
+        return getDataTable(list);
+    }
+
+    /**
+     * 【新增】获取我接受的跑腿订单列表
+     */
+    @GetMapping("/my-taken")
+    public TableDataInfo myTakenList(CampusErrandOrder campusErrandOrder)
+    {
+        startPage();
+        // 关键：设置查询条件为当前用户ID
+        campusErrandOrder.setTakerId(getUserId());
+        List<CampusErrandOrder> list = campusErrandOrderService.selectMyTakenErrandOrderList(campusErrandOrder);
+        return getDataTable(list);
+    }
 }
