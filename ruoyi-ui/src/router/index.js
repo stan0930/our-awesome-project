@@ -169,7 +169,21 @@ export const dynamicRoutes = [
         meta: { title: '修改生成配置', activeMenu: '/tool/gen' }
       }
     ]
+  },
+  // --- 【新增“跑腿代办”的路由】 ---
+  {
+    path: '/errand',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/campus/errand/index'),
+        name: 'Errand',
+        meta: { title: '跑腿大厅', icon: 'el-icon-s-promotion' }
+      }
+    ]
   }
+  // --- 【新增结束】 ---
 ]
 
 // 防止连续点击多次路由报错
