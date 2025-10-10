@@ -32,7 +32,7 @@
         </div>
         <div class="card-footer">
           <span class="publisher-info">
-            <el-avatar size="small" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c672f1epng.png"></el-avatar>
+            <el-avatar size="small" :src="order.publisherAvatar || 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c672f1epng.png'"></el-avatar>
             <span class="nickname">{{ order.publisherNickName }}</span>
           </span>
           <el-button type="primary" size="mini" round @click="handleTakeOrder(order)">立即接单</el-button>
@@ -80,7 +80,6 @@
 </template>
 
 <script>
-// 【修改】导入 takeErrandOrder 接口
 import { listErrand, addErrand, takeErrandOrder } from "@/api/campus/errand";
 
 export default {
@@ -96,7 +95,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        status: '0'
+        status: '0' // 只查询待接单的
       },
       form: {},
       rules: {
@@ -155,7 +154,6 @@ export default {
         }
       });
     },
-    /** 【修改】实现接单逻辑 */
     handleTakeOrder(row) {
       this.$modal.confirm('是否确认接收这个跑腿任务？').then(() => {
         return takeErrandOrder(row.orderId);
@@ -170,7 +168,6 @@ export default {
 </script>
 
 <style scoped>
-/* 样式部分无需修改 */
 .errand-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));

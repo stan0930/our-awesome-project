@@ -20,16 +20,23 @@
         <result property="createBy"    column="create_by"    />
         <result property="updateBy"    column="update_by"    />
         <result property="publisherNickName" column="publisher_nick_name" />
+        <result property="takerNickName" column="taker_nick_name" />
+        <result property="publisherAvatar" column="publisher_avatar" />
+        <result property="takerAvatar" column="taker_avatar" />
     </resultMap>
 
     <sql id="selectCampusErrandOrderVo">
-        select o.order_id, o.publisher_id, o.taker_id, o.order_type, o.title, o.detail, o.reward, o.delivery_address, o.status, o.create_time, o.take_time, o.finish_time, u.nick_name as publisher_nick_name, o.create_by, o.update_by
+        select o.order_id, o.publisher_id, o.taker_id, o.order_type, o.title, o.detail, o.reward, o.delivery_address, o.status, o.create_time, o.take_time, o.finish_time, o.create_by, o.update_by
         from campus_errand_order o
-                 left join sys_user u on u.user_id = o.publisher_id
     </sql>
 
     <select id="selectCampusErrandOrderList" parameterType="CampusErrandOrder" resultMap="CampusErrandOrderResult">
-        <include refid="selectCampusErrandOrderVo"/>
+        select o.order_id, o.publisher_id, o.taker_id, o.order_type, o.title, o.detail, o.reward, o.delivery_address, o.status, o.create_time, o.take_time, o.finish_time,
+        u.nick_name as publisher_nick_name,
+        u.avatar as publisher_avatar,  -- 【修复】增加查询发布人头像
+        o.create_by, o.update_by
+        from campus_errand_order o
+        left join sys_user u on u.user_id = o.publisher_id
         <where>
             <if test="publisherId != null "> and o.publisher_id = #{publisherId}</if>
             <if test="takerId != null "> and o.taker_id = #{takerId}</if>
@@ -41,7 +48,7 @@
 
     <select id="selectCampusErrandOrderByOrderId" parameterType="Long" resultMap="CampusErrandOrderResult">
         <include refid="selectCampusErrandOrderVo"/>
-        where o.order_id = #{orderId}
+        where order_id = #{orderId}
     </select>
 
     <insert id="insertCampusErrandOrder" parameterType="CampusErrandOrder" useGeneratedKeys="true" keyProperty="orderId">
@@ -108,4 +115,26 @@
             #{orderId}
         </foreach>
     </delete>
+
+    <select id="selectMyPublishedErrandOrderList" parameterType="CampusErrandOrder" resultMap="CampusErrandOrderResult">
+        select o.order_id, o.publisher_id, o.taker_id, o.order_type, o.title, o.detail, o.reward, o.delivery_address, o.status, o.create_time, o.take_time, o.finish_time,
+        taker.nick_name as taker_nick_name, taker.avatar as taker_avatar
+        from campus_errand_order o
+        left join sys_user taker on taker.user_id = o.taker_id
+        <where>
+            o.publisher_id = #{publisherId}
+        </where>
+        order by o.create_time desc
+    </select>
+
+    <select id="selectMyTakenErrandOrderList" parameterType="CampusErrandOrder" resultMap="CampusErrandOrderResult">
+        select o.order_id, o.publisher_id, o.taker_id, o.order_type, o.title, o.detail, o.reward, o.delivery_address, o.status, o.create_time, o.take_time, o.finish_time,
+        publisher.nick_name as publisher_nick_name, publisher.avatar as publisher_avatar
+        from campus_errand_order o
+        left join sys_user publisher on publisher.user_id = o.publisher_id
+        <where>
+            o.taker_id = #{takerId}
+        </where>
+        order by o.take_time desc
+    </select>
 </mapper>
