@@ -18,6 +18,28 @@ public class CampusErrandOrder extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
+    /** 【新增】发布人头像 */
+    private String publisherAvatar;
+
+    /** 【新增】接单人头像 */
+    private String takerAvatar;
+
+    public String getPublisherAvatar() {
+        return publisherAvatar;
+    }
+
+    public void setPublisherAvatar(String publisherAvatar) {
+        this.publisherAvatar = publisherAvatar;
+    }
+
+    public String getTakerAvatar() {
+        return takerAvatar;
+    }
+
+    public void setTakerAvatar(String takerAvatar) {
+        this.takerAvatar = takerAvatar;
+    }
+
     /** 订单ID (主键) */
     private Long orderId;
 

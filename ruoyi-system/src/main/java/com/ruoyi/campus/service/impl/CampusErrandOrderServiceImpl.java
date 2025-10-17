@@ -115,18 +115,18 @@ public class CampusErrandOrderServiceImpl implements ICampusErrandOrderService
     }
 
     /**
-     * 查询我发布的跑腿订单
+     * 查询我发布的跑腿订单 (调用新的Mapper方法)
      */
     @Override
     public List<CampusErrandOrder> selectMyPublishedErrandOrderList(CampusErrandOrder campusErrandOrder) {
-        return campusErrandOrderMapper.selectCampusErrandOrderList(campusErrandOrder);
+        return campusErrandOrderMapper.selectMyPublishedErrandOrderList(campusErrandOrder);
     }
 
     /**
-     * 查询我接受的跑腿订单
+     * 查询我接受的跑腿订单 (调用新的Mapper方法)
      */
     @Override
     public List<CampusErrandOrder> selectMyTakenErrandOrderList(CampusErrandOrder campusErrandOrder) {
-        return campusErrandOrderMapper.selectCampusErrandOrderList(campusErrandOrder);
+        return campusErrandOrderMapper.selectMyTakenErrandOrderList(campusErrandOrder);
     }
 }
