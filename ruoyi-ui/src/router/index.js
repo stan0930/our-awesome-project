@@ -75,6 +75,32 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/assistant',
+    component: Layout,
+    hidden: false, // 设置为 false 以在侧边栏显示
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/assistant'),
+        name: 'IntelligentAssistant',
+        meta: { title: '智能助手', icon: 'message' } // 使用已有的icon，例如 'message'
+      }
+    ]
+  },
+  {
+    path: '',
+    component: Layout,
+    redirect: 'index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/index'),
+        name: 'Index',
+        meta: { title: '首页', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
+  {
     path: '/user',
     component: Layout,
     hidden: true,

@@ -74,7 +74,7 @@ spring:
     # 数据库索引
     database: 0
     # 密码
-    password: 123456
+    password:
     # 连接超时时间
     timeout: 10s
     lettuce:
@@ -134,3 +134,9 @@ xss:
   excludes: /system/notice
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
+
+dify:
+  api:
+    url: http://10.144.84.111/v1
+#    url: http://localhost/v1
+    key: app-XOLus2uDywltGaxFiJI4oodD
