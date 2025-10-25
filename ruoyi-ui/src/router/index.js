@@ -74,32 +74,7 @@ export const constantRoutes = [
       }
     ]
   },
-  {
-    path: '/assistant',
-    component: Layout,
-    hidden: false, // 设置为 false 以在侧边栏显示
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/assistant'),
-        name: 'IntelligentAssistant',
-        meta: { title: '智能助手', icon: 'message' } // 使用已有的icon，例如 'message'
-      }
-    ]
-  },
-  {
-    path: '',
-    component: Layout,
-    redirect: 'index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/index'),
-        name: 'Index',
-        meta: { title: '首页', icon: 'dashboard', affix: true }
-      }
-    ]
-  },
+  // --- “智能助手”路由已从此处移至 dynamicRoutes ---
   {
     path: '/user',
     component: Layout,
@@ -206,6 +181,22 @@ export const dynamicRoutes = [
         component: () => import('@/views/campus/errand/index'),
         name: 'Errand',
         meta: { title: '跑腿大厅', icon: 'el-icon-s-promotion' }
+      }
+    ]
+  },
+  // --- 【新增结束】 ---
+
+  // --- 【“智能助手”路由已移到此处】 ---
+  {
+    path: '/assistant',
+    component: Layout,
+    // hidden: false, // 在 dynamicRoutes 中通常不需要 hidden: false，显示/隐藏由后端菜单控制
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/assistant'),
+        name: 'IntelligentAssistant',
+        meta: { title: '智能助手', icon: 'message' } // 使用已有的icon，例如 'message'
       }
     ]
   }
