@@ -2,60 +2,69 @@ package com.ruoyi.campus.mapper;
 
 import java.util.List;
 import com.ruoyi.campus.domain.CampusProduct;
+import org.apache.ibatis.annotations.Param; // 【新增】导入 Param
 
 /**
  * 校园二手商品Mapper接口
- * 
- * @author ruoyi
- * @date 2025-11-11
+ * * @author ruoyi
+ * @date (你的生成日期)
  */
-public interface CampusProductMapper 
+public interface CampusProductMapper
 {
     /**
      * 查询校园二手商品
-     * 
-     * @param productId 校园二手商品主键
+     * * @param productId 校园二手商品主键
      * @return 校园二手商品
      */
     public CampusProduct selectCampusProductByProductId(Long productId);
 
     /**
      * 查询校园二手商品列表
-     * 
-     * @param campusProduct 校园二手商品
+     * * @param campusProduct 校园二手商品
      * @return 校园二手商品集合
      */
     public List<CampusProduct> selectCampusProductList(CampusProduct campusProduct);
 
     /**
      * 新增校园二手商品
-     * 
-     * @param campusProduct 校园二手商品
+     * * @param campusProduct 校园二手商品
      * @return 结果
      */
     public int insertCampusProduct(CampusProduct campusProduct);
 
     /**
      * 修改校园二手商品
-     * 
-     * @param campusProduct 校园二手商品
+     * * @param campusProduct 校园二手商品
      * @return 结果
      */
     public int updateCampusProduct(CampusProduct campusProduct);
 
     /**
      * 删除校园二手商品
-     * 
-     * @param productId 校园二手商品主键
+     * * @param productId 校园二手商品主键
      * @return 结果
      */
     public int deleteCampusProductByProductId(Long productId);
 
     /**
      * 批量删除校园二手商品
-     * 
-     * @param productIds 需要删除的数据主键集合
+     * * @param productIds 需要删除的数据主键集合
      * @return 结果
      */
     public int deleteCampusProductByProductIds(Long[] productIds);
+
+    /**
+     * 【新增】查询商品并锁定
+     * @param productId 商品ID
+     * @return 商品
+     */
+    public CampusProduct selectCampusProductByProductIdForUpdate(@Param("productId") Long productId);
+
+    /**
+     * 【新增】更新商品状态
+     * @param productId 商品ID
+     * @param status 状态
+     * @return 结果
+     */
+    public int updateCampusProductStatus(@Param("productId") Long productId, @Param("status") String status);
 }

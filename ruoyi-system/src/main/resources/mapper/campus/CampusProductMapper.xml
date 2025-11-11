@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.campus.mapper.CampusProductMapper">
-    
+
     <resultMap type="CampusProduct" id="CampusProductResult">
         <result property="productId"    column="product_id"    />
         <result property="userId"    column="user_id"    />
@@ -18,27 +18,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateBy"    column="update_by"    />
         <result property="updateTime"    column="update_time"    />
         <result property="remark"    column="remark"    />
+        <result property="nickName"   column="nick_name"   />
     </resultMap>
 
     <sql id="selectCampusProductVo">
-        select product_id, user_id, title, description, image_urls, price, status, del_flag, create_by, create_time, update_by, update_time, remark from campus_product
+        select p.product_id, p.user_id, p.title, p.description, p.image_urls, p.price, p.status, p.del_flag, p.create_by, p.create_time, p.update_by, p.update_time, p.remark, u.nick_name
+        from campus_product p
+                 left join sys_user u on u.user_id = p.user_id
     </sql>
 
     <select id="selectCampusProductList" parameterType="CampusProduct" resultMap="CampusProductResult">
         <include refid="selectCampusProductVo"/>
-        <where>  
-            <if test="userId != null "> and user_id = #{userId}</if>
-            <if test="title != null  and title != ''"> and title = #{title}</if>
-            <if test="description != null  and description != ''"> and description = #{description}</if>
-            <if test="imageUrls != null  and imageUrls != ''"> and image_urls = #{imageUrls}</if>
-            <if test="price != null "> and price = #{price}</if>
-            <if test="status != null  and status != ''"> and status = #{status}</if>
+        <where>
+            <if test="userId != null "> and p.user_id = #{userId}</if>
+            <if test="title != null  and title != ''"> and p.title like concat('%', #{title}, '%')</if>
+            <if test="status != null  and status != ''"> and p.status = #{status}</if>
         </where>
     </select>
-    
+
     <select id="selectCampusProductByProductId" parameterType="Long" resultMap="CampusProductResult">
         <include refid="selectCampusProductVo"/>
-        where product_id = #{productId}
+        where p.product_id = #{productId}
     </select>
 
     <insert id="insertCampusProduct" parameterType="CampusProduct" useGeneratedKeys="true" keyProperty="productId">
@@ -56,7 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">update_by,</if>
             <if test="updateTime != null">update_time,</if>
             <if test="remark != null">remark,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">#{userId},</if>
             <if test="title != null and title != ''">#{title},</if>
@@ -70,7 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateBy != null">#{updateBy},</if>
             <if test="updateTime != null">#{updateTime},</if>
             <if test="remark != null">#{remark},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateCampusProduct" parameterType="CampusProduct">
@@ -93,13 +93,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteCampusProductByProductId" parameterType="Long">
-        delete from campus_product where product_id = #{productId}
+        update campus_product set del_flag = '2' where product_id = #{productId}
     </delete>
 
     <delete id="deleteCampusProductByProductIds" parameterType="String">
-        delete from campus_product where product_id in 
+        update campus_product set del_flag = '2' where product_id in
         <foreach item="productId" collection="array" open="(" separator="," close=")">
             #{productId}
         </foreach>
     </delete>
+
+    <select id="selectCampusProductByProductIdForUpdate" resultMap="CampusProductResult">
+        select
+            p.product_id, p.user_id, p.title, p.description, p.image_urls, p.price, p.status, p.del_flag, p.create_by, p.create_time, p.update_by, p.update_time, p.remark, u.nick_name
+        from campus_product p
+                 left join sys_user u on u.user_id = p.user_id
+        where p.product_id = #{productId}
+            for update
+    </select>
+
+    <update id="updateCampusProductStatus">
+        update campus_product
+        set status = #{status}, update_time = sysdate()
+        where product_id = #{productId} and status = '0' </update>
+
 </mapper>

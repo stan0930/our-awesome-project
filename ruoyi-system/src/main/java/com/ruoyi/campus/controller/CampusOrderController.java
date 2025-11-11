@@ -21,11 +21,15 @@ import com.ruoyi.campus.service.ICampusOrderService;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 
+// 【新增】导入
+import com.ruoyi.campus.domain.dto.CreateOrderDto;
+import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.common.exception.ServiceException;
+
 /**
  * 校园订单Controller
- * 
- * @author ruoyi
- * @date 2025-11-11
+ * * @author ruoyi
+ * @date (你的生成日期)
  */
 @RestController
 @RequestMapping("/campus/order")
@@ -96,9 +100,43 @@ public class CampusOrderController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('campus:order:remove')")
     @Log(title = "校园订单", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{orderIds}")
+    @DeleteMapping("/{orderIds}")
     public AjaxResult remove(@PathVariable Long[] orderIds)
     {
         return toAjax(campusOrderService.deleteCampusOrderByOrderIds(orderIds));
+    }
+
+
+    /**
+     * 【新增】用户创建订单
+     * 这个接口是给前台用户用的，不需要权限
+     */
+    @PostMapping("/create")
+    public AjaxResult create(@RequestBody CreateOrderDto createOrderDto)
+    {
+        if (createOrderDto.getProductId() == null) {
+            return AjaxResult.error("商品ID不能为空");
+        }
+        // 简单的校验
+        if (StringUtils.isEmpty(createOrderDto.getAddress())) {
+            return AjaxResult.error("收货地址不能为空");
+        }
+
+        try
+        {
+            Long orderId = campusOrderService.createOrder(createOrderDto);
+            return AjaxResult.success("订单创建成功", orderId);
+        }
+        catch (ServiceException e)
+        {
+            // 捕获业务异常 (比如 "商品已售出")
+            return AjaxResult.error(e.getMessage());
+        }
+        catch (Exception e)
+        {
+            // 捕获其他未知异常
+            e.printStackTrace(); // 在后台打印详细错误
+            return AjaxResult.error("创建订单失败，请联系管理员");
+        }
     }
 }
