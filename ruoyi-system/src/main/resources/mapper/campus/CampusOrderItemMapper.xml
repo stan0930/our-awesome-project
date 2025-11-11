@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.campus.mapper.CampusOrderItemMapper">
+    
+    <resultMap type="CampusOrderItem" id="CampusOrderItemResult">
+        <result property="itemId"    column="item_id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="productId"    column="product_id"    />
+        <result property="productTitle"    column="product_title"    />
+        <result property="productImage"    column="product_image"    />
+        <result property="price"    column="price"    />
+        <result property="quantity"    column="quantity"    />
+        <result property="createTime"    column="create_time"    />
+    </resultMap>
+
+    <sql id="selectCampusOrderItemVo">
+        select item_id, order_id, product_id, product_title, product_image, price, quantity, create_time from campus_order_item
+    </sql>
+
+    <select id="selectCampusOrderItemList" parameterType="CampusOrderItem" resultMap="CampusOrderItemResult">
+        <include refid="selectCampusOrderItemVo"/>
+        <where>  
+            <if test="orderId != null "> and order_id = #{orderId}</if>
+            <if test="productId != null "> and product_id = #{productId}</if>
+            <if test="productTitle != null  and productTitle != ''"> and product_title = #{productTitle}</if>
+            <if test="productImage != null  and productImage != ''"> and product_image = #{productImage}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="quantity != null "> and quantity = #{quantity}</if>
+        </where>
+    </select>
+    
+    <select id="selectCampusOrderItemByItemId" parameterType="Long" resultMap="CampusOrderItemResult">
+        <include refid="selectCampusOrderItemVo"/>
+        where item_id = #{itemId}
+    </select>
+
+    <insert id="insertCampusOrderItem" parameterType="CampusOrderItem" useGeneratedKeys="true" keyProperty="itemId">
+        insert into campus_order_item
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">order_id,</if>
+            <if test="productId != null">product_id,</if>
+            <if test="productTitle != null">product_title,</if>
+            <if test="productImage != null">product_image,</if>
+            <if test="price != null">price,</if>
+            <if test="quantity != null">quantity,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">#{orderId},</if>
+            <if test="productId != null">#{productId},</if>
+            <if test="productTitle != null">#{productTitle},</if>
+            <if test="productImage != null">#{productImage},</if>
+            <if test="price != null">#{price},</if>
+            <if test="quantity != null">#{quantity},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateCampusOrderItem" parameterType="CampusOrderItem">
+        update campus_order_item
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="productId != null">product_id = #{productId},</if>
+            <if test="productTitle != null">product_title = #{productTitle},</if>
+            <if test="productImage != null">product_image = #{productImage},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="quantity != null">quantity = #{quantity},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+        </trim>
+        where item_id = #{itemId}
+    </update>
+
+    <delete id="deleteCampusOrderItemByItemId" parameterType="Long">
+        delete from campus_order_item where item_id = #{itemId}
+    </delete>
+
+    <delete id="deleteCampusOrderItemByItemIds" parameterType="String">
+        delete from campus_order_item where item_id in 
+        <foreach item="itemId" collection="array" open="(" separator="," close=")">
+            #{itemId}
+        </foreach>
+    </delete>
+</mapper>
