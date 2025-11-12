@@ -45,6 +45,13 @@ public interface CampusTopicMapper
      */
     public List<CampusTopic> selectMyCommentedTopics(@Param("userId") Long userId);
 
+    /**
+     * 【新增】查询我发布的话题列表
+     * @param campusTopic 查询参数，包含 userId
+     * @return 话题列表
+     */
+    public List<CampusTopic> selectMyCampusTopicList(CampusTopic campusTopic);
+
     // --- 【新增】收藏相关 ---
     /**
      * 根据话题ID和用户ID查询收藏记录

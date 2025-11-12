@@ -30,6 +30,13 @@ public interface ICampusTopicService
      * @return 话题列表
      */
     public List<CampusTopic> selectMyCommentedTopics(Long userId);
+
+    /**
+     * 【新增】查询我发布的话题
+     * @param campusTopic 查询参数，包含 userId
+     * @return 话题列表
+     */
+    public List<CampusTopic> selectMyCampusTopicList(CampusTopic campusTopic);
     // --- 【新增结束】 ---
     // --- 【新增】收藏相关 ---
     boolean toggleFavorite(Long topicId, Long userId);
