@@ -1,114 +1,151 @@
 <template>
   <div class="app-container">
-    <el-tabs v-model="activeTab" @tab-click="handleTabClick">
-
+    <el-tabs v-model="queryParams.topicType" @tab-click="handleQuery">
       <el-tab-pane label="全部" name="all"></el-tab-pane>
       <el-tab-pane label="推荐" name="recommend"></el-tab-pane>
       <el-tab-pane label="问答" name="qa"></el-tab-pane>
-
-      <el-tab-pane label="二手" name="second-hand"></el-tab-pane>
-
-      <el-tab-pane label="恋爱交友" name="love"></el-tab-pane>
+      <el-tab-pane label="二手" name="secondhand"></el-tab-pane>
+      <el-tab-pane label="恋爱交友" name="dating"></el-tab-pane>
       <el-tab-pane label="兼职信息" name="jobs"></el-tab-pane>
       <el-tab-pane label="校园八卦" name="gossip"></el-tab-pane>
-
-      <el-button
-        type="primary"
-        icon="el-icon-plus"
-        size="mini"
-        @click="handlePublish"
-        class="publish-btn"
-      >
-        {{ activeTab === 'second-hand' ? '上架商品' : '发布帖子' }}
-      </el-button>
     </el-tabs>
 
-    <div v-if="activeTab !== 'second-hand'" v-loading="loading">
-      <div v-for="topic in topicList" :key="topic.topicId" class="topic-item">
+    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px" @submit.native.prevent>
+      <el-form-item label="关键词" prop="content">
+        <el-input
+          v-model="queryParams.content"
+          placeholder="帖子内容或作者昵称"
+          clearable
+          @keyup.enter.native="handleQuery"
+        />
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+      </el-form-item>
+    </el-form>
+
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button
+          type="primary"
+          plain
+          icon="el-icon-plus"
+          size="mini"
+          @click="handleAdd"
+          v-hasPermi="['campus:topic:add']"
+        >发布新话题</el-button>
+      </el-col>
+      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+    </el-row>
+
+    <div class="topic-list" v-loading="loading">
+      <div class="topic-card" v-for="topic in topicList" :key="topic.topicId">
         <div class="topic-header">
-          <el-avatar :size="40" :src="topic.avatar"></el-avatar>
+          <el-avatar :src="topic.avatar ? topic.avatar : 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c672f1epng.png'"></el-avatar>
           <div class="user-info">
-            <div class="username">{{ topic.nickName }}</div>
-            <div class="time">{{ parseTime(topic.createTime) }}</div>
+            <div class="nickname">{{ topic.nickName }}</div>
+            <div class="create-time">{{ parseTime(topic.createTime, '{y}-{m}-{d} {h}:{i}') }}</div>
+          </div>
+          <el-tag class="topic-type-tag" size="mini">{{ formatTopicType(topic.topicType) }}</el-tag>
+        </div>
+
+        <div class="topic-content">
+          <p v-if="topic.content" v-html="topic.content.replace(/\n/g, '<br>')"></p>
+          <div class="image-list" v-if="topic.imageUrls">
+            <el-image
+              v-for="(url, index) in topic.imageUrls.split(',')"
+              :key="index"
+              :src="url"
+              :preview-src-list="topic.imageUrls.split(',')"
+              class="topic-image"
+              fit="cover"
+            ></el-image>
           </div>
         </div>
-        <div class="topic-content">
-          <p>{{ topic.content }}</p>
-        </div>
-        <div class="topic-footer">
-          <span>
+
+        <div class="topic-actions">
+          <span @click="handleLike(topic)" :class="{ 'liked': topic.liked }">
             <i class="el-icon-thumb"></i> {{ topic.likeCount }}
           </span>
+          <span v-if="topic.commentEnabled == '0'" @click="handleShowComment(topic.topicId, 0, '')">
+            <i class="el-icon-chat-dot-round"></i> 评论
+          </span>
+          <span @click="handleFavorite(topic)" :class="{ 'favorited': topic.favorited }">
+            <i class="el-icon-star-off"></i> 收藏
+          </span>
+        </div>
+
+        <div class="comment-section" v-if="topic.commentEnabled == '0' && commentList[topic.topicId] && commentList[topic.topicId].length > 0">
+          <div class="comment-item" v-for="comment in commentList[topic.topicId]" :key="comment.commentId">
+            <el-avatar class="comment-avatar" :src="comment.avatar ? comment.avatar : 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c672f1epng.png'"></el-avatar>
+            <div class="comment-body">
+              <div>
+                <span class="comment-nickname">{{ comment.nickName }}</span>
+                <span v-if="comment.parentId !== 0 && comment.replyToNickName">
+                  <span class="reply-text"> 回复 </span>
+                  <span class="comment-nickname">{{ comment.replyToNickName }}</span>
+                </span>:
+                <span class="comment-content">{{ comment.content }}</span>
+              </div>
+              <div class="comment-footer">
+                <span class="comment-time">{{ parseTime(comment.createTime, '{y}-{m}-{d} {h}:{i}') }}</span>
+                <span class="comment-reply-btn" @click="handleShowComment(topic.topicId, comment.commentId, comment.nickName)">回复</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <el-empty v-if="topicList.length === 0" description="暂无帖子"></el-empty>
-    </div>
-
-    <div v-else v-loading="loading">
-      <el-row :gutter="20">
-        <el-col :span="6" v-for="product in productList" :key="product.productId">
-          <el-card class="product-card">
-            <img
-              :src="getFirstImage(product.imageUrls)"
-              class="product-image"
-              alt="商品图片"
-            />
-            <div class="product-info">
-              <div class="product-title">{{ product.title }}</div>
-              <div class="product-desc">{{ product.description }}</div>
-              <div class="product-price">¥ {{ product.price }}</div>
-              <div class="product-seller">卖家: {{ product.nickName }}</div>
-
-              <el-button
-                type="danger"
-                size="mini"
-                v-if="product.status == '0' && product.userId != userId"
-                @click="handleBuy(product)"
-              >
-                立即购买
-              </el-button>
-              <el-tag type="info" v-if="product.status == '0' && product.userId == userId">
-                我的商品
-              </el-tag>
-              <el-tag type="info" v-if="product.status == '1'">已售出</el-tag>
-              <el-tag type="warning" v-if="product.status == '2'">已下架</el-tag>
-            </div>
-          </el-card>
-        </el-col>
-      </el-row>
-      <el-empty v-if="productList.length === 0" description="暂无商品"></el-empty>
     </div>
 
     <pagination
-      v-show="total > 0"
+      v-show="total>0"
       :total="total"
       :page.sync="queryParams.pageNum"
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
+
     <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="商品标题" prop="title">
-          <el-input v-model="form.title" placeholder="请输入标题" />
+        <el-form-item label="选择分区" prop="topicType">
+          <el-select v-model="form.topicType" placeholder="请选择分区">
+            <el-option
+              v-for="item in topicTypeOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="商品描述" prop="description">
-          <el-input
-            v-model="form.description"
-            type="textarea"
-            rows="3"
-            placeholder="请输入描述"
-          />
-        </el-form-item>
-        <el-form-item label="商品价格" prop="price">
-          <el-input-number v-model="form.price" :precision="2" :step="1" :min="0.01"></el-input-number> 元
+        <el-form-item label="话题内容" prop="content">
+          <el-input v-model="form.content" type="textarea" :rows="5" placeholder="分享新鲜事..." />
         </el-form-item>
         <el-form-item label="上传图片" prop="imageUrls">
-          <image-upload v-model="form.imageUrls" :limit="3"/>
+          <image-upload v-model="form.imageUrls"/>
+        </el-form-item>
+        <el-form-item label="评论设置">
+          <el-radio-group v-model="form.commentEnabled">
+            <el-radio label="0">允许评论</el-radio>
+            <el-radio label="1">禁止评论</el-radio>
+          </el-radio-group>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button type="primary" @click="submitForm">发 布</el-button>
         <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog :title="commentForm.title" :visible.sync="commentOpen" width="500px" append-to-body>
+      <el-form ref="commentForm" :model="commentForm" :rules="commentRules" label-width="0px">
+        <el-form-item prop="content">
+          <el-input v-model="commentForm.content" type="textarea" :rows="3" :placeholder="commentForm.placeholder"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitCommentForm">发 表</el-button>
+        <el-button @click="cancelComment">取 消</el-button>
       </div>
     </el-dialog>
 
@@ -116,273 +153,322 @@
 </template>
 
 <script>
-// 【【【 1. 导入所有需要的API 】】】
-import { listTopic } from "@/api/campus/topic";
-import { listProduct, addProduct } from "@/api/campus/product";
-import { createOrder } from "@/api/campus/order";
-import { mapGetters } from 'vuex';
+import { listTopic, addTopic, getComments, toggleLike, addComment, toggleFavorite } from "@/api/campus/topic";
+import ImageUpload from '@/components/ImageUpload';
 
 export default {
-  name: "CampusTopicIndex", // 你的组件名
+  name: "Topic",
+  components: { ImageUpload },
   data() {
     return {
       loading: true,
-      // 激活的标签页
-      activeTab: "all",
-      // 帖子列表
-      topicList: [],
-      // 【新增】商品列表
-      productList: [],
-      // 总条数
+      showSearch: true,
       total: 0,
-      // 查询参数
+      topicList: [],
+      commentList: {},
+      title: "",
+      open: false,
       queryParams: {
         pageNum: 1,
-        pageSize: 12,
-        topicType: null, // 用于查询帖子
-        status: '0',     // 【新增】默认只查询"在售"的商品
+        pageSize: 10,
+        topicType: 'all',
+        content: null,
       },
-
-      // 【【【【【【 以下是新加的 】】】】】】
-      // 弹窗开关
-      open: false,
-      // 弹窗标题
-      title: "",
-      // 商品表单
       form: {},
-      // 【【【【【【 新增结束 】】】】】】
-      // 【【【 新增表单校验 】】】
+      topicTypeOptions: [
+        { value: 'recommend', label: '推荐' },
+        { value: 'qa', label: '问答' },
+        { value: 'secondhand', label: '二手' },
+        { value: 'dating', label: '恋爱交友' },
+        { value: 'jobs', label: '兼职信息' },
+        { value: 'gossip', label: '校园八卦' }
+      ],
       rules: {
-        title: [
-          { required: true, message: "商品标题不能为空", trigger: "blur" }
-        ],
-        price: [
-          { required: true, message: "商品价格不能为空", trigger: "blur" }
-        ],
+        topicType: [ { required: true, message: "请选择一个分区", trigger: "change" } ],
+        content: [ { required: true, message: "话题内容不能为空", trigger: "blur" } ],
+      },
+      commentOpen: false,
+      commentForm: {
+        title: '',
+        placeholder: '',
+        topicId: null,
+        parentId: null,
+        content: ''
+      },
+      commentRules: {
+        content: [ { required: true, message: "评论内容不能为空", trigger: "blur" } ]
       }
     };
   },
-  computed: {
-    ...mapGetters([
-      'userId' // 获取当前登录的用户ID，用于判断是否是自己的商品
-    ]),
-  },
+
   created() {
     this.getList();
   },
+
   methods: {
-    /** 【【【 2. 大改 getList 方法 】】】 */
     getList() {
       this.loading = true;
-      this.topicList = [];
-      this.productList = [];
-
-      // 判断当前是否在“二手”标签页
-      if (this.activeTab === 'second-hand') {
-        // ** (A) 如果是二手，调用商品API **
-        // 我们只看在售('0')的商品
-        this.queryParams.status = '0';
-        // topicType 参数对商品无效，清空
-        this.queryParams.topicType = null;
-
-        listProduct(this.queryParams).then(response => {
-          this.productList = response.rows;
-          this.total = response.total;
-          this.loading = false;
-        });
-      } else {
-        // ** (B) 否则，调用帖子API **
-        // status 参数对帖子无效，清空
-        this.queryParams.status = null;
-        // 设置帖子类型
-        this.queryParams.topicType = this.activeTab === 'all' ? null : this.activeTab;
-
-        listTopic(this.queryParams).then(response => {
-          this.topicList = response.rows;
-          this.total = response.total;
-          this.loading = false;
-        });
+      const params = { ...this.queryParams };
+      if (params.topicType === 'all') {
+        params.topicType = null;
       }
-    },
-    // 切换Tab
-    handleTabClick() {
-      this.queryParams.pageNum = 1;
-      this.getList();
-    },
-    /** 【【【 修改：发布按钮逻辑 】】】 */
-    handlePublish() {
-      if (this.activeTab === 'second-hand') {
-        // --- (A) 上架商品 ---
-        this.reset(); // 重置表单
-        this.open = true; // 打开弹窗
-        this.title = "上架二手商品";
-      } else {
-        // --- (B) 发布帖子 ---
-        // TODO: (这里放你原来的发布帖子逻辑)
-        this.$modal.msgWarning("“发布帖子”功能待开发");
-      }
+      listTopic(params).then(response => {
+        this.topicList = response.rows;
+        this.total = response.total;
+        this.loading = false;
+        this.topicList.forEach(topic => {
+          this.handleGetComments(topic.topicId);
+        });
+      });
     },
 
-    /** 【【【 新增：重置表单 】】】 */
-    reset() {
-      this.form = {
-        title: null,
-        description: null,
-        imageUrls: null, // 对应 ImageUpload
-        price: 0.01,
-        status: "0" // 默认上架
-      };
-      this.resetForm("form"); // ruoyi.js 提供的表单重置
+    handleGetComments(topicId) {
+      getComments(topicId).then(response => {
+        this.$set(this.commentList, topicId, response.data);
+      });
     },
 
-    /** 【【【 新增：关闭弹窗 】】】 */
+    handleLike(topic) {
+      toggleLike(topic.topicId).then(response => {
+        topic.liked = response.data;
+        if (topic.liked) {
+          topic.likeCount++;
+          this.$modal.msgSuccess("点赞成功");
+        } else {
+          topic.likeCount--;
+          this.$modal.msgSuccess("取消点赞");
+        }
+      });
+    },
+
+    handleFavorite(topic) {
+      toggleFavorite(topic.topicId).then(response => {
+        topic.favorited = response.data;
+        if (topic.favorited) {
+          this.$modal.msgSuccess("收藏成功");
+        } else {
+          this.$modal.msgSuccess("取消收藏");
+        }
+      });
+    },
+
+    formatTopicType(type) {
+      const option = this.topicTypeOptions.find(item => item.value === type);
+      return option ? option.label : '其他';
+    },
+
     cancel() {
       this.open = false;
       this.reset();
     },
 
-    /** 【【【 新增：提交表单 】】】 */
+    reset() {
+      this.form = {
+        topicId: null,
+        content: null,
+        imageUrls: null,
+        topicType: 'recommend',
+        commentEnabled: '0'
+      };
+      this.resetForm("form");
+    },
+
+    handleQuery() {
+      this.queryParams.pageNum = 1;
+      this.getList();
+    },
+
+    resetQuery() {
+      this.resetForm("queryForm");
+      this.queryParams.topicType = 'all';
+      this.handleQuery();
+    },
+
+    handleAdd() {
+      this.reset();
+      this.open = true;
+      this.title = "发布新话题";
+    },
+
     submitForm() {
       this.$refs["form"].validate(valid => {
         if (valid) {
-          // 调用我们之前在 product.js 里定义的 addProduct
-          addProduct(this.form).then(response => {
-            this.$modal.msgSuccess("上架成功");
+          addTopic(this.form).then(response => {
+            this.$modal.msgSuccess("发布成功");
             this.open = false;
-            this.getList(); // 刷新列表，就能看到新商品了
+            this.getList();
           });
         }
       });
     },
-    /** 【【【 3. 新增 handleBuy 购买方法 】】】 */
-    handleBuy(product) {
-      // 弹出一个输入框，让用户输入地址
-      this.$prompt('请输入你的收货地址 (例如：X栋X单元XXX室)', '确认购买', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        inputType: 'textarea',
-        inputValidator: (value) => {
-          if (!value || value.trim().length === 0) {
-            return '收货地址不能为空';
-          }
-          return true;
-        }
-      }).then(({ value }) => {
-        // 用户点击了“确定”
-        const orderData = {
-          productId: product.productId,
-          address: value
-        };
 
-        // 调用我们第3步创建的后端接口
-        createOrder(orderData).then(response => {
-          this.$modal.msgSuccess("购买成功！请等待卖家联系你发货");
-          // 刷新列表，这个商品会变成“已售出”
-          this.getList();
-        }).catch(error => {
-          // API 可能会返回错误，例如 "商品已售出"
-          // this.$modal.msgError(error.message);
-        });
-
-      }).catch(() => {
-        // 用户点击了“取消”
-        this.$message({
-          type: 'info',
-          message: '取消购买'
-        });
-      });
+    resetCommentForm() {
+      this.commentForm = {
+        title: '',
+        placeholder: '',
+        topicId: null,
+        parentId: null,
+        content: ''
+      };
+      this.resetForm("commentForm");
     },
-    /** 【【【 4. 新增 getFirstImage 辅助方法 】】】 */
-    getFirstImage(imageUrls) {
-      if (imageUrls && imageUrls.length > 0) {
-        // 数据库存的是逗号分隔的字符串，我们取第一个
-        const images = imageUrls.split(',');
-        // 确保返回的是完整的 URL
-        // (如果图片路径不是 /profile/ 开头，你可能需要修改这里)
-        if (images[0].startsWith('/profile')) {
-          return process.env.VUE_APP_BASE_API + images[0];
-        }
-        return images[0];
+    handleShowComment(topicId, parentId, parentNickName) {
+      this.resetCommentForm();
+      this.commentForm.topicId = topicId;
+      this.commentForm.parentId = parentId;
+      if (parentId === 0) {
+        this.commentForm.title = "发表评论";
+        this.commentForm.placeholder = "请输入评论内容...";
+      } else {
+        this.commentForm.title = "回复 " + parentNickName;
+        this.commentForm.placeholder = "回复 " + parentNickName + ":";
       }
-      // 返回一个默认图片
-      return "/path/to/your/default-image.png";
+      this.commentOpen = true;
+    },
+    cancelComment() {
+      this.commentOpen = false;
+      this.resetCommentForm();
+    },
+    submitCommentForm() {
+      this.$refs["commentForm"].validate(valid => {
+        if (valid) {
+          addComment(this.commentForm).then(response => {
+            this.$modal.msgSuccess("发表成功");
+            this.commentOpen = false;
+            this.handleGetComments(this.commentForm.topicId);
+          }).catch(() => {
+            // 捕获后端返回的业务异常提示
+          });
+        }
+      });
     }
   }
 };
 </script>
 
 <style scoped>
-.app-container {
+.topic-list {
+  padding: 10px;
+}
+.topic-card {
+  background: #ffffff;
+  border-radius: 8px;
   padding: 20px;
-}
-.publish-btn {
-  float: right;
-  margin-top: -10px;
-}
-
-/* 帖子样式 (你原来的样式) */
-.topic-item {
-  border-bottom: 1px solid #e8e8e8;
-  padding: 15px 0;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 .topic-header {
   display: flex;
   align-items: center;
+  margin-bottom: 15px;
+  position: relative;
+}
+.topic-type-tag {
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 .user-info {
   margin-left: 10px;
 }
-.username {
+.nickname {
   font-weight: bold;
+  font-size: 16px;
 }
-.time {
+.create-time {
   font-size: 12px;
   color: #999;
+  margin-top: 2px;
 }
 .topic-content {
-  margin: 10px 0;
+  margin-bottom: 15px;
+  line-height: 1.7;
+  font-size: 15px;
+  color: #333;
 }
-.topic-footer {
-  color: #999;
+.image-list {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.topic-image {
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.topic-actions {
+  display: flex;
+  color: #888;
   font-size: 14px;
 }
-
-/* 【【【 新增：商品卡片样式 】】】 */
-.product-card {
-  margin-bottom: 20px;
+.topic-actions span {
+  display: flex;
+  align-items: center;
+  margin-right: 25px;
+  cursor: pointer;
 }
-.product-image {
-  width: 100%;
-  height: 180px; /* 固定高度 */
-  object-fit: cover; /* 保证图片不变形 */
-  display: block;
+.topic-actions span.liked {
+  color: #409EFF;
 }
-.product-info {
-  padding: 14px;
+.topic-actions span.favorited {
+  color: #E6A23C;
 }
-.product-title {
-  font-size: 16px;
-  font-weight: bold;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.topic-actions span i {
+  margin-right: 5px;
 }
-.product-desc {
-  font-size: 13px;
-  color: #999;
-  margin: 5px 0;
-  height: 40px; /* 固定2行高度 */
-  overflow: hidden;
+.topic-actions span:hover {
+  color: #409EFF;
 }
-.product-price {
-  font-size: 18px;
-  color: #ff5000;
-  font-weight: bold;
-  margin: 10px 0;
+.comment-section {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #f0f0f0;
 }
-.product-seller {
-  font-size: 12px;
-  color: #aaa;
+.comment-item {
+  display: flex;
   margin-bottom: 10px;
+}
+.comment-avatar {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+}
+.comment-body {
+  margin-left: 10px;
+  font-size: 14px;
+  width: 100%;
+}
+.comment-nickname {
+  font-weight: bold;
+  color: #555;
+}
+.comment-content {
+  color: #333;
+}
+.reply-text {
+  font-size: 14px;
+  color: #888;
+  margin: 0 5px;
+}
+.comment-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2px;
+}
+.comment-time {
+  font-size: 12px;
+  color: #999;
+}
+.comment-reply-btn {
+  font-size: 12px;
+  color: #888;
+  cursor: pointer;
+}
+.comment-reply-btn:hover {
+  color: #409EFF;
 }
 </style>

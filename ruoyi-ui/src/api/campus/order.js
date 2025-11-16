@@ -42,14 +42,3 @@ export function delOrder(orderId) {
     method: 'delete'
   })
 }
-
-// 【【【【【【 这是我们新加的 】】】】】】
-// 用户创建订单
-export function createOrder(data) {
-  return request({
-    url: '/campus/order/create',
-    method: 'post',
-    data: data // data 应该包含 { productId, address }
-  })
-}
-// 【【【【【【 新增结束 】】】】】】
