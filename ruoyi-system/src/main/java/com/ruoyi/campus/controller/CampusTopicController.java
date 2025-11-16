@@ -49,7 +49,10 @@ public class CampusTopicController extends BaseController
         startPage();
         // 只查询当前登录用户发布的
         campusTopic.setUserId(getUserId());
-        List<CampusTopic> list = campusTopicService.selectCampusTopicList(campusTopic);
+
+        // 【修改】调用新创建的、只查询“我的”话题的服务
+        List<CampusTopic> list = campusTopicService.selectMyCampusTopicList(campusTopic);
+
         return getDataTable(list);
     }
 
