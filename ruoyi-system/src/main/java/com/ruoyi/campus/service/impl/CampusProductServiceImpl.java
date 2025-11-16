@@ -2,6 +2,10 @@ package com.ruoyi.campus.service.impl;
 
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+
+// 【【【 1. 导入 SecurityUtils 】】】
+import com.ruoyi.common.utils.SecurityUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.campus.mapper.CampusProductMapper;
@@ -10,34 +14,21 @@ import com.ruoyi.campus.service.ICampusProductService;
 
 /**
  * 校园二手商品Service业务层处理
- * 
- * @author ruoyi
- * @date 2025-11-11
+ * * @author ruoyi
+ * @date (你的生成日期)
  */
 @Service
-public class CampusProductServiceImpl implements ICampusProductService 
+public class CampusProductServiceImpl implements ICampusProductService
 {
     @Autowired
     private CampusProductMapper campusProductMapper;
 
-    /**
-     * 查询校园二手商品
-     * 
-     * @param productId 校园二手商品主键
-     * @return 校园二手商品
-     */
     @Override
     public CampusProduct selectCampusProductByProductId(Long productId)
     {
         return campusProductMapper.selectCampusProductByProductId(productId);
     }
 
-    /**
-     * 查询校园二手商品列表
-     * 
-     * @param campusProduct 校园二手商品
-     * @return 校园二手商品
-     */
     @Override
     public List<CampusProduct> selectCampusProductList(CampusProduct campusProduct)
     {
@@ -45,49 +36,36 @@ public class CampusProductServiceImpl implements ICampusProductService
     }
 
     /**
+     * 【【【 2. 修改这个方法 】】】
      * 新增校园二手商品
-     * 
-     * @param campusProduct 校园二手商品
-     * @return 结果
      */
     @Override
     public int insertCampusProduct(CampusProduct campusProduct)
     {
+        // 【【【 3. 在插入前，自动设置 user_id 和 create_by 】】】
+        campusProduct.setUserId(SecurityUtils.getUserId());
+        campusProduct.setCreateBy(SecurityUtils.getUsername());
+        // 【【【 4. 设置创建时间 】】】
         campusProduct.setCreateTime(DateUtils.getNowDate());
+
         return campusProductMapper.insertCampusProduct(campusProduct);
     }
 
-    /**
-     * 修改校园二手商品
-     * 
-     * @param campusProduct 校园二手商品
-     * @return 结果
-     */
     @Override
     public int updateCampusProduct(CampusProduct campusProduct)
     {
+        // 【【【 5. (顺便)把更新也改了 】】】
+        campusProduct.setUpdateBy(SecurityUtils.getUsername());
         campusProduct.setUpdateTime(DateUtils.getNowDate());
         return campusProductMapper.updateCampusProduct(campusProduct);
     }
 
-    /**
-     * 批量删除校园二手商品
-     * 
-     * @param productIds 需要删除的校园二手商品主键
-     * @return 结果
-     */
     @Override
     public int deleteCampusProductByProductIds(Long[] productIds)
     {
         return campusProductMapper.deleteCampusProductByProductIds(productIds);
     }
 
-    /**
-     * 删除校园二手商品信息
-     * 
-     * @param productId 校园二手商品主键
-     * @return 结果
-     */
     @Override
     public int deleteCampusProductByProductId(Long productId)
     {
