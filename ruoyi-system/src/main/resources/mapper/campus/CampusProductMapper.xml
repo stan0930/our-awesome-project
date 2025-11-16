@@ -51,7 +51,7 @@
             <if test="price != null">price,</if>
             <if test="status != null and status != ''">status,</if>
             <if test="delFlag != null">del_flag,</if>
-            <if test="createBy != null and createBy != ''">create_by,</if>
+            <if test="createBy != null">create_by,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateBy != null">update_by,</if>
             <if test="updateTime != null">update_time,</if>
@@ -65,7 +65,7 @@
             <if test="price != null">#{price},</if>
             <if test="status != null and status != ''">#{status},</if>
             <if test="delFlag != null">#{delFlag},</if>
-            <if test="createBy != null and createBy != ''">#{createBy},</if>
+            <if test="createBy != null">#{createBy},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateBy != null">#{updateBy},</if>
             <if test="updateTime != null">#{updateTime},</if>
@@ -85,7 +85,7 @@
             <if test="delFlag != null">del_flag = #{delFlag},</if>
             <if test="createBy != null">create_by = #{createBy},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
-            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="remark != null">remark = #{remark},</if>
         </trim>
@@ -115,7 +115,6 @@
     <update id="updateCampusProductStatus">
         update campus_product
         set status = #{status}, update_time = sysdate()
-        where product_id = #{productId} and status = '0'
-    </update>
+        where product_id = #{productId} and status = '0' </update>
 
 </mapper>

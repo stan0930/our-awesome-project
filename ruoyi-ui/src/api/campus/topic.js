@@ -9,21 +9,20 @@ export function listTopic(query) {
   })
 }
 
-// 【【【 确保你有这个方法 】】】
-// 新增校园话题 (发布帖子)
-export function addTopic(data) {
-  return request({
-    url: '/campus/topic', // 它会 POST 到 CampusTopicController
-    method: 'post',
-    data: data
-  })
-}
-
 // 查询校园话题详细
 export function getTopic(topicId) {
   return request({
     url: '/campus/topic/' + topicId,
     method: 'get'
+  })
+}
+
+// 新增校园话题
+export function addTopic(data) {
+  return request({
+    url: '/campus/topic',
+    method: 'post',
+    data: data
   })
 }
 
@@ -44,26 +43,7 @@ export function delTopic(topicId) {
   })
 }
 
-// 【【【 以下是你“点赞收藏”功能可能有的API 】】】
-// (如果你之前没加，加了也没事)
-
-// 切换点赞
-export function toggleLike(topicId) {
-  return request({
-    url: '/campus/topic/toggleLike/' + topicId,
-    method: 'put'
-  })
-}
-
-// 切换收藏
-export function toggleFavorite(topicId) {
-  return request({
-    url: '/campus/topic/toggle-favorite/' + topicId,
-    method: 'put'
-  })
-}
-
-// 获取评论
+// 根据话题ID获取评论列表
 export function getComments(topicId) {
   return request({
     url: '/campus/topic/comments/' + topicId,
@@ -71,11 +51,67 @@ export function getComments(topicId) {
   })
 }
 
-// 新增评论
+// 点赞或取消点赞
+export function toggleLike(topicId) {
+  return request({
+    url: '/campus/topic/toggleLike/' + topicId,
+    method: 'put'
+  })
+}
+
+// 新增评论或回复
 export function addComment(data) {
   return request({
     url: '/campus/topic/comment',
     method: 'post',
     data: data
+  })
+}
+
+// --- “我的”模块相关API ---
+
+// 查询我发布的话题列表
+export function listMyTopic(query) {
+  return request({
+    url: '/campus/topic/my-list',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询我点赞的话题列表
+export function listMyLikes(query) {
+  return request({
+    url: '/campus/topic/my-likes',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询我评论的话题列表
+export function listMyComments(query) {
+  return request({
+    url: '/campus/topic/my-comments',
+    method: 'get',
+    params: query
+  })
+}
+
+// --- 【新增】收藏功能相关API ---
+
+// 切换收藏状态
+export function toggleFavorite(topicId) {
+  return request({
+    url: '/campus/topic/toggle-favorite/' + topicId,
+    method: 'put'
+  })
+}
+
+// 查询我收藏的话题列表
+export function listMyFavorites(query) {
+  return request({
+    url: '/campus/topic/my-favorites',
+    method: 'get',
+    params: query
   })
 }
