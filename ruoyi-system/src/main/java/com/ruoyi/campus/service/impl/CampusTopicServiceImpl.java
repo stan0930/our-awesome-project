@@ -110,11 +110,6 @@ public class CampusTopicServiceImpl implements ICampusTopicService
     public List<CampusTopic> selectMyCommentedTopics(Long userId) {
         return campusTopicMapper.selectMyCommentedTopics(userId);
     }
-
-    @Override
-    public List<CampusTopic> selectMyCampusTopicList(CampusTopic campusTopic) {
-        return campusTopicMapper.selectMyCampusTopicList(campusTopic);
-    }
     // --- 【新增结束】 ---
     // ... 在文件末尾 } 之前 ...
 

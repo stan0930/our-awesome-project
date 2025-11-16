@@ -62,29 +62,6 @@
         order by t.create_time desc
     </select>
 
-    <select id="selectMyCampusTopicList" parameterType="com.ruoyi.campus.domain.CampusTopic" resultMap="CampusTopicResult">
-        select
-        t.topic_id, t.user_id, t.content, t.image_urls, t.status, t.del_flag, t.create_by, t.create_time, t.update_by, t.update_time, t.remark, t.topic_type, t.comment_enabled,
-        u.nick_name,
-        u.avatar,
-        (select count(*) from campus_topic_like l where l.topic_id = t.topic_id) as like_count,
-        (select count(*) from campus_topic_like l where l.topic_id = t.topic_id and l.user_id = #{userId}) as liked,
-        (select count(*) from campus_topic_favorite f where f.topic_id = t.topic_id and f.user_id = #{userId}) as favorited
-        from campus_topic t
-        left join sys_user u on u.user_id = t.user_id
-        <where>
-            AND t.user_id = #{userId}
-
-            <if test="content != null  and content != ''">
-                AND (t.content like concat('%', #{content}, '%') OR u.nick_name like concat('%', #{content}, '%'))
-            </if>
-            <if test="topicType != null and topicType != '' and topicType != 'all'">
-                and t.topic_type = #{topicType}
-            </if>
-        </where>
-        order by t.create_time desc
-    </select>
-
     <select id="selectCommentsByTopicId" parameterType="Long" resultMap="CampusCommentResult">
         select
             c.comment_id, c.topic_id, c.user_id, c.parent_id, c.content, c.create_time,
