@@ -14,3 +14,13 @@ export function sendMessageToDify(message) {
     }
   });
 }
+
+/**
+ * 获取聊天历史记录
+ */
+export function getChatHistory() {
+  return request({
+    url: '/chat/history',
+    method: 'get'
+  });
+}
