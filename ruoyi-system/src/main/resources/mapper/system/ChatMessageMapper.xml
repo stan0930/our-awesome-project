@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ChatMessageMapper">
+
+    <resultMap type="ChatMessage" id="ChatMessageResult">
+        <result property="messageId"    column="message_id"    />
+        <result property="content"      column="content"       />
+        <result property="role"         column="role"          />
+        <result property="createBy"     column="create_by"     />
+        <result property="createTime"   column="create_time"   />
+    </resultMap>
+
+    <sql id="selectChatMessageVo">
+        select message_id, content, role, create_by, create_time from sys_chat_message
+    </sql>
+
+    <insert id="insertChatMessage" parameterType="ChatMessage" useGeneratedKeys="true" keyProperty="messageId">
+        insert into sys_chat_message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="content != null">content,</if>
+            <if test="role != null">role,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="content != null">#{content},</if>
+            <if test="role != null">#{role},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+        </trim>
+    </insert>
+
+    <select id="selectRecentChatMessages" resultMap="ChatMessageResult">
+        SELECT * FROM (
+                          SELECT message_id, content, role, create_by, create_time
+                          FROM sys_chat_message
+                          WHERE create_by = #{param1}
+                          ORDER BY create_time DESC
+                              LIMIT #{param2}
+                      ) sub
+        ORDER BY create_time ASC
+    </select>
+
+</mapper>

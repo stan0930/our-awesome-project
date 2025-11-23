@@ -1,7 +1,12 @@
 package com.ruoyi.system.service.impl;
 
 import com.alibaba.fastjson2.JSONObject;
+import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.system.domain.ChatMessage;
+import com.ruoyi.system.mapper.ChatMessageMapper;
 import com.ruoyi.system.service.IChatService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -12,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,6 +25,9 @@ import java.util.Map;
  */
 @Service
 public class ChatServiceImpl implements IChatService {
+
+    @Autowired
+    private ChatMessageMapper chatMessageMapper;
 
     private final RestTemplate restTemplate = new RestTemplate();
 
@@ -30,17 +39,32 @@ public class ChatServiceImpl implements IChatService {
 
     @Override
     public String sendMessageToDify(String message) {
-        // 构建请求头
+        // 获取当前登录用户名，如果没有登录则使用默认值
+        String username = "anonymous";
+        try {
+            username = SecurityUtils.getUsername();
+        } catch (Exception e) {
+            // 忽略未登录异常
+        }
+
+        // 1. 持久化用户发送的消息
+        ChatMessage userMsg = new ChatMessage();
+        userMsg.setContent(message);
+        userMsg.setRole("user");
+        userMsg.setCreateBy(username);
+        userMsg.setCreateTime(DateUtils.getNowDate());
+        chatMessageMapper.insertChatMessage(userMsg);
+
+        // 构建API请求
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", "Bearer " + difyApiKey);
 
-        // 构建请求体，将模式改为 blocking 并添加 inputs 字段
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("query", message);
-        requestBody.put("inputs", new HashMap<String, Object>()); // 添加inputs字段
+        requestBody.put("inputs", new HashMap<String, Object>());
         requestBody.put("response_mode", "blocking");
-        requestBody.put("user", "user_123");
+        requestBody.put("user", username);
 
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
@@ -51,14 +75,33 @@ public class ChatServiceImpl implements IChatService {
                     requestEntity,
                     String.class);
 
-            // 解析返回的 JSON 响应
             JSONObject jsonObject = JSONObject.parseObject(response.getBody());
-            // 根据 Dify 文档，阻塞模式下回复在 answer 字段中
-            return jsonObject.getString("answer");
+            String answer = jsonObject.getString("answer");
+
+            // 2. 持久化 AI 回复的消息
+            ChatMessage aiMsg = new ChatMessage();
+            aiMsg.setContent(answer);
+            aiMsg.setRole("assistant");
+            aiMsg.setCreateBy(username);
+            aiMsg.setCreateTime(DateUtils.getNowDate());
+            chatMessageMapper.insertChatMessage(aiMsg);
+
+            return answer;
 
         } catch (Exception e) {
             e.printStackTrace();
             return "抱歉，调用Dify API时发生错误。";
         }
+    }
+
+    @Override
+    public List<ChatMessage> getRecentHistory() {
+        String username = "anonymous";
+        try {
+            username = SecurityUtils.getUsername();
+        } catch (Exception e) {
+        }
+        // 获取最近的10条记录
+        return chatMessageMapper.selectRecentChatMessages(username, 10);
     }
 }

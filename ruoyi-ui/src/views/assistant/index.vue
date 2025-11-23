@@ -1,98 +1,193 @@
 <template>
   <div class="chat-container">
-    <div class="message-list">
-      <div v-for="(message, index) in messages" :key="index" :class="message.role">
-        <p>{{ message.content }}</p>
+    <div class="message-list" ref="messageList">
+      <div v-for="(message, index) in messages" :key="index" :class="['message-item', message.role]">
+        <div class="content-wrapper">
+          <div class="bubble">
+            <p>{{ message.content }}</p>
+          </div>
+          <span class="time" v-if="message.createTime">{{ message.createTime }}</span>
+        </div>
       </div>
     </div>
+
     <div class="input-area">
-      <el-input v-model="inputMessage" @keyup.enter.native="sendMessage" placeholder="请输入消息..."></el-input>
-      <el-button @click="sendMessage">发送</el-button>
+      <el-input
+        v-model="inputMessage"
+        @keyup.enter.native="sendMessage"
+        placeholder="请输入消息..."
+        :disabled="loading"
+      ></el-input>
+      <el-button type="primary" @click="sendMessage" :loading="loading">发送</el-button>
     </div>
   </div>
 </template>
 
 <script>
-import { sendMessageToDify } from "@/api/assistant/chat";
+import { sendMessageToDify, getChatHistory } from "@/api/assistant/chat";
+import { parseTime } from "@/utils/ruoyi"; // 引入若依自带的时间格式化工具
 
 export default {
+  name: "Chat",
   data() {
     return {
       inputMessage: '',
-      messages: []
+      messages: [],
+      loading: false
     };
   },
+  created() {
+    this.loadHistory();
+  },
   methods: {
-    async sendMessage() {
-      if (this.inputMessage.trim() === '') return;
+    // 加载历史记录
+    async loadHistory() {
+      try {
+        const response = await getChatHistory();
+        if (response.data) {
+          this.messages = response.data;
+          this.scrollToBottom();
+        }
+      } catch (error) {
+        console.error("加载历史记录失败:", error);
+      }
+    },
 
-      const userMessage = { role: 'user', content: this.inputMessage };
+    // 发送消息
+    async sendMessage() {
+      const content = this.inputMessage.trim();
+      if (!content) return;
+
+      // 1. 立即将用户的消息显示在界面上
+      const userMessage = {
+        role: 'user',
+        content: content,
+        createTime: parseTime(new Date()) // 获取当前时间并格式化
+      };
       this.messages.push(userMessage);
+      this.inputMessage = '';
+      this.scrollToBottom();
+      this.loading = true;
 
       try {
-        const response = await sendMessageToDify(this.inputMessage);
-        this.messages.push({ role: 'assistant', content: response.msg }); // 若依的AjaxResult返回格式为{code, msg, data}
-      } catch (error) {
-        this.messages.push({ role: 'assistant', content: '抱歉，服务出现问题。' });
-        console.error("Error sending message:", error);
-      }
+        // 2. 发送请求
+        const response = await sendMessageToDify(content);
 
-      this.inputMessage = '';
+        // 3. 接收回复
+        // 注意：根据后端 ChatController，response.msg 存放的是回复内容
+        const aiMessage = {
+          role: 'assistant',
+          content: response.msg,
+          createTime: parseTime(new Date())
+        };
+        this.messages.push(aiMessage);
+      } catch (error) {
+        this.messages.push({
+          role: 'assistant',
+          content: '抱歉，服务出现问题，请稍后再试。',
+          createTime: parseTime(new Date())
+        });
+      } finally {
+        this.loading = false;
+        this.scrollToBottom();
+      }
+    },
+
+    // 滚动到底部
+    scrollToBottom() {
+      this.$nextTick(() => {
+        const container = this.$refs.messageList;
+        if (container) {
+          container.scrollTop = container.scrollHeight;
+        }
+      });
     }
   }
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .chat-container {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
+  height: calc(100vh - 84px); // 减去若依顶栏高度，根据实际情况调整
+  border: 1px solid #e6ebf5;
+  border-radius: 4px;
+  background-color: #fff;
+  margin: 10px;
 }
 
 .message-list {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
-}
+  background-color: #f9f9f9;
 
-.message-list .user {
-  text-align: right;
-  margin-bottom: 10px;
-}
+  .message-item {
+    display: flex;
+    margin-bottom: 20px;
 
-.message-list .user p {
-  background-color: #e1ffc7;
-  display: inline-block;
-  padding: 8px 12px;
-  border-radius: 12px;
-  max-width: 70%;
-}
+    .content-wrapper {
+      display: flex;
+      flex-direction: column;
+      max-width: 70%;
+    }
 
-.message-list .assistant {
-  text-align: left;
-  margin-bottom: 10px;
-}
+    .bubble {
+      padding: 10px 15px;
+      border-radius: 8px;
+      line-height: 1.5;
+      word-wrap: break-word;
+      font-size: 14px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
 
-.message-list .assistant p {
-  background-color: #f0f0f0;
-  display: inline-block;
-  padding: 8px 12px;
-  border-radius: 12px;
-  max-width: 70%;
+    .time {
+      font-size: 12px;
+      color: #999;
+      margin-top: 5px;
+    }
+
+    // 用户样式（靠右）
+    &.user {
+      justify-content: flex-end;
+
+      .content-wrapper {
+        align-items: flex-end;
+      }
+
+      .bubble {
+        background-color: #95ec69; // 微信风格绿色
+        color: #000;
+        border-top-right-radius: 2px;
+      }
+    }
+
+    // 助手样式（靠左）
+    &.assistant {
+      justify-content: flex-start;
+
+      .content-wrapper {
+        align-items: flex-start;
+      }
+
+      .bubble {
+        background-color: #ffffff;
+        color: #333;
+        border-top-left-radius: 2px;
+      }
+    }
+  }
 }
 
 .input-area {
   display: flex;
-  padding: 10px;
+  padding: 15px;
   border-top: 1px solid #eee;
-}
+  background-color: #fff;
 
-.input-area .el-input {
-  flex: 1;
-  margin-right: 10px;
+  .el-input {
+    margin-right: 10px;
+  }
 }
 </style>
