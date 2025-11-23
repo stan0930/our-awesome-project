@@ -12,7 +12,8 @@ import com.ruoyi.campus.domain.CampusTopicComment;
 import com.ruoyi.campus.domain.CampusTopicLike;
 import com.ruoyi.campus.service.ICampusTopicService;
 import com.ruoyi.common.exception.ServiceException;
-import org.springframework.dao.DuplicateKeyException; // 【修改】增加了这个 import
+import org.springframework.dao.DuplicateKeyException;
+import com.ruoyi.common.utils.SecurityUtils;
 
 @Service
 public class CampusTopicServiceImpl implements ICampusTopicService
@@ -34,16 +35,39 @@ public class CampusTopicServiceImpl implements ICampusTopicService
         return campusTopicMapper.insertCampusTopic(campusTopic);
     }
     @Override
-    public int updateCampusTopic(CampusTopic campusTopic) {
+    public int updateCampusTopic(CampusTopic campusTopic, Long userId) {
+        // 1. Check existence
+        CampusTopic existing = campusTopicMapper.selectCampusTopicByTopicId(campusTopic.getTopicId());
+        if (existing == null) {
+            throw new ServiceException("话题不存在");
+        }
+        // 2. Check ownership
+        if (!SecurityUtils.isAdmin(userId) && !existing.getUserId().equals(userId)) {
+            throw new ServiceException("无权修改他人话题");
+        }
         campusTopic.setUpdateTime(DateUtils.getNowDate());
         return campusTopicMapper.updateCampusTopic(campusTopic);
     }
     @Override
-    public int deleteCampusTopicByTopicIds(Long[] topicIds) {
+    public int deleteCampusTopicByTopicIds(Long[] topicIds, Long userId) {
+        for (Long id : topicIds) {
+            CampusTopic existing = campusTopicMapper.selectCampusTopicByTopicId(id);
+            if (existing != null) {
+                if (!SecurityUtils.isAdmin(userId) && !existing.getUserId().equals(userId)) {
+                    throw new ServiceException("无权删除他人话题");
+                }
+            }
+        }
         return campusTopicMapper.deleteCampusTopicByTopicIds(topicIds);
     }
     @Override
-    public int deleteCampusTopicByTopicId(Long topicId) {
+    public int deleteCampusTopicByTopicId(Long topicId, Long userId) {
+        CampusTopic existing = campusTopicMapper.selectCampusTopicByTopicId(topicId);
+        if (existing != null) {
+            if (!SecurityUtils.isAdmin(userId) && !existing.getUserId().equals(userId)) {
+                throw new ServiceException("无权删除他人话题");
+            }
+        }
         return campusTopicMapper.deleteCampusTopicByTopicId(topicId);
     }
     @Override

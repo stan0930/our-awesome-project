@@ -127,7 +127,7 @@ public class CampusTopicController extends BaseController
     public AjaxResult edit(@RequestBody CampusTopic campusTopic)
     {
         campusTopic.setUpdateBy(getUsername());
-        return toAjax(campusTopicService.updateCampusTopic(campusTopic));
+        return toAjax(campusTopicService.updateCampusTopic(campusTopic, getUserId()));
     }
 
     @PreAuthorize("@ss.hasPermi('campus:topic:remove')")
@@ -135,7 +135,7 @@ public class CampusTopicController extends BaseController
     @DeleteMapping("/{topicIds}")
     public AjaxResult remove(@PathVariable Long[] topicIds)
     {
-        return toAjax(campusTopicService.deleteCampusTopicByTopicIds(topicIds));
+        return toAjax(campusTopicService.deleteCampusTopicByTopicIds(topicIds, getUserId()));
     }
     // ... 在 myComments 方法之后 ...
 

@@ -9,9 +9,9 @@ public interface ICampusTopicService
     public CampusTopic selectCampusTopicByTopicId(Long topicId);
     public List<CampusTopic> selectCampusTopicList(CampusTopic campusTopic);
     public int insertCampusTopic(CampusTopic campusTopic);
-    public int updateCampusTopic(CampusTopic campusTopic);
-    public int deleteCampusTopicByTopicIds(Long[] topicIds);
-    public int deleteCampusTopicByTopicId(Long topicId);
+    public int updateCampusTopic(CampusTopic campusTopic, Long userId);
+    public int deleteCampusTopicByTopicIds(Long[] topicIds, Long userId);
+    public int deleteCampusTopicByTopicId(Long topicId, Long userId);
     public List<CampusTopicComment> selectCommentsByTopicId(Long topicId);
     public boolean toggleLike(Long topicId, Long userId);
     public int insertComment(CampusTopicComment comment);
