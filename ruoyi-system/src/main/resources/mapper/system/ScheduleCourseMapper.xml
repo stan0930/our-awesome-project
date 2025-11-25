@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ScheduleCourseMapper">
+    
+    <resultMap type="ScheduleCourse" id="ScheduleCourseResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="day"    column="day"    />
+        <result property="section"    column="section"    />
+        <result property="name"    column="name"    />
+        <result property="teacher"    column="teacher"    />
+        <result property="location"    column="location"    />
+        <result property="color"    column="color"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectScheduleCourseVo">
+        select id, user_id, day, section, name, teacher, location, color, create_time, update_time from schedule_course
+    </sql>
+
+    <select id="selectScheduleCourseList" parameterType="ScheduleCourse" resultMap="ScheduleCourseResult">
+        <include refid="selectScheduleCourseVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="day != null "> and day = #{day}</if>
+            <if test="section != null "> and section = #{section}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+        </where>
+        order by day, section
+    </select>
+    
+    <select id="selectScheduleCourseById" parameterType="Long" resultMap="ScheduleCourseResult">
+        <include refid="selectScheduleCourseVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertScheduleCourse" parameterType="ScheduleCourse" useGeneratedKeys="true" keyProperty="id">
+        insert into schedule_course
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="day != null">day,</if>
+            <if test="section != null">section,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="teacher != null">teacher,</if>
+            <if test="location != null">location,</if>
+            <if test="color != null">color,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="day != null">#{day},</if>
+            <if test="section != null">#{section},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="teacher != null">#{teacher},</if>
+            <if test="location != null">#{location},</if>
+            <if test="color != null">#{color},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateScheduleCourse" parameterType="ScheduleCourse">
+        update schedule_course
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="teacher != null">teacher = #{teacher},</if>
+            <if test="location != null">location = #{location},</if>
+            <if test="color != null">color = #{color},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteScheduleCourseById" parameterType="Long">
+        delete from schedule_course where id = #{id}
+    </delete>
+
+    <delete id="deleteScheduleCourseByIds" parameterType="String">
+        delete from schedule_course where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+    <insert id="batchInsertScheduleCourse" parameterType="java.util.List">
+        insert into schedule_course(user_id, day, section, name, teacher, location, color, create_time)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.userId}, #{item.day}, #{item.section}, #{item.name}, #{item.teacher}, #{item.location}, #{item.color}, #{item.createTime})
+        </foreach>
+    </insert>
+</mapper>

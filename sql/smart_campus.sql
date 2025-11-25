@@ -11,7 +11,7 @@
  Target Server Version : 80041 (8.0.41)
  File Encoding         : 65001
 
- Date: 27/10/2025 00:00:49
+ Date: 25/11/2025 20:31:35
 */
 
 SET NAMES utf8mb4;
@@ -22,44 +22,45 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `campus_activity`;
 CREATE TABLE `campus_activity`  (
-                                    `activity_id` bigint NOT NULL AUTO_INCREMENT COMMENT '活动id',
-                                    `title` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '活动标题',
-                                    `content` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL COMMENT '活动内容',
-                                    `club_id` bigint NOT NULL COMMENT '所属社团ID（关联campus_club表）',
-                                    `location` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '活动地点',
-                                    `start_time` datetime NULL DEFAULT NULL COMMENT '开始时间',
-                                    `end_time` datetime NULL DEFAULT NULL COMMENT '结束时间',
-                                    `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '状态（0草稿 1已发布 2已结束）',
-                                    `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
-                                    `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                                    `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
-                                    `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                                    `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
-                                    PRIMARY KEY (`activity_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '社团活动表' ROW_FORMAT = Dynamic;
+  `activity_id` bigint NOT NULL AUTO_INCREMENT COMMENT '活动id',
+  `title` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '活动标题',
+  `content` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL COMMENT '活动内容',
+  `club_id` bigint NOT NULL COMMENT '所属社团ID（关联campus_club表）',
+  `location` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '活动地点',
+  `start_time` datetime NULL DEFAULT NULL COMMENT '开始时间',
+  `end_time` datetime NULL DEFAULT NULL COMMENT '结束时间',
+  `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '状态（0草稿 1已发布 2已结束）',
+  `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`activity_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '社团活动表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of campus_activity
 -- ----------------------------
+INSERT INTO `campus_activity` VALUES (1, 'ttt', '<p>ttt</p>', 123, '杏园', '2025-10-02 00:00:00', '2025-10-28 00:00:00', '1', '', '2025-10-27 18:08:08', '', NULL, 'ttt');
 
 -- ----------------------------
 -- Table structure for campus_club
 -- ----------------------------
 DROP TABLE IF EXISTS `campus_club`;
 CREATE TABLE `campus_club`  (
-                                `club_id` bigint NOT NULL AUTO_INCREMENT COMMENT '社团id',
-                                `club_name` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '社团名称',
-                                `logo` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '社团logo',
-                                `description` varchar(1000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '社团简介',
-                                `president_user_id` bigint NULL DEFAULT NULL COMMENT '社长（关联sys_user表）',
-                                `president_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '社长姓名',
-                                `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '状态（0正常 1停用）',
-                                `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
-                                `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                                `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
-                                `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                                `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
-                                PRIMARY KEY (`club_id`) USING BTREE
+  `club_id` bigint NOT NULL AUTO_INCREMENT COMMENT '社团id',
+  `club_name` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '社团名称',
+  `logo` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '社团logo',
+  `description` varchar(1000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '社团简介',
+  `president_user_id` bigint NULL DEFAULT NULL COMMENT '社长（关联sys_user表）',
+  `president_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '社长姓名',
+  `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '状态（0正常 1停用）',
+  `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`club_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '社团信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -72,17 +73,17 @@ INSERT INTO `campus_club` VALUES (2, '漫画社', '/profile/upload/2025/10/26/Sc
 -- ----------------------------
 DROP TABLE IF EXISTS `campus_comment`;
 CREATE TABLE `campus_comment`  (
-                                   `comment_id` bigint NOT NULL AUTO_INCREMENT COMMENT '评论ID (主键)',
-                                   `topic_id` bigint NOT NULL COMMENT '话题ID (外键)',
-                                   `user_id` bigint NOT NULL COMMENT '评论用户ID (外键)',
-                                   `content` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '评论内容',
-                                   `parent_comment_id` bigint NULL DEFAULT NULL COMMENT '父评论ID (用于二级评论)',
-                                   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                                   PRIMARY KEY (`comment_id`) USING BTREE,
-                                   INDEX `topic_id`(`topic_id` ASC) USING BTREE,
-                                   INDEX `user_id`(`user_id` ASC) USING BTREE,
-                                   CONSTRAINT `campus_comment_ibfk_1` FOREIGN KEY (`topic_id`) REFERENCES `campus_topic` (`topic_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-                                   CONSTRAINT `campus_comment_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  `comment_id` bigint NOT NULL AUTO_INCREMENT COMMENT '评论ID (主键)',
+  `topic_id` bigint NOT NULL COMMENT '话题ID (外键)',
+  `user_id` bigint NOT NULL COMMENT '评论用户ID (外键)',
+  `content` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '评论内容',
+  `parent_comment_id` bigint NULL DEFAULT NULL COMMENT '父评论ID (用于二级评论)',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`comment_id`) USING BTREE,
+  INDEX `topic_id`(`topic_id` ASC) USING BTREE,
+  INDEX `user_id`(`user_id` ASC) USING BTREE,
+  CONSTRAINT `campus_comment_ibfk_1` FOREIGN KEY (`topic_id`) REFERENCES `campus_topic` (`topic_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  CONSTRAINT `campus_comment_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '12. 帖子评论表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -94,21 +95,21 @@ CREATE TABLE `campus_comment`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `campus_errand_order`;
 CREATE TABLE `campus_errand_order`  (
-                                        `order_id` bigint NOT NULL AUTO_INCREMENT COMMENT '订单ID (主键)',
-                                        `publisher_id` bigint NOT NULL COMMENT '发布人ID (外键, 关联sys_user)',
-                                        `taker_id` bigint NULL DEFAULT NULL COMMENT '接单人ID (外键, 关联sys_user)',
-                                        `order_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '订单类型 (如: 快递代取, 外卖代拿, 校园跑腿)',
-                                        `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '订单标题',
-                                        `detail` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '订单详情',
-                                        `reward` decimal(10, 2) NOT NULL COMMENT '悬赏金额',
-                                        `delivery_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '送达地址',
-                                        `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0' COMMENT '订单状态 (0=待接单, 1=进行中, 2=已完成, 3=已取消)',
-                                        `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                                        `take_time` datetime NULL DEFAULT NULL COMMENT '接单时间',
-                                        `finish_time` datetime NULL DEFAULT NULL COMMENT '完成时间',
-                                        `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
-                                        `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
-                                        PRIMARY KEY (`order_id`) USING BTREE
+  `order_id` bigint NOT NULL AUTO_INCREMENT COMMENT '订单ID (主键)',
+  `publisher_id` bigint NOT NULL COMMENT '发布人ID (外键, 关联sys_user)',
+  `taker_id` bigint NULL DEFAULT NULL COMMENT '接单人ID (外键, 关联sys_user)',
+  `order_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '订单类型 (如: 快递代取, 外卖代拿, 校园跑腿)',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '订单标题',
+  `detail` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '订单详情',
+  `reward` decimal(10, 2) NOT NULL COMMENT '悬赏金额',
+  `delivery_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '送达地址',
+  `status` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '0' COMMENT '订单状态 (0=待接单, 1=进行中, 2=已完成, 3=已取消)',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `take_time` datetime NULL DEFAULT NULL COMMENT '接单时间',
+  `finish_time` datetime NULL DEFAULT NULL COMMENT '完成时间',
+  `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
+  `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
+  PRIMARY KEY (`order_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '跑腿代办订单表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -120,25 +121,98 @@ INSERT INTO `campus_errand_order` VALUES (3, 1, NULL, '外卖代拿', 's', 's', 
 INSERT INTO `campus_errand_order` VALUES (4, 1, NULL, '校园跑腿', '需要跑腿', '取件码1127  12.00之前', 20.00, '杏园408', '0', '2025-10-13 17:31:05', NULL, NULL, 'admin', '');
 
 -- ----------------------------
+-- Table structure for campus_order
+-- ----------------------------
+DROP TABLE IF EXISTS `campus_order`;
+CREATE TABLE `campus_order`  (
+  `order_id` bigint NOT NULL AUTO_INCREMENT COMMENT '订单ID',
+  `order_sn` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '订单编号 (唯一)',
+  `buyer_id` bigint NOT NULL COMMENT '买家ID',
+  `seller_id` bigint NOT NULL COMMENT '卖家ID',
+  `total_amount` decimal(10, 2) NOT NULL DEFAULT 0.00 COMMENT '订单总金额',
+  `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '0' COMMENT '订单状态 (0=待支付, 1=待发货, 2=待收货, 3=已完成, 4=已取消)',
+  `address` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '收货地址 (简化)',
+  `pay_time` datetime NULL DEFAULT NULL COMMENT '支付时间',
+  `del_flag` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '删除标志 (0存在 2删除)',
+  `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`order_id`) USING BTREE,
+  UNIQUE INDEX `uk_order_sn`(`order_sn` ASC) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '校园订单表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of campus_order
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for campus_order_item
+-- ----------------------------
+DROP TABLE IF EXISTS `campus_order_item`;
+CREATE TABLE `campus_order_item`  (
+  `item_id` bigint NOT NULL AUTO_INCREMENT COMMENT '订单项ID',
+  `order_id` bigint NOT NULL COMMENT '订单ID',
+  `product_id` bigint NOT NULL COMMENT '商品ID',
+  `product_title` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '商品标题(快照)',
+  `product_image` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '商品图片(快照)',
+  `price` decimal(10, 2) NOT NULL DEFAULT 0.00 COMMENT '成交价格',
+  `quantity` int NOT NULL DEFAULT 1 COMMENT '购买数量',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`item_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '订单商品关联表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of campus_order_item
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for campus_product
+-- ----------------------------
+DROP TABLE IF EXISTS `campus_product`;
+CREATE TABLE `campus_product`  (
+  `product_id` bigint NOT NULL AUTO_INCREMENT COMMENT '商品ID',
+  `user_id` bigint NOT NULL COMMENT '卖家用户ID',
+  `title` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '商品标题',
+  `description` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL COMMENT '商品描述',
+  `image_urls` varchar(1000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '商品图片',
+  `price` decimal(10, 2) NOT NULL DEFAULT 0.00 COMMENT '价格',
+  `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '0' COMMENT '状态 (0=在售, 1=已售, 2=下架)',
+  `del_flag` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '删除标志 (0存在 2删除)',
+  `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`product_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '校园二手商品表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of campus_product
+-- ----------------------------
+INSERT INTO `campus_product` VALUES (1, 1, 'ss', 'ss', '/profile/upload/2025/11/13/Grounded_2025.09.22-19.53.20_20251113160800A001.png', 0.01, '0', '0', 'admin', '2025-11-13 16:08:01', '', NULL, NULL);
+
+-- ----------------------------
 -- Table structure for campus_topic
 -- ----------------------------
 DROP TABLE IF EXISTS `campus_topic`;
 CREATE TABLE `campus_topic`  (
-                                 `topic_id` bigint NOT NULL AUTO_INCREMENT COMMENT '话题ID',
-                                 `user_id` bigint NOT NULL COMMENT '用户ID',
-                                 `content` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '话题内容',
-                                 `image_urls` varchar(1000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '图片链接(多张用逗号分隔)',
-                                 `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '状态(0=正常, 1=停用)',
-                                 `del_flag` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '删除标志(0=代表存在, 2=代表删除)',
-                                 `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
-                                 `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                                 `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
-                                 `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                                 `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
-                                 `topic_type` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT 'recommend',
-                                 `comment_enabled` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '是否允许评论 (0=允许, 1=禁止)',
-                                 PRIMARY KEY (`topic_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 117 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '校园话题表' ROW_FORMAT = Dynamic;
+  `topic_id` bigint NOT NULL AUTO_INCREMENT COMMENT '话题ID',
+  `user_id` bigint NOT NULL COMMENT '用户ID',
+  `content` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '话题内容',
+  `image_urls` varchar(1000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '图片链接(多张用逗号分隔)',
+  `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '状态(0=正常, 1=停用)',
+  `del_flag` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '删除标志(0=代表存在, 2=代表删除)',
+  `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
+  `topic_type` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT 'recommend',
+  `comment_enabled` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '是否允许评论 (0=允许, 1=禁止)',
+  PRIMARY KEY (`topic_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 118 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '校园话题表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of campus_topic
@@ -148,8 +222,6 @@ INSERT INTO `campus_topic` VALUES (102, 1, '<p><img src=\"/dev-api/profile/uploa
 INSERT INTO `campus_topic` VALUES (104, 1, '<p>1</p>', NULL, '0', '0', '', '2025-09-21 23:27:30', '', NULL, NULL, 'recommend', '0');
 INSERT INTO `campus_topic` VALUES (105, 1, '1', NULL, '0', '0', '', '2025-09-21 23:52:34', '', NULL, NULL, 'recommend', '0');
 INSERT INTO `campus_topic` VALUES (106, 2, '666', NULL, '0', '0', '', '2025-09-22 14:37:38', '', NULL, NULL, 'recommend', '0');
-INSERT INTO `campus_topic` VALUES (107, 2, 'hh', '/profile/upload/2025/09/22/微信图片_20230823145137_20250922144305A001.jpg', '0', '0', '', '2025-09-22 14:43:10', '', NULL, NULL, 'recommend', '0');
-INSERT INTO `campus_topic` VALUES (108, 2, '1', '/profile/upload/2025/09/22/微信图片_20230823145137_20250922145220A002.jpg', '0', '0', '', '2025-09-22 14:52:24', '', NULL, NULL, 'recommend', '0');
 INSERT INTO `campus_topic` VALUES (109, 1, '？', '/profile/upload/2025/09/22/Screenshot 2025-08-29 190218_20250922155349A002.png', '0', '0', '', '2025-09-22 15:53:51', '', NULL, NULL, 'recommend', '0');
 INSERT INTO `campus_topic` VALUES (110, 1, '有没有二手货', '/profile/upload/2025/09/29/Grounded_2025.09.22-19.53.20_20250929123454A001.png', '0', '0', 'admin', '2025-09-29 12:34:55', '', NULL, NULL, 'secondhand', '0');
 INSERT INTO `campus_topic` VALUES (111, 1, '什么东西？', '/profile/upload/2025/09/29/Screenshot 2025-09-25 131510_20250929123742A002.png', '0', '0', 'admin', '2025-09-29 12:37:54', '', NULL, NULL, 'qa', '0');
@@ -164,14 +236,14 @@ INSERT INTO `campus_topic` VALUES (116, 1, '禁止评论', NULL, '0', '0', 'admi
 -- ----------------------------
 DROP TABLE IF EXISTS `campus_topic_comment`;
 CREATE TABLE `campus_topic_comment`  (
-                                         `comment_id` bigint NOT NULL AUTO_INCREMENT COMMENT '评论ID',
-                                         `topic_id` bigint NOT NULL COMMENT '话题ID',
-                                         `user_id` bigint NOT NULL COMMENT '评论用户ID',
-                                         `parent_id` bigint NULL DEFAULT 0 COMMENT '父评论ID(回复某条评论)',
-                                         `content` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '评论内容',
-                                         `create_time` datetime NULL DEFAULT NULL COMMENT '评论时间',
-                                         PRIMARY KEY (`comment_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '话题评论表' ROW_FORMAT = Dynamic;
+  `comment_id` bigint NOT NULL AUTO_INCREMENT COMMENT '评论ID',
+  `topic_id` bigint NOT NULL COMMENT '话题ID',
+  `user_id` bigint NOT NULL COMMENT '评论用户ID',
+  `parent_id` bigint NULL DEFAULT 0 COMMENT '父评论ID(回复某条评论)',
+  `content` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '评论内容',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '评论时间',
+  PRIMARY KEY (`comment_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '话题评论表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of campus_topic_comment
@@ -183,38 +255,38 @@ INSERT INTO `campus_topic_comment` VALUES (4, 111, 1, 0, 'good\n', '2025-09-29 1
 INSERT INTO `campus_topic_comment` VALUES (5, 100, 1, 1, '666', '2025-09-29 19:19:34');
 INSERT INTO `campus_topic_comment` VALUES (6, 114, 1, 0, 's\n', '2025-09-29 20:28:45');
 INSERT INTO `campus_topic_comment` VALUES (7, 106, 1, 0, '6', '2025-09-29 20:29:25');
+INSERT INTO `campus_topic_comment` VALUES (8, 110, 1, 0, '？？？', '2025-11-25 10:09:07');
 
 -- ----------------------------
 -- Table structure for campus_topic_favorite
 -- ----------------------------
 DROP TABLE IF EXISTS `campus_topic_favorite`;
 CREATE TABLE `campus_topic_favorite`  (
-                                          `favorite_id` bigint NOT NULL AUTO_INCREMENT COMMENT '收藏ID',
-                                          `topic_id` bigint NOT NULL COMMENT '话题ID',
-                                          `user_id` bigint NOT NULL COMMENT '用户ID',
-                                          `create_time` datetime NULL DEFAULT NULL COMMENT '收藏时间',
-                                          PRIMARY KEY (`favorite_id`) USING BTREE,
-                                          UNIQUE INDEX `uk_user_topic`(`user_id` ASC, `topic_id` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '话题收藏表' ROW_FORMAT = Dynamic;
+  `favorite_id` bigint NOT NULL AUTO_INCREMENT COMMENT '收藏ID',
+  `topic_id` bigint NOT NULL COMMENT '话题ID',
+  `user_id` bigint NOT NULL COMMENT '用户ID',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '收藏时间',
+  PRIMARY KEY (`favorite_id`) USING BTREE,
+  UNIQUE INDEX `uk_user_topic`(`user_id` ASC, `topic_id` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '话题收藏表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of campus_topic_favorite
 -- ----------------------------
 INSERT INTO `campus_topic_favorite` VALUES (1, 115, 1, '2025-09-29 23:09:37');
-INSERT INTO `campus_topic_favorite` VALUES (2, 107, 1, '2025-09-29 23:36:07');
 
 -- ----------------------------
 -- Table structure for campus_topic_like
 -- ----------------------------
 DROP TABLE IF EXISTS `campus_topic_like`;
 CREATE TABLE `campus_topic_like`  (
-                                      `like_id` bigint NOT NULL AUTO_INCREMENT COMMENT '点赞ID',
-                                      `topic_id` bigint NOT NULL COMMENT '话题ID',
-                                      `user_id` bigint NOT NULL COMMENT '点赞用户ID',
-                                      `create_time` datetime NULL DEFAULT NULL COMMENT '点赞时间',
-                                      PRIMARY KEY (`like_id`) USING BTREE,
-                                      UNIQUE INDEX `uk_topic_user`(`topic_id` ASC, `user_id` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '话题点赞记录表' ROW_FORMAT = Dynamic;
+  `like_id` bigint NOT NULL AUTO_INCREMENT COMMENT '点赞ID',
+  `topic_id` bigint NOT NULL COMMENT '话题ID',
+  `user_id` bigint NOT NULL COMMENT '点赞用户ID',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '点赞时间',
+  PRIMARY KEY (`like_id`) USING BTREE,
+  UNIQUE INDEX `uk_topic_user`(`topic_id` ASC, `user_id` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 55 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '话题点赞记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of campus_topic_like
@@ -225,41 +297,43 @@ INSERT INTO `campus_topic_like` VALUES (3, 102, 1, '2025-09-22 16:03:44');
 INSERT INTO `campus_topic_like` VALUES (4, 103, 1, '2025-09-22 16:03:45');
 INSERT INTO `campus_topic_like` VALUES (5, 104, 1, '2025-09-22 16:03:46');
 INSERT INTO `campus_topic_like` VALUES (6, 109, 1, '2025-09-22 18:26:47');
-INSERT INTO `campus_topic_like` VALUES (7, 108, 1, '2025-09-22 18:26:48');
 INSERT INTO `campus_topic_like` VALUES (8, 111, 1, '2025-09-29 12:37:58');
 INSERT INTO `campus_topic_like` VALUES (9, 114, 1, '2025-09-29 14:59:47');
 INSERT INTO `campus_topic_like` VALUES (10, 105, 1, '2025-09-29 20:10:02');
 INSERT INTO `campus_topic_like` VALUES (11, 110, 1, '2025-09-29 23:52:37');
-INSERT INTO `campus_topic_like` VALUES (12, 116, 1, '2025-10-08 16:12:06');
+INSERT INTO `campus_topic_like` VALUES (13, 115, 1, '2025-11-10 15:36:09');
+INSERT INTO `campus_topic_like` VALUES (25, 113, 1, '2025-11-10 16:27:58');
+INSERT INTO `campus_topic_like` VALUES (28, 112, 1, '2025-11-10 16:28:04');
+INSERT INTO `campus_topic_like` VALUES (54, 116, 1, '2025-11-16 21:43:28');
 
 -- ----------------------------
 -- Table structure for gen_table
 -- ----------------------------
 DROP TABLE IF EXISTS `gen_table`;
 CREATE TABLE `gen_table`  (
-                              `table_id` bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
-                              `table_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '表名称',
-                              `table_comment` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '表描述',
-                              `sub_table_name` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '关联子表的表名',
-                              `sub_table_fk_name` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '子表关联的外键名',
-                              `class_name` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '实体类名称',
-                              `tpl_category` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT 'crud' COMMENT '使用的模板（crud单表操作 tree树表操作）',
-                              `tpl_web_type` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '前端模板类型（element-ui模版 element-plus模版）',
-                              `package_name` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '生成包路径',
-                              `module_name` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '生成模块名',
-                              `business_name` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '生成业务名',
-                              `function_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '生成功能名',
-                              `function_author` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '生成功能作者',
-                              `gen_type` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '生成代码方式（0zip压缩包 1自定义路径）',
-                              `gen_path` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '/' COMMENT '生成路径（不填默认项目路径）',
-                              `options` varchar(1000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '其它生成选项',
-                              `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
-                              `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                              `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
-                              `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                              `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
-                              PRIMARY KEY (`table_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '代码生成业务表' ROW_FORMAT = Dynamic;
+  `table_id` bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `table_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '表名称',
+  `table_comment` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '表描述',
+  `sub_table_name` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '关联子表的表名',
+  `sub_table_fk_name` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '子表关联的外键名',
+  `class_name` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '实体类名称',
+  `tpl_category` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT 'crud' COMMENT '使用的模板（crud单表操作 tree树表操作）',
+  `tpl_web_type` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '前端模板类型（element-ui模版 element-plus模版）',
+  `package_name` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '生成包路径',
+  `module_name` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '生成模块名',
+  `business_name` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '生成业务名',
+  `function_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '生成功能名',
+  `function_author` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '生成功能作者',
+  `gen_type` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '生成代码方式（0zip压缩包 1自定义路径）',
+  `gen_path` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '/' COMMENT '生成路径（不填默认项目路径）',
+  `options` varchar(1000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '其它生成选项',
+  `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`table_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '代码生成业务表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of gen_table
@@ -268,36 +342,39 @@ INSERT INTO `gen_table` VALUES (1, 'campus_topic', '校园话题表', NULL, NULL
 INSERT INTO `gen_table` VALUES (2, 'campus_errand_order', '跑腿代办订单表', NULL, NULL, 'CampusErrandOrder', 'crud', 'element-ui', 'com.ruoyi.campus', 'campus', 'errand', '跑腿代办', 'stan', '0', '/', '{\"parentMenuId\":0}', 'admin', '2025-10-08 17:10:34', '', '2025-10-08 18:17:53', NULL);
 INSERT INTO `gen_table` VALUES (3, 'campus_activity', '社团活动表', NULL, NULL, 'CampusActivity', 'crud', 'element-ui', 'com.ruoyi.campus', 'campus', 'activity', '社团活动', 'ruoyi', '0', '/', '{\"parentMenuId\":0}', 'admin', '2025-10-26 22:14:21', '', '2025-10-26 22:55:29', NULL);
 INSERT INTO `gen_table` VALUES (4, 'campus_club', '社团信息表', NULL, NULL, 'CampusClub', 'crud', 'element-ui', 'com.ruoyi.campus', 'campus', 'club', '社团管理', 'ruoyi', '0', '/', '{\"parentMenuId\":0}', 'admin', '2025-10-26 22:14:21', '', '2025-10-26 22:55:37', NULL);
+INSERT INTO `gen_table` VALUES (5, 'campus_order', '校园订单表', NULL, NULL, 'CampusOrder', 'crud', 'element-ui', 'com.ruoyi.campus', 'campus', 'order', '校园订单', 'ruoyi', '0', '/', '{\"parentMenuId\":1}', 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:50:04', NULL);
+INSERT INTO `gen_table` VALUES (6, 'campus_order_item', '订单商品关联表', NULL, NULL, 'CampusOrderItem', 'crud', 'element-ui', 'com.ruoyi.campus', 'campus', 'item', '订单商品关联', 'ruoyi', '0', '/', '{}', 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:52:07', NULL);
+INSERT INTO `gen_table` VALUES (7, 'campus_product', '校园二手商品表', NULL, NULL, 'CampusProduct', 'crud', 'element-ui', 'com.ruoyi.campus', 'campus', 'product', '校园二手商品', 'ruoyi', '0', '/', '{\"parentMenuId\":0}', 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:54:00', NULL);
 
 -- ----------------------------
 -- Table structure for gen_table_column
 -- ----------------------------
 DROP TABLE IF EXISTS `gen_table_column`;
 CREATE TABLE `gen_table_column`  (
-                                     `column_id` bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
-                                     `table_id` bigint NULL DEFAULT NULL COMMENT '归属表编号',
-                                     `column_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '列名称',
-                                     `column_comment` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '列描述',
-                                     `column_type` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '列类型',
-                                     `java_type` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT 'JAVA类型',
-                                     `java_field` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT 'JAVA字段名',
-                                     `is_pk` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '是否主键（1是）',
-                                     `is_increment` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '是否自增（1是）',
-                                     `is_required` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '是否必填（1是）',
-                                     `is_insert` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '是否为插入字段（1是）',
-                                     `is_edit` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '是否编辑字段（1是）',
-                                     `is_list` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '是否列表字段（1是）',
-                                     `is_query` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '是否查询字段（1是）',
-                                     `query_type` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT 'EQ' COMMENT '查询方式（等于、不等于、大于、小于、范围）',
-                                     `html_type` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '显示类型（文本框、文本域、下拉框、复选框、单选框、日期控件）',
-                                     `dict_type` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '字典类型',
-                                     `sort` int NULL DEFAULT NULL COMMENT '排序',
-                                     `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
-                                     `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                                     `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
-                                     `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                                     PRIMARY KEY (`column_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 49 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = Dynamic;
+  `column_id` bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `table_id` bigint NULL DEFAULT NULL COMMENT '归属表编号',
+  `column_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '列名称',
+  `column_comment` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '列描述',
+  `column_type` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '列类型',
+  `java_type` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT 'JAVA类型',
+  `java_field` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT 'JAVA字段名',
+  `is_pk` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '是否主键（1是）',
+  `is_increment` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '是否自增（1是）',
+  `is_required` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '是否必填（1是）',
+  `is_insert` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '是否为插入字段（1是）',
+  `is_edit` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '是否编辑字段（1是）',
+  `is_list` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '是否列表字段（1是）',
+  `is_query` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '是否查询字段（1是）',
+  `query_type` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT 'EQ' COMMENT '查询方式（等于、不等于、大于、小于、范围）',
+  `html_type` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '显示类型（文本框、文本域、下拉框、复选框、单选框、日期控件）',
+  `dict_type` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '字典类型',
+  `sort` int NULL DEFAULT NULL COMMENT '排序',
+  `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`column_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 84 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '代码生成业务表字段' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of gen_table_column
@@ -350,18 +427,53 @@ INSERT INTO `gen_table_column` VALUES (45, 4, 'create_time', '创建时间', 'da
 INSERT INTO `gen_table_column` VALUES (46, 4, 'update_by', '更新者', 'varchar(64)', 'String', 'updateBy', '0', '0', '0', '1', '1', NULL, NULL, 'EQ', 'input', '', 10, 'admin', '2025-10-26 22:14:21', '', '2025-10-26 22:55:37');
 INSERT INTO `gen_table_column` VALUES (47, 4, 'update_time', '更新时间', 'datetime', 'Date', 'updateTime', '0', '0', '0', '1', '1', NULL, NULL, 'EQ', 'datetime', '', 11, 'admin', '2025-10-26 22:14:21', '', '2025-10-26 22:55:37');
 INSERT INTO `gen_table_column` VALUES (48, 4, 'remark', '备注', 'varchar(500)', 'String', 'remark', '0', '0', '0', '1', '1', '1', NULL, 'EQ', 'textarea', '', 12, 'admin', '2025-10-26 22:14:21', '', '2025-10-26 22:55:37');
+INSERT INTO `gen_table_column` VALUES (49, 5, 'order_id', '订单ID', 'bigint', 'Long', 'orderId', '1', '1', '0', '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:50:04');
+INSERT INTO `gen_table_column` VALUES (50, 5, 'order_sn', '订单编号 (唯一)', 'varchar(64)', 'String', 'orderSn', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:50:04');
+INSERT INTO `gen_table_column` VALUES (51, 5, 'buyer_id', '买家ID', 'bigint', 'Long', 'buyerId', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:50:04');
+INSERT INTO `gen_table_column` VALUES (52, 5, 'seller_id', '卖家ID', 'bigint', 'Long', 'sellerId', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:50:04');
+INSERT INTO `gen_table_column` VALUES (53, 5, 'total_amount', '订单总金额', 'decimal(10,2)', 'BigDecimal', 'totalAmount', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 5, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:50:04');
+INSERT INTO `gen_table_column` VALUES (54, 5, 'status', '订单状态 (0=待支付, 1=待发货, 2=待收货, 3=已完成, 4=已取消)', 'char(1)', 'String', 'status', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'select', 'campus_order_status', 6, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:50:04');
+INSERT INTO `gen_table_column` VALUES (55, 5, 'address', '收货地址 (简化)', 'varchar(500)', 'String', 'address', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'textarea', '', 7, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:50:04');
+INSERT INTO `gen_table_column` VALUES (56, 5, 'pay_time', '支付时间', 'datetime', 'Date', 'payTime', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'datetime', '', 8, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:50:04');
+INSERT INTO `gen_table_column` VALUES (57, 5, 'del_flag', '删除标志 (0存在 2删除)', 'char(1)', 'String', 'delFlag', '0', '0', '0', '1', NULL, NULL, NULL, 'EQ', 'input', '', 9, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:50:04');
+INSERT INTO `gen_table_column` VALUES (58, 5, 'create_by', '创建者', 'varchar(64)', 'String', 'createBy', '0', '0', '0', '1', NULL, NULL, NULL, 'EQ', 'input', '', 10, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:50:04');
+INSERT INTO `gen_table_column` VALUES (59, 5, 'create_time', '创建时间', 'datetime', 'Date', 'createTime', '0', '0', '0', '1', NULL, NULL, NULL, 'EQ', 'datetime', '', 11, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:50:04');
+INSERT INTO `gen_table_column` VALUES (60, 5, 'update_by', '更新者', 'varchar(64)', 'String', 'updateBy', '0', '0', '0', '1', '1', NULL, NULL, 'EQ', 'input', '', 12, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:50:04');
+INSERT INTO `gen_table_column` VALUES (61, 5, 'update_time', '更新时间', 'datetime', 'Date', 'updateTime', '0', '0', '0', '1', '1', NULL, NULL, 'EQ', 'datetime', '', 13, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:50:04');
+INSERT INTO `gen_table_column` VALUES (62, 5, 'remark', '备注', 'varchar(500)', 'String', 'remark', '0', '0', '0', '1', '1', '1', NULL, 'EQ', 'textarea', '', 14, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:50:04');
+INSERT INTO `gen_table_column` VALUES (63, 6, 'item_id', '订单项ID', 'bigint', 'Long', 'itemId', '1', '1', '0', '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:52:07');
+INSERT INTO `gen_table_column` VALUES (64, 6, 'order_id', '订单ID', 'bigint', 'Long', 'orderId', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:52:07');
+INSERT INTO `gen_table_column` VALUES (65, 6, 'product_id', '商品ID', 'bigint', 'Long', 'productId', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:52:07');
+INSERT INTO `gen_table_column` VALUES (66, 6, 'product_title', '商品标题(快照)', 'varchar(255)', 'String', 'productTitle', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:52:07');
+INSERT INTO `gen_table_column` VALUES (67, 6, 'product_image', '商品图片(快照)', 'varchar(500)', 'String', 'productImage', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'imageUpload', '', 5, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:52:07');
+INSERT INTO `gen_table_column` VALUES (68, 6, 'price', '成交价格', 'decimal(10,2)', 'BigDecimal', 'price', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 6, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:52:07');
+INSERT INTO `gen_table_column` VALUES (69, 6, 'quantity', '购买数量', 'int', 'Long', 'quantity', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 7, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:52:07');
+INSERT INTO `gen_table_column` VALUES (70, 6, 'create_time', '创建时间', 'datetime', 'Date', 'createTime', '0', '0', '0', '1', NULL, NULL, NULL, 'EQ', 'datetime', '', 8, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:52:07');
+INSERT INTO `gen_table_column` VALUES (71, 7, 'product_id', '商品ID', 'bigint', 'Long', 'productId', '1', '1', '0', '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:54:00');
+INSERT INTO `gen_table_column` VALUES (72, 7, 'user_id', '卖家用户ID', 'bigint', 'Long', 'userId', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 2, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:54:00');
+INSERT INTO `gen_table_column` VALUES (73, 7, 'title', '商品标题', 'varchar(255)', 'String', 'title', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:54:00');
+INSERT INTO `gen_table_column` VALUES (74, 7, 'description', '商品描述', 'text', 'String', 'description', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'textarea', '', 4, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:54:00');
+INSERT INTO `gen_table_column` VALUES (75, 7, 'image_urls', '商品图片', 'varchar(1000)', 'String', 'imageUrls', '0', '0', '0', '1', '1', '1', '1', 'EQ', 'textarea', '', 5, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:54:00');
+INSERT INTO `gen_table_column` VALUES (76, 7, 'price', '价格', 'decimal(10,2)', 'BigDecimal', 'price', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'input', '', 6, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:54:00');
+INSERT INTO `gen_table_column` VALUES (77, 7, 'status', '状态 (0=在售, 1=已售, 2=下架)', 'char(1)', 'String', 'status', '0', '0', '1', '1', '1', '1', '1', 'EQ', 'select', 'campus_product_status', 7, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:54:00');
+INSERT INTO `gen_table_column` VALUES (78, 7, 'del_flag', '删除标志 (0存在 2删除)', 'char(1)', 'String', 'delFlag', '0', '0', '0', '1', NULL, NULL, NULL, 'EQ', 'input', '', 8, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:54:00');
+INSERT INTO `gen_table_column` VALUES (79, 7, 'create_by', '创建者', 'varchar(64)', 'String', 'createBy', '0', '0', '0', '1', NULL, NULL, NULL, 'EQ', 'input', '', 9, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:54:00');
+INSERT INTO `gen_table_column` VALUES (80, 7, 'create_time', '创建时间', 'datetime', 'Date', 'createTime', '0', '0', '0', '1', NULL, NULL, NULL, 'EQ', 'datetime', '', 10, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:54:00');
+INSERT INTO `gen_table_column` VALUES (81, 7, 'update_by', '更新者', 'varchar(64)', 'String', 'updateBy', '0', '0', '0', '1', '1', NULL, NULL, 'EQ', 'input', '', 11, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:54:00');
+INSERT INTO `gen_table_column` VALUES (82, 7, 'update_time', '更新时间', 'datetime', 'Date', 'updateTime', '0', '0', '0', '1', '1', NULL, NULL, 'EQ', 'datetime', '', 12, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:54:00');
+INSERT INTO `gen_table_column` VALUES (83, 7, 'remark', '备注', 'varchar(500)', 'String', 'remark', '0', '0', '0', '1', '1', '1', NULL, 'EQ', 'textarea', '', 13, 'admin', '2025-11-11 14:35:46', '', '2025-11-11 14:54:00');
 
 -- ----------------------------
 -- Table structure for qrtz_blob_triggers
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_blob_triggers`;
 CREATE TABLE `qrtz_blob_triggers`  (
-                                       `sched_name` varchar(120) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度名称',
-                                       `trigger_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_triggers表trigger_name的外键',
-                                       `trigger_group` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_triggers表trigger_group的外键',
-                                       `blob_data` blob NULL COMMENT '存放持久化Trigger对象',
-                                       PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
-                                       CONSTRAINT `qrtz_blob_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  `sched_name` varchar(120) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度名称',
+  `trigger_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_triggers表trigger_name的外键',
+  `trigger_group` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_triggers表trigger_group的外键',
+  `blob_data` blob NULL COMMENT '存放持久化Trigger对象',
+  PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
+  CONSTRAINT `qrtz_blob_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = 'Blob类型的触发器表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -373,10 +485,10 @@ CREATE TABLE `qrtz_blob_triggers`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_calendars`;
 CREATE TABLE `qrtz_calendars`  (
-                                   `sched_name` varchar(120) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度名称',
-                                   `calendar_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '日历名称',
-                                   `calendar` blob NOT NULL COMMENT '存放持久化calendar对象',
-                                   PRIMARY KEY (`sched_name`, `calendar_name`) USING BTREE
+  `sched_name` varchar(120) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度名称',
+  `calendar_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '日历名称',
+  `calendar` blob NOT NULL COMMENT '存放持久化calendar对象',
+  PRIMARY KEY (`sched_name`, `calendar_name`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '日历信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -388,13 +500,13 @@ CREATE TABLE `qrtz_calendars`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_cron_triggers`;
 CREATE TABLE `qrtz_cron_triggers`  (
-                                       `sched_name` varchar(120) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度名称',
-                                       `trigger_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_triggers表trigger_name的外键',
-                                       `trigger_group` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_triggers表trigger_group的外键',
-                                       `cron_expression` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'cron表达式',
-                                       `time_zone_id` varchar(80) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '时区',
-                                       PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
-                                       CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  `sched_name` varchar(120) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度名称',
+  `trigger_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_triggers表trigger_name的外键',
+  `trigger_group` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_triggers表trigger_group的外键',
+  `cron_expression` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'cron表达式',
+  `time_zone_id` varchar(80) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '时区',
+  PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
+  CONSTRAINT `qrtz_cron_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = 'Cron类型的触发器表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -406,20 +518,20 @@ CREATE TABLE `qrtz_cron_triggers`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_fired_triggers`;
 CREATE TABLE `qrtz_fired_triggers`  (
-                                        `sched_name` varchar(120) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度名称',
-                                        `entry_id` varchar(95) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度器实例id',
-                                        `trigger_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_triggers表trigger_name的外键',
-                                        `trigger_group` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_triggers表trigger_group的外键',
-                                        `instance_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度器实例名',
-                                        `fired_time` bigint NOT NULL COMMENT '触发的时间',
-                                        `sched_time` bigint NOT NULL COMMENT '定时器制定的时间',
-                                        `priority` int NOT NULL COMMENT '优先级',
-                                        `state` varchar(16) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '状态',
-                                        `job_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '任务名称',
-                                        `job_group` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '任务组名',
-                                        `is_nonconcurrent` varchar(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '是否并发',
-                                        `requests_recovery` varchar(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '是否接受恢复执行',
-                                        PRIMARY KEY (`sched_name`, `entry_id`) USING BTREE
+  `sched_name` varchar(120) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度名称',
+  `entry_id` varchar(95) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度器实例id',
+  `trigger_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_triggers表trigger_name的外键',
+  `trigger_group` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_triggers表trigger_group的外键',
+  `instance_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度器实例名',
+  `fired_time` bigint NOT NULL COMMENT '触发的时间',
+  `sched_time` bigint NOT NULL COMMENT '定时器制定的时间',
+  `priority` int NOT NULL COMMENT '优先级',
+  `state` varchar(16) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '状态',
+  `job_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '任务名称',
+  `job_group` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '任务组名',
+  `is_nonconcurrent` varchar(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '是否并发',
+  `requests_recovery` varchar(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '是否接受恢复执行',
+  PRIMARY KEY (`sched_name`, `entry_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '已触发的触发器表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -431,17 +543,17 @@ CREATE TABLE `qrtz_fired_triggers`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_job_details`;
 CREATE TABLE `qrtz_job_details`  (
-                                     `sched_name` varchar(120) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度名称',
-                                     `job_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '任务名称',
-                                     `job_group` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '任务组名',
-                                     `description` varchar(250) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '相关介绍',
-                                     `job_class_name` varchar(250) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '执行任务类名称',
-                                     `is_durable` varchar(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '是否持久化',
-                                     `is_nonconcurrent` varchar(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '是否并发',
-                                     `is_update_data` varchar(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '是否更新数据',
-                                     `requests_recovery` varchar(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '是否接受恢复执行',
-                                     `job_data` blob NULL COMMENT '存放持久化job对象',
-                                     PRIMARY KEY (`sched_name`, `job_name`, `job_group`) USING BTREE
+  `sched_name` varchar(120) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度名称',
+  `job_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '任务名称',
+  `job_group` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '任务组名',
+  `description` varchar(250) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '相关介绍',
+  `job_class_name` varchar(250) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '执行任务类名称',
+  `is_durable` varchar(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '是否持久化',
+  `is_nonconcurrent` varchar(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '是否并发',
+  `is_update_data` varchar(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '是否更新数据',
+  `requests_recovery` varchar(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '是否接受恢复执行',
+  `job_data` blob NULL COMMENT '存放持久化job对象',
+  PRIMARY KEY (`sched_name`, `job_name`, `job_group`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '任务详细信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -453,9 +565,9 @@ CREATE TABLE `qrtz_job_details`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_locks`;
 CREATE TABLE `qrtz_locks`  (
-                               `sched_name` varchar(120) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度名称',
-                               `lock_name` varchar(40) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '悲观锁名称',
-                               PRIMARY KEY (`sched_name`, `lock_name`) USING BTREE
+  `sched_name` varchar(120) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度名称',
+  `lock_name` varchar(40) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '悲观锁名称',
+  PRIMARY KEY (`sched_name`, `lock_name`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '存储的悲观锁信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -467,9 +579,9 @@ CREATE TABLE `qrtz_locks`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_paused_trigger_grps`;
 CREATE TABLE `qrtz_paused_trigger_grps`  (
-                                             `sched_name` varchar(120) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度名称',
-                                             `trigger_group` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_triggers表trigger_group的外键',
-                                             PRIMARY KEY (`sched_name`, `trigger_group`) USING BTREE
+  `sched_name` varchar(120) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度名称',
+  `trigger_group` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_triggers表trigger_group的外键',
+  PRIMARY KEY (`sched_name`, `trigger_group`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '暂停的触发器表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -481,11 +593,11 @@ CREATE TABLE `qrtz_paused_trigger_grps`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_scheduler_state`;
 CREATE TABLE `qrtz_scheduler_state`  (
-                                         `sched_name` varchar(120) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度名称',
-                                         `instance_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '实例名称',
-                                         `last_checkin_time` bigint NOT NULL COMMENT '上次检查时间',
-                                         `checkin_interval` bigint NOT NULL COMMENT '检查间隔时间',
-                                         PRIMARY KEY (`sched_name`, `instance_name`) USING BTREE
+  `sched_name` varchar(120) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度名称',
+  `instance_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '实例名称',
+  `last_checkin_time` bigint NOT NULL COMMENT '上次检查时间',
+  `checkin_interval` bigint NOT NULL COMMENT '检查间隔时间',
+  PRIMARY KEY (`sched_name`, `instance_name`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '调度器状态表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -497,14 +609,14 @@ CREATE TABLE `qrtz_scheduler_state`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_simple_triggers`;
 CREATE TABLE `qrtz_simple_triggers`  (
-                                         `sched_name` varchar(120) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度名称',
-                                         `trigger_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_triggers表trigger_name的外键',
-                                         `trigger_group` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_triggers表trigger_group的外键',
-                                         `repeat_count` bigint NOT NULL COMMENT '重复的次数统计',
-                                         `repeat_interval` bigint NOT NULL COMMENT '重复的间隔时间',
-                                         `times_triggered` bigint NOT NULL COMMENT '已经触发的次数',
-                                         PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
-                                         CONSTRAINT `qrtz_simple_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  `sched_name` varchar(120) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度名称',
+  `trigger_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_triggers表trigger_name的外键',
+  `trigger_group` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_triggers表trigger_group的外键',
+  `repeat_count` bigint NOT NULL COMMENT '重复的次数统计',
+  `repeat_interval` bigint NOT NULL COMMENT '重复的间隔时间',
+  `times_triggered` bigint NOT NULL COMMENT '已经触发的次数',
+  PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
+  CONSTRAINT `qrtz_simple_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '简单触发器的信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -516,22 +628,22 @@ CREATE TABLE `qrtz_simple_triggers`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_simprop_triggers`;
 CREATE TABLE `qrtz_simprop_triggers`  (
-                                          `sched_name` varchar(120) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度名称',
-                                          `trigger_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_triggers表trigger_name的外键',
-                                          `trigger_group` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_triggers表trigger_group的外键',
-                                          `str_prop_1` varchar(512) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT 'String类型的trigger的第一个参数',
-                                          `str_prop_2` varchar(512) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT 'String类型的trigger的第二个参数',
-                                          `str_prop_3` varchar(512) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT 'String类型的trigger的第三个参数',
-                                          `int_prop_1` int NULL DEFAULT NULL COMMENT 'int类型的trigger的第一个参数',
-                                          `int_prop_2` int NULL DEFAULT NULL COMMENT 'int类型的trigger的第二个参数',
-                                          `long_prop_1` bigint NULL DEFAULT NULL COMMENT 'long类型的trigger的第一个参数',
-                                          `long_prop_2` bigint NULL DEFAULT NULL COMMENT 'long类型的trigger的第二个参数',
-                                          `dec_prop_1` decimal(13, 4) NULL DEFAULT NULL COMMENT 'decimal类型的trigger的第一个参数',
-                                          `dec_prop_2` decimal(13, 4) NULL DEFAULT NULL COMMENT 'decimal类型的trigger的第二个参数',
-                                          `bool_prop_1` varchar(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT 'Boolean类型的trigger的第一个参数',
-                                          `bool_prop_2` varchar(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT 'Boolean类型的trigger的第二个参数',
-                                          PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
-                                          CONSTRAINT `qrtz_simprop_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  `sched_name` varchar(120) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度名称',
+  `trigger_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_triggers表trigger_name的外键',
+  `trigger_group` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_triggers表trigger_group的外键',
+  `str_prop_1` varchar(512) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT 'String类型的trigger的第一个参数',
+  `str_prop_2` varchar(512) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT 'String类型的trigger的第二个参数',
+  `str_prop_3` varchar(512) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT 'String类型的trigger的第三个参数',
+  `int_prop_1` int NULL DEFAULT NULL COMMENT 'int类型的trigger的第一个参数',
+  `int_prop_2` int NULL DEFAULT NULL COMMENT 'int类型的trigger的第二个参数',
+  `long_prop_1` bigint NULL DEFAULT NULL COMMENT 'long类型的trigger的第一个参数',
+  `long_prop_2` bigint NULL DEFAULT NULL COMMENT 'long类型的trigger的第二个参数',
+  `dec_prop_1` decimal(13, 4) NULL DEFAULT NULL COMMENT 'decimal类型的trigger的第一个参数',
+  `dec_prop_2` decimal(13, 4) NULL DEFAULT NULL COMMENT 'decimal类型的trigger的第二个参数',
+  `bool_prop_1` varchar(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT 'Boolean类型的trigger的第一个参数',
+  `bool_prop_2` varchar(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT 'Boolean类型的trigger的第二个参数',
+  PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
+  CONSTRAINT `qrtz_simprop_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '同步机制的行锁表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -543,25 +655,25 @@ CREATE TABLE `qrtz_simprop_triggers`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `qrtz_triggers`;
 CREATE TABLE `qrtz_triggers`  (
-                                  `sched_name` varchar(120) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度名称',
-                                  `trigger_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '触发器的名字',
-                                  `trigger_group` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '触发器所属组的名字',
-                                  `job_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_job_details表job_name的外键',
-                                  `job_group` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_job_details表job_group的外键',
-                                  `description` varchar(250) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '相关介绍',
-                                  `next_fire_time` bigint NULL DEFAULT NULL COMMENT '上一次触发时间（毫秒）',
-                                  `prev_fire_time` bigint NULL DEFAULT NULL COMMENT '下一次触发时间（默认为-1表示不触发）',
-                                  `priority` int NULL DEFAULT NULL COMMENT '优先级',
-                                  `trigger_state` varchar(16) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '触发器状态',
-                                  `trigger_type` varchar(8) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '触发器的类型',
-                                  `start_time` bigint NOT NULL COMMENT '开始时间',
-                                  `end_time` bigint NULL DEFAULT NULL COMMENT '结束时间',
-                                  `calendar_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '日程表名称',
-                                  `misfire_instr` smallint NULL DEFAULT NULL COMMENT '补偿执行的策略',
-                                  `job_data` blob NULL COMMENT '存放持久化job对象',
-                                  PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
-                                  INDEX `sched_name`(`sched_name` ASC, `job_name` ASC, `job_group` ASC) USING BTREE,
-                                  CONSTRAINT `qrtz_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `job_name`, `job_group`) REFERENCES `qrtz_job_details` (`sched_name`, `job_name`, `job_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  `sched_name` varchar(120) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调度名称',
+  `trigger_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '触发器的名字',
+  `trigger_group` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '触发器所属组的名字',
+  `job_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_job_details表job_name的外键',
+  `job_group` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT 'qrtz_job_details表job_group的外键',
+  `description` varchar(250) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '相关介绍',
+  `next_fire_time` bigint NULL DEFAULT NULL COMMENT '上一次触发时间（毫秒）',
+  `prev_fire_time` bigint NULL DEFAULT NULL COMMENT '下一次触发时间（默认为-1表示不触发）',
+  `priority` int NULL DEFAULT NULL COMMENT '优先级',
+  `trigger_state` varchar(16) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '触发器状态',
+  `trigger_type` varchar(8) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '触发器的类型',
+  `start_time` bigint NOT NULL COMMENT '开始时间',
+  `end_time` bigint NULL DEFAULT NULL COMMENT '结束时间',
+  `calendar_name` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '日程表名称',
+  `misfire_instr` smallint NULL DEFAULT NULL COMMENT '补偿执行的策略',
+  `job_data` blob NULL COMMENT '存放持久化job对象',
+  PRIMARY KEY (`sched_name`, `trigger_name`, `trigger_group`) USING BTREE,
+  INDEX `sched_name`(`sched_name` ASC, `job_name` ASC, `job_group` ASC) USING BTREE,
+  CONSTRAINT `qrtz_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `job_name`, `job_group`) REFERENCES `qrtz_job_details` (`sched_name`, `job_name`, `job_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '触发器详细信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -569,21 +681,50 @@ CREATE TABLE `qrtz_triggers`  (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for schedule_course
+-- ----------------------------
+DROP TABLE IF EXISTS `schedule_course`;
+CREATE TABLE `schedule_course`  (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '课程ID',
+  `user_id` bigint NOT NULL COMMENT '用户ID',
+  `day` tinyint NOT NULL COMMENT '星期几(1-7: 周一到周日)',
+  `section` tinyint NOT NULL COMMENT '第几节课(1-12)',
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '课程名称',
+  `teacher` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '教师姓名',
+  `location` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '上课地点',
+  `color` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '#4CAF50' COMMENT '课程颜色',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `uk_user_day_section_name`(`user_id` ASC, `day` ASC, `section` ASC, `name` ASC) USING BTREE,
+  INDEX `idx_user_id`(`user_id` ASC) USING BTREE,
+  INDEX `idx_day_section`(`day` ASC, `section` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户课程表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of schedule_course
+-- ----------------------------
+INSERT INTO `schedule_course` VALUES (5, 1, 2, 1, '高数', '李', '204', '#4CAF50', '2025-11-25 17:19:34', NULL);
+INSERT INTO `schedule_course` VALUES (6, 1, 2, 2, '高数', '李', '204', '#4CAF50', '2025-11-25 17:22:30', NULL);
+INSERT INTO `schedule_course` VALUES (20, 1, 2, 3, '高数', '李', '204', '#4CAF50', '2025-11-25 17:24:26', NULL);
+INSERT INTO `schedule_course` VALUES (23, 1, 2, 4, '高数', '李', '204', '#4CAF50', '2025-11-25 17:27:31', NULL);
+
+-- ----------------------------
 -- Table structure for sys_config
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_config`;
 CREATE TABLE `sys_config`  (
-                               `config_id` int NOT NULL AUTO_INCREMENT COMMENT '参数主键',
-                               `config_name` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '参数名称',
-                               `config_key` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '参数键名',
-                               `config_value` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '参数键值',
-                               `config_type` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT 'N' COMMENT '系统内置（Y是 N否）',
-                               `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
-                               `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                               `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
-                               `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                               `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
-                               PRIMARY KEY (`config_id`) USING BTREE
+  `config_id` int NOT NULL AUTO_INCREMENT COMMENT '参数主键',
+  `config_name` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '参数名称',
+  `config_key` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '参数键名',
+  `config_value` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '参数键值',
+  `config_type` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT 'N' COMMENT '系统内置（Y是 N否）',
+  `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`config_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '参数配置表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -593,7 +734,7 @@ INSERT INTO `sys_config` VALUES (1, '主框架页-默认皮肤样式名称', 'sy
 INSERT INTO `sys_config` VALUES (2, '用户管理-账号初始密码', 'sys.user.initPassword', '123456', 'Y', 'admin', '2025-09-21 20:04:51', '', NULL, '初始化密码 123456');
 INSERT INTO `sys_config` VALUES (3, '主框架页-侧边栏主题', 'sys.index.sideTheme', 'theme-dark', 'Y', 'admin', '2025-09-21 20:04:51', '', NULL, '深色主题theme-dark，浅色主题theme-light');
 INSERT INTO `sys_config` VALUES (4, '账号自助-验证码开关', 'sys.account.captchaEnabled', 'true', 'Y', 'admin', '2025-09-21 20:04:51', '', NULL, '是否开启验证码功能（true开启，false关闭）');
-INSERT INTO `sys_config` VALUES (5, '账号自助-是否开启用户注册功能', 'sys.account.registerUser', 'false', 'Y', 'admin', '2025-09-21 20:04:51', '', NULL, '是否开启注册用户功能（true开启，false关闭）');
+INSERT INTO `sys_config` VALUES (5, '账号自助-是否开启用户注册功能', 'sys.account.registerUser', 'true', 'Y', 'admin', '2025-09-21 20:04:51', 'admin', '2025-11-13 15:08:53', '是否开启注册用户功能（true开启，false关闭）');
 INSERT INTO `sys_config` VALUES (6, '用户登录-黑名单列表', 'sys.login.blackIPList', '', 'Y', 'admin', '2025-09-21 20:04:51', '', NULL, '设置登录IP黑名单限制，多个匹配项以;分隔，支持匹配（*通配、网段）');
 INSERT INTO `sys_config` VALUES (7, '用户管理-初始密码修改策略', 'sys.account.initPasswordModify', '1', 'Y', 'admin', '2025-09-21 20:04:51', '', NULL, '0：初始密码修改策略关闭，没有任何提示，1：提醒用户，如果未修改初始密码，则在登录时就会提醒修改密码对话框');
 INSERT INTO `sys_config` VALUES (8, '用户管理-账号密码更新周期', 'sys.account.passwordValidateDays', '0', 'Y', 'admin', '2025-09-21 20:04:51', '', NULL, '密码更新周期（填写数字，数据初始化值为0不限制，若修改必须为大于0小于365的正整数），如果超过这个周期登录系统时，则在登录时就会提醒修改密码对话框');
@@ -603,21 +744,21 @@ INSERT INTO `sys_config` VALUES (8, '用户管理-账号密码更新周期', 'sy
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_dept`;
 CREATE TABLE `sys_dept`  (
-                             `dept_id` bigint NOT NULL AUTO_INCREMENT COMMENT '部门id',
-                             `parent_id` bigint NULL DEFAULT 0 COMMENT '父部门id',
-                             `ancestors` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '祖级列表',
-                             `dept_name` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '部门名称',
-                             `order_num` int NULL DEFAULT 0 COMMENT '显示顺序',
-                             `leader` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '负责人',
-                             `phone` varchar(11) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '联系电话',
-                             `email` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '邮箱',
-                             `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '部门状态（0正常 1停用）',
-                             `del_flag` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
-                             `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
-                             `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                             `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
-                             `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                             PRIMARY KEY (`dept_id`) USING BTREE
+  `dept_id` bigint NOT NULL AUTO_INCREMENT COMMENT '部门id',
+  `parent_id` bigint NULL DEFAULT 0 COMMENT '父部门id',
+  `ancestors` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '祖级列表',
+  `dept_name` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '部门名称',
+  `order_num` int NULL DEFAULT 0 COMMENT '显示顺序',
+  `leader` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '负责人',
+  `phone` varchar(11) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '联系电话',
+  `email` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '邮箱',
+  `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '部门状态（0正常 1停用）',
+  `del_flag` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
+  `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`dept_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 200 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '部门表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -639,22 +780,22 @@ INSERT INTO `sys_dept` VALUES (109, 102, '0,100,102', '财务部门', 2, '若依
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_dict_data`;
 CREATE TABLE `sys_dict_data`  (
-                                  `dict_code` bigint NOT NULL AUTO_INCREMENT COMMENT '字典编码',
-                                  `dict_sort` int NULL DEFAULT 0 COMMENT '字典排序',
-                                  `dict_label` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '字典标签',
-                                  `dict_value` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '字典键值',
-                                  `dict_type` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '字典类型',
-                                  `css_class` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '样式属性（其他样式扩展）',
-                                  `list_class` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '表格回显样式',
-                                  `is_default` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT 'N' COMMENT '是否默认（Y是 N否）',
-                                  `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '状态（0正常 1停用）',
-                                  `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
-                                  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                                  `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
-                                  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                                  `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
-                                  PRIMARY KEY (`dict_code`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 103 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '字典数据表' ROW_FORMAT = Dynamic;
+  `dict_code` bigint NOT NULL AUTO_INCREMENT COMMENT '字典编码',
+  `dict_sort` int NULL DEFAULT 0 COMMENT '字典排序',
+  `dict_label` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '字典标签',
+  `dict_value` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '字典键值',
+  `dict_type` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '字典类型',
+  `css_class` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '样式属性（其他样式扩展）',
+  `list_class` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '表格回显样式',
+  `is_default` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT 'N' COMMENT '是否默认（Y是 N否）',
+  `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '状态（0正常 1停用）',
+  `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`dict_code`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 110 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '字典数据表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_dict_data
@@ -691,24 +832,31 @@ INSERT INTO `sys_dict_data` VALUES (29, 2, '失败', '1', 'sys_common_status', '
 INSERT INTO `sys_dict_data` VALUES (100, 1, '草稿', '0', 'campus_activity_status', NULL, 'default', 'N', '0', 'admin', '2025-10-26 22:46:02', 'admin', '2025-10-26 22:46:19', NULL);
 INSERT INTO `sys_dict_data` VALUES (101, 2, '已发布', '1', 'campus_activity_status', NULL, 'default', 'N', '0', 'admin', '2025-10-26 22:46:38', '', NULL, NULL);
 INSERT INTO `sys_dict_data` VALUES (102, 3, '已结束', '2', 'campus_activity_status', NULL, 'default', 'N', '0', 'admin', '2025-10-26 22:46:54', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (103, 1, '在售', '0', 'campus_product_status', NULL, 'default', 'N', '0', 'admin', '2025-11-11 14:40:29', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (104, 2, '已售', '1', 'campus_product_status', NULL, 'default', 'N', '0', 'admin', '2025-11-11 14:40:39', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (105, 3, '下架', '2', 'campus_product_status', NULL, 'default', 'N', '0', 'admin', '2025-11-11 14:40:48', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (106, 1, '待支付', '0', 'campus_order_status', NULL, 'default', 'N', '0', 'admin', '2025-11-11 14:41:15', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (107, 2, '待发货', '1', 'campus_order_status', NULL, 'default', 'N', '0', 'admin', '2025-11-11 14:41:25', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (108, 3, '待收货', '2', 'campus_order_status', NULL, 'default', 'N', '0', 'admin', '2025-11-11 14:41:35', '', NULL, NULL);
+INSERT INTO `sys_dict_data` VALUES (109, 5, '已取消', '4', 'campus_order_status', NULL, 'default', 'N', '0', 'admin', '2025-11-11 14:45:23', '', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_dict_type
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_dict_type`;
 CREATE TABLE `sys_dict_type`  (
-                                  `dict_id` bigint NOT NULL AUTO_INCREMENT COMMENT '字典主键',
-                                  `dict_name` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '字典名称',
-                                  `dict_type` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '字典类型',
-                                  `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '状态（0正常 1停用）',
-                                  `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
-                                  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                                  `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
-                                  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                                  `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
-                                  PRIMARY KEY (`dict_id`) USING BTREE,
-                                  UNIQUE INDEX `dict_type`(`dict_type` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 101 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '字典类型表' ROW_FORMAT = Dynamic;
+  `dict_id` bigint NOT NULL AUTO_INCREMENT COMMENT '字典主键',
+  `dict_name` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '字典名称',
+  `dict_type` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '字典类型',
+  `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '状态（0正常 1停用）',
+  `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`dict_id`) USING BTREE,
+  UNIQUE INDEX `dict_type`(`dict_type` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 103 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '字典类型表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_dict_type
@@ -724,26 +872,28 @@ INSERT INTO `sys_dict_type` VALUES (8, '通知状态', 'sys_notice_status', '0',
 INSERT INTO `sys_dict_type` VALUES (9, '操作类型', 'sys_oper_type', '0', 'admin', '2025-09-21 20:04:51', '', NULL, '操作类型列表');
 INSERT INTO `sys_dict_type` VALUES (10, '系统状态', 'sys_common_status', '0', 'admin', '2025-09-21 20:04:51', '', NULL, '登录状态列表');
 INSERT INTO `sys_dict_type` VALUES (100, '活动状态', 'campus_activity_status', '0', 'admin', '2025-10-26 22:42:45', 'admin', '2025-10-26 22:43:28', NULL);
+INSERT INTO `sys_dict_type` VALUES (101, '商品状态', 'campus_product_status', '0', 'admin', '2025-11-11 14:39:18', '', NULL, '二手商品的在售/已售/下架');
+INSERT INTO `sys_dict_type` VALUES (102, '订单状态', 'campus_order_status', '0', 'admin', '2025-11-11 14:39:38', '', NULL, '二手交易的订单状态');
 
 -- ----------------------------
 -- Table structure for sys_job
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_job`;
 CREATE TABLE `sys_job`  (
-                            `job_id` bigint NOT NULL AUTO_INCREMENT COMMENT '任务ID',
-                            `job_name` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '任务名称',
-                            `job_group` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT 'DEFAULT' COMMENT '任务组名',
-                            `invoke_target` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调用目标字符串',
-                            `cron_expression` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT 'cron执行表达式',
-                            `misfire_policy` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '3' COMMENT '计划执行错误策略（1立即执行 2执行一次 3放弃执行）',
-                            `concurrent` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '1' COMMENT '是否并发执行（0允许 1禁止）',
-                            `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '状态（0正常 1暂停）',
-                            `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
-                            `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                            `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
-                            `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                            `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '备注信息',
-                            PRIMARY KEY (`job_id`, `job_name`, `job_group`) USING BTREE
+  `job_id` bigint NOT NULL AUTO_INCREMENT COMMENT '任务ID',
+  `job_name` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '' COMMENT '任务名称',
+  `job_group` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT 'DEFAULT' COMMENT '任务组名',
+  `invoke_target` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调用目标字符串',
+  `cron_expression` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT 'cron执行表达式',
+  `misfire_policy` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '3' COMMENT '计划执行错误策略（1立即执行 2执行一次 3放弃执行）',
+  `concurrent` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '1' COMMENT '是否并发执行（0允许 1禁止）',
+  `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '状态（0正常 1暂停）',
+  `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '备注信息',
+  PRIMARY KEY (`job_id`, `job_name`, `job_group`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '定时任务调度表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -758,15 +908,15 @@ INSERT INTO `sys_job` VALUES (3, '系统默认（多参）', 'DEFAULT', 'ryTask.
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_job_log`;
 CREATE TABLE `sys_job_log`  (
-                                `job_log_id` bigint NOT NULL AUTO_INCREMENT COMMENT '任务日志ID',
-                                `job_name` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '任务名称',
-                                `job_group` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '任务组名',
-                                `invoke_target` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调用目标字符串',
-                                `job_message` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '日志信息',
-                                `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '执行状态（0正常 1失败）',
-                                `exception_info` varchar(2000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '异常信息',
-                                `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                                PRIMARY KEY (`job_log_id`) USING BTREE
+  `job_log_id` bigint NOT NULL AUTO_INCREMENT COMMENT '任务日志ID',
+  `job_name` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '任务名称',
+  `job_group` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '任务组名',
+  `invoke_target` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '调用目标字符串',
+  `job_message` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '日志信息',
+  `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '执行状态（0正常 1失败）',
+  `exception_info` varchar(2000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '异常信息',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`job_log_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '定时任务调度日志表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -778,19 +928,19 @@ CREATE TABLE `sys_job_log`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_logininfor`;
 CREATE TABLE `sys_logininfor`  (
-                                   `info_id` bigint NOT NULL AUTO_INCREMENT COMMENT '访问ID',
-                                   `user_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '用户账号',
-                                   `ipaddr` varchar(128) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '登录IP地址',
-                                   `login_location` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '登录地点',
-                                   `browser` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '浏览器类型',
-                                   `os` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '操作系统',
-                                   `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '登录状态（0成功 1失败）',
-                                   `msg` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '提示消息',
-                                   `login_time` datetime NULL DEFAULT NULL COMMENT '访问时间',
-                                   PRIMARY KEY (`info_id`) USING BTREE,
-                                   INDEX `idx_sys_logininfor_s`(`status` ASC) USING BTREE,
-                                   INDEX `idx_sys_logininfor_lt`(`login_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 201 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
+  `info_id` bigint NOT NULL AUTO_INCREMENT COMMENT '访问ID',
+  `user_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '用户账号',
+  `ipaddr` varchar(128) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '登录IP地址',
+  `login_location` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '登录地点',
+  `browser` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '浏览器类型',
+  `os` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '操作系统',
+  `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '登录状态（0成功 1失败）',
+  `msg` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '提示消息',
+  `login_time` datetime NULL DEFAULT NULL COMMENT '访问时间',
+  PRIMARY KEY (`info_id`) USING BTREE,
+  INDEX `idx_sys_logininfor_s`(`status` ASC) USING BTREE,
+  INDEX `idx_sys_logininfor_lt`(`login_time` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 295 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_logininfor
@@ -896,34 +1046,128 @@ INSERT INTO `sys_logininfor` VALUES (197, 'admin', '127.0.0.1', '内网IP', 'Chr
 INSERT INTO `sys_logininfor` VALUES (198, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-10-25 20:47:53');
 INSERT INTO `sys_logininfor` VALUES (199, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-10-26 21:59:09');
 INSERT INTO `sys_logininfor` VALUES (200, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-10-26 23:38:28');
+INSERT INTO `sys_logininfor` VALUES (201, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-10-27 18:07:29');
+INSERT INTO `sys_logininfor` VALUES (202, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-10-27 19:08:59');
+INSERT INTO `sys_logininfor` VALUES (203, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-10 15:36:02');
+INSERT INTO `sys_logininfor` VALUES (204, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-10 16:58:05');
+INSERT INTO `sys_logininfor` VALUES (205, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-10 18:23:23');
+INSERT INTO `sys_logininfor` VALUES (206, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-11 14:27:02');
+INSERT INTO `sys_logininfor` VALUES (207, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-11 15:52:34');
+INSERT INTO `sys_logininfor` VALUES (208, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-12 15:52:45');
+INSERT INTO `sys_logininfor` VALUES (209, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-13 14:31:01');
+INSERT INTO `sys_logininfor` VALUES (210, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '退出成功', '2025-11-13 14:57:02');
+INSERT INTO `sys_logininfor` VALUES (211, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-13 14:57:08');
+INSERT INTO `sys_logininfor` VALUES (212, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '退出成功', '2025-11-13 15:02:57');
+INSERT INTO `sys_logininfor` VALUES (213, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-13 15:03:05');
+INSERT INTO `sys_logininfor` VALUES (214, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-13 15:03:57');
+INSERT INTO `sys_logininfor` VALUES (215, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '退出成功', '2025-11-13 15:07:29');
+INSERT INTO `sys_logininfor` VALUES (216, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-13 15:07:59');
+INSERT INTO `sys_logininfor` VALUES (217, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '退出成功', '2025-11-13 15:08:17');
+INSERT INTO `sys_logininfor` VALUES (218, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-13 15:08:23');
+INSERT INTO `sys_logininfor` VALUES (219, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '退出成功', '2025-11-13 15:11:50');
+INSERT INTO `sys_logininfor` VALUES (220, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '1', '验证码错误', '2025-11-13 15:12:02');
+INSERT INTO `sys_logininfor` VALUES (221, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-13 15:54:29');
+INSERT INTO `sys_logininfor` VALUES (222, 'admin', '192.168.1.105', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-13 16:07:46');
+INSERT INTO `sys_logininfor` VALUES (223, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-16 20:09:20');
+INSERT INTO `sys_logininfor` VALUES (224, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-16 20:30:13');
+INSERT INTO `sys_logininfor` VALUES (225, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-16 21:25:12');
+INSERT INTO `sys_logininfor` VALUES (226, 'admin', '192.168.1.102', '内网IP', 'Chrome 14', 'Windows 10', '1', '用户不存在/密码错误', '2025-11-17 17:15:10');
+INSERT INTO `sys_logininfor` VALUES (227, 'admin', '192.168.1.102', '内网IP', 'Chrome 14', 'Windows 10', '1', '用户不存在/密码错误', '2025-11-17 17:15:22');
+INSERT INTO `sys_logininfor` VALUES (228, 'admin', '192.168.1.102', '内网IP', 'Chrome 14', 'Windows 10', '1', '验证码错误', '2025-11-17 17:15:52');
+INSERT INTO `sys_logininfor` VALUES (229, 'admin', '192.168.1.102', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-17 17:15:55');
+INSERT INTO `sys_logininfor` VALUES (230, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-23 20:53:58');
+INSERT INTO `sys_logininfor` VALUES (231, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '1', '验证码已失效', '2025-11-23 21:15:25');
+INSERT INTO `sys_logininfor` VALUES (232, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '1', '验证码错误', '2025-11-23 21:15:29');
+INSERT INTO `sys_logininfor` VALUES (233, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-23 21:15:34');
+INSERT INTO `sys_logininfor` VALUES (234, 'admin', '127.0.0.1', '内网IP', 'Chrome Mobile', 'Android 6.x', '0', '登录成功', '2025-11-23 21:16:12');
+INSERT INTO `sys_logininfor` VALUES (235, 'admin', '127.0.0.1', '内网IP', 'Chrome Mobile', 'Android 6.x', '0', '退出成功', '2025-11-23 21:16:21');
+INSERT INTO `sys_logininfor` VALUES (236, 'admin', '127.0.0.1', '内网IP', 'Chrome Mobile', 'Android 6.x', '0', '登录成功', '2025-11-23 21:16:24');
+INSERT INTO `sys_logininfor` VALUES (237, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-24 18:44:58');
+INSERT INTO `sys_logininfor` VALUES (238, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '退出成功', '2025-11-24 18:45:48');
+INSERT INTO `sys_logininfor` VALUES (239, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-25 09:36:17');
+INSERT INTO `sys_logininfor` VALUES (240, 'admin123', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '1', '用户不存在/密码错误', '2025-11-25 10:00:53');
+INSERT INTO `sys_logininfor` VALUES (241, 'admin123', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '1', '用户不存在/密码错误', '2025-11-25 10:01:01');
+INSERT INTO `sys_logininfor` VALUES (242, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-25 10:01:51');
+INSERT INTO `sys_logininfor` VALUES (243, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-25 10:08:15');
+INSERT INTO `sys_logininfor` VALUES (244, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-25 10:13:08');
+INSERT INTO `sys_logininfor` VALUES (245, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '0', '登录成功', '2025-11-25 10:14:42');
+INSERT INTO `sys_logininfor` VALUES (246, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '1', '验证码已失效', '2025-11-25 10:48:22');
+INSERT INTO `sys_logininfor` VALUES (247, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '0', '登录成功', '2025-11-25 10:48:25');
+INSERT INTO `sys_logininfor` VALUES (248, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '0', '登录成功', '2025-11-25 10:51:44');
+INSERT INTO `sys_logininfor` VALUES (249, 'adnin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '1', '验证码已失效', '2025-11-25 10:58:05');
+INSERT INTO `sys_logininfor` VALUES (250, 'adnin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '1', '用户不存在/密码错误', '2025-11-25 10:58:08');
+INSERT INTO `sys_logininfor` VALUES (251, 'adnin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '1', '验证码错误', '2025-11-25 10:58:18');
+INSERT INTO `sys_logininfor` VALUES (252, 'adnin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '1', '用户不存在/密码错误', '2025-11-25 10:58:22');
+INSERT INTO `sys_logininfor` VALUES (253, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '0', '登录成功', '2025-11-25 10:58:29');
+INSERT INTO `sys_logininfor` VALUES (254, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '0', '登录成功', '2025-11-25 11:00:02');
+INSERT INTO `sys_logininfor` VALUES (255, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '1', '验证码已失效', '2025-11-25 11:06:24');
+INSERT INTO `sys_logininfor` VALUES (256, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '0', '登录成功', '2025-11-25 11:06:27');
+INSERT INTO `sys_logininfor` VALUES (257, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '0', '登录成功', '2025-11-25 11:09:04');
+INSERT INTO `sys_logininfor` VALUES (258, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '0', '登录成功', '2025-11-25 11:10:18');
+INSERT INTO `sys_logininfor` VALUES (259, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '1', '验证码已失效', '2025-11-25 11:35:26');
+INSERT INTO `sys_logininfor` VALUES (260, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '0', '登录成功', '2025-11-25 11:35:37');
+INSERT INTO `sys_logininfor` VALUES (261, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '1', '验证码已失效', '2025-11-25 11:53:52');
+INSERT INTO `sys_logininfor` VALUES (262, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '1', '验证码错误', '2025-11-25 11:53:55');
+INSERT INTO `sys_logininfor` VALUES (263, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '1', '验证码错误', '2025-11-25 11:53:58');
+INSERT INTO `sys_logininfor` VALUES (264, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '0', '登录成功', '2025-11-25 11:54:00');
+INSERT INTO `sys_logininfor` VALUES (265, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-25 16:22:31');
+INSERT INTO `sys_logininfor` VALUES (266, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '0', '登录成功', '2025-11-25 16:31:34');
+INSERT INTO `sys_logininfor` VALUES (267, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-25 16:34:35');
+INSERT INTO `sys_logininfor` VALUES (268, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '1', '用户不存在/密码错误', '2025-11-25 16:37:11');
+INSERT INTO `sys_logininfor` VALUES (269, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '0', '登录成功', '2025-11-25 16:37:20');
+INSERT INTO `sys_logininfor` VALUES (270, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-25 17:14:53');
+INSERT INTO `sys_logininfor` VALUES (271, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '0', '登录成功', '2025-11-25 17:18:23');
+INSERT INTO `sys_logininfor` VALUES (272, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '0', '登录成功', '2025-11-25 17:19:08');
+INSERT INTO `sys_logininfor` VALUES (273, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '0', '登录成功', '2025-11-25 17:22:19');
+INSERT INTO `sys_logininfor` VALUES (274, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '0', '登录成功', '2025-11-25 17:27:18');
+INSERT INTO `sys_logininfor` VALUES (275, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '1', '验证码已失效', '2025-11-25 17:50:55');
+INSERT INTO `sys_logininfor` VALUES (276, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '0', '登录成功', '2025-11-25 17:50:59');
+INSERT INTO `sys_logininfor` VALUES (277, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-25 18:14:34');
+INSERT INTO `sys_logininfor` VALUES (278, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-25 18:46:58');
+INSERT INTO `sys_logininfor` VALUES (279, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-25 18:50:03');
+INSERT INTO `sys_logininfor` VALUES (280, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-25 19:16:26');
+INSERT INTO `sys_logininfor` VALUES (281, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '0', '登录成功', '2025-11-25 19:18:08');
+INSERT INTO `sys_logininfor` VALUES (282, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '1', '验证码已失效', '2025-11-25 19:23:41');
+INSERT INTO `sys_logininfor` VALUES (283, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '0', '登录成功', '2025-11-25 19:23:45');
+INSERT INTO `sys_logininfor` VALUES (284, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '0', '登录成功', '2025-11-25 19:24:10');
+INSERT INTO `sys_logininfor` VALUES (285, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '0', '登录成功', '2025-11-25 19:27:30');
+INSERT INTO `sys_logininfor` VALUES (286, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '0', '登录成功', '2025-11-25 19:28:00');
+INSERT INTO `sys_logininfor` VALUES (287, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '0', '登录成功', '2025-11-25 19:28:48');
+INSERT INTO `sys_logininfor` VALUES (288, 'admin', '127.0.0.1', '内网IP', 'Mobile Safari', 'Mac OS X (iPhone)', '0', '登录成功', '2025-11-25 19:29:25');
+INSERT INTO `sys_logininfor` VALUES (289, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-25 20:00:19');
+INSERT INTO `sys_logininfor` VALUES (290, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-25 20:11:18');
+INSERT INTO `sys_logininfor` VALUES (291, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-25 20:21:16');
+INSERT INTO `sys_logininfor` VALUES (292, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-25 20:21:54');
+INSERT INTO `sys_logininfor` VALUES (293, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-25 20:24:11');
+INSERT INTO `sys_logininfor` VALUES (294, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-25 20:26:35');
 
 -- ----------------------------
 -- Table structure for sys_menu
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_menu`;
 CREATE TABLE `sys_menu`  (
-                             `menu_id` bigint NOT NULL AUTO_INCREMENT COMMENT '菜单ID',
-                             `menu_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '菜单名称',
-                             `parent_id` bigint NULL DEFAULT 0 COMMENT '父菜单ID',
-                             `order_num` int NULL DEFAULT 0 COMMENT '显示顺序',
-                             `path` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '路由地址',
-                             `component` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '组件路径',
-                             `query` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '路由参数',
-                             `route_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '路由名称',
-                             `is_frame` int NULL DEFAULT 1 COMMENT '是否为外链（0是 1否）',
-                             `is_cache` int NULL DEFAULT 0 COMMENT '是否缓存（0缓存 1不缓存）',
-                             `menu_type` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '菜单类型（M目录 C菜单 F按钮）',
-                             `visible` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '菜单状态（0显示 1隐藏）',
-                             `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '菜单状态（0正常 1停用）',
-                             `perms` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '权限标识',
-                             `icon` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '#' COMMENT '菜单图标',
-                             `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
-                             `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                             `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
-                             `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                             `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '备注',
-                             PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2021 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
+  `menu_id` bigint NOT NULL AUTO_INCREMENT COMMENT '菜单ID',
+  `menu_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '菜单名称',
+  `parent_id` bigint NULL DEFAULT 0 COMMENT '父菜单ID',
+  `order_num` int NULL DEFAULT 0 COMMENT '显示顺序',
+  `path` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '路由地址',
+  `component` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '组件路径',
+  `query` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '路由参数',
+  `route_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '路由名称',
+  `is_frame` int NULL DEFAULT 1 COMMENT '是否为外链（0是 1否）',
+  `is_cache` int NULL DEFAULT 0 COMMENT '是否缓存（0缓存 1不缓存）',
+  `menu_type` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '菜单类型（M目录 C菜单 F按钮）',
+  `visible` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '菜单状态（0显示 1隐藏）',
+  `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '菜单状态（0正常 1停用）',
+  `perms` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '权限标识',
+  `icon` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '#' COMMENT '菜单图标',
+  `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '备注',
+  PRIMARY KEY (`menu_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2039 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -1027,24 +1271,42 @@ INSERT INTO `sys_menu` VALUES (2010, '我的圈子', 0, 1, 'my-circle', 'campus/
 INSERT INTO `sys_menu` VALUES (2017, '智能助手', 0, 3, 'assistant', 'assistant', NULL, '', 1, 0, 'C', '0', '0', '', 'message', 'admin', '2025-10-25 15:58:34', 'admin', '2025-10-25 16:02:38', '');
 INSERT INTO `sys_menu` VALUES (2018, '校园圈子管理（管理员）', 1, 0, 'topicAdmin', 'campus/admin/topic/index', NULL, '', 1, 0, 'C', '0', '0', '', 'international', 'admin', '2025-10-25 16:27:45', 'admin', '2025-10-25 16:28:54', '');
 INSERT INTO `sys_menu` VALUES (2019, '社团管理（管理员）', 1, 0, 'club', 'campus/admin/club/index', NULL, '', 1, 0, 'C', '0', '0', '', 'peoples', 'admin', '2025-10-26 23:43:22', 'admin', '2025-10-26 23:50:33', '');
-INSERT INTO `sys_menu` VALUES (2020, '活动管理', 1, 0, 'activity', 'campus/admin/activity/index', NULL, '', 1, 0, 'C', '0', '0', NULL, 'list', 'admin', '2025-10-26 23:57:39', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2020, '活动管理（管理员）', 1, 0, 'activity', 'campus/admin/activity/index', NULL, '', 1, 0, 'C', '0', '0', '', 'list', 'admin', '2025-10-26 23:57:39', 'admin', '2025-11-11 14:34:41', '');
+INSERT INTO `sys_menu` VALUES (2021, '订单商品关联', 3, 1, 'item', 'campus/item/index', NULL, '', 1, 0, 'C', '0', '0', 'campus:item:list', '#', 'admin', '2025-11-11 15:07:03', '', NULL, '订单商品关联菜单');
+INSERT INTO `sys_menu` VALUES (2022, '订单商品关联查询', 2021, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'campus:item:query', '#', 'admin', '2025-11-11 15:07:03', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2023, '订单商品关联新增', 2021, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'campus:item:add', '#', 'admin', '2025-11-11 15:07:03', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2024, '订单商品关联修改', 2021, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'campus:item:edit', '#', 'admin', '2025-11-11 15:07:03', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2025, '订单商品关联删除', 2021, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'campus:item:remove', '#', 'admin', '2025-11-11 15:07:03', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2026, '订单商品关联导出', 2021, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'campus:item:export', '#', 'admin', '2025-11-11 15:07:03', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2027, '校园订单管理（管理员）', 1, 0, 'order', 'campus/admin/order/index', NULL, '', 1, 0, 'C', '0', '0', 'campus:order:list', 'skill', 'admin', '2025-11-11 15:07:12', 'admin', '2025-11-11 15:10:59', '校园订单菜单');
+INSERT INTO `sys_menu` VALUES (2028, '校园订单查询', 2027, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'campus:order:query', '#', 'admin', '2025-11-11 15:07:12', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2029, '校园订单新增', 2027, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'campus:order:add', '#', 'admin', '2025-11-11 15:07:12', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2030, '校园订单修改', 2027, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'campus:order:edit', '#', 'admin', '2025-11-11 15:07:12', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2031, '校园订单删除', 2027, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'campus:order:remove', '#', 'admin', '2025-11-11 15:07:12', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2032, '校园订单导出', 2027, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'campus:order:export', '#', 'admin', '2025-11-11 15:07:12', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2033, '校园二手商品管理（管理员）', 1, 0, 'product', 'campus/admin/product/index', NULL, '', 1, 0, 'C', '0', '0', 'campus:product:list', 'tool', 'admin', '2025-11-11 15:07:18', 'admin', '2025-11-11 15:14:13', '校园二手商品菜单');
+INSERT INTO `sys_menu` VALUES (2034, '校园二手商品查询', 2033, 1, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'campus:product:query', '#', 'admin', '2025-11-11 15:07:18', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2035, '校园二手商品新增', 2033, 2, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'campus:product:add', '#', 'admin', '2025-11-11 15:07:18', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2036, '校园二手商品修改', 2033, 3, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'campus:product:edit', '#', 'admin', '2025-11-11 15:07:18', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2037, '校园二手商品删除', 2033, 4, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'campus:product:remove', '#', 'admin', '2025-11-11 15:07:18', '', NULL, '');
+INSERT INTO `sys_menu` VALUES (2038, '校园二手商品导出', 2033, 5, '#', '', NULL, '', 1, 0, 'F', '0', '0', 'campus:product:export', '#', 'admin', '2025-11-11 15:07:18', '', NULL, '');
 
 -- ----------------------------
 -- Table structure for sys_notice
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_notice`;
 CREATE TABLE `sys_notice`  (
-                               `notice_id` int NOT NULL AUTO_INCREMENT COMMENT '公告ID',
-                               `notice_title` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '公告标题',
-                               `notice_type` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '公告类型（1通知 2公告）',
-                               `notice_content` longblob NULL COMMENT '公告内容',
-                               `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '公告状态（0正常 1关闭）',
-                               `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
-                               `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                               `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
-                               `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                               `remark` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
-                               PRIMARY KEY (`notice_id`) USING BTREE
+  `notice_id` int NOT NULL AUTO_INCREMENT COMMENT '公告ID',
+  `notice_title` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '公告标题',
+  `notice_type` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '公告类型（1通知 2公告）',
+  `notice_content` longblob NULL COMMENT '公告内容',
+  `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '公告状态（0正常 1关闭）',
+  `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`notice_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '通知公告表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -1058,28 +1320,28 @@ INSERT INTO `sys_notice` VALUES (2, '维护通知：2018-07-01 若依系统凌�
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_oper_log`;
 CREATE TABLE `sys_oper_log`  (
-                                 `oper_id` bigint NOT NULL AUTO_INCREMENT COMMENT '日志主键',
-                                 `title` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '模块标题',
-                                 `business_type` int NULL DEFAULT 0 COMMENT '业务类型（0其它 1新增 2修改 3删除）',
-                                 `method` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '方法名称',
-                                 `request_method` varchar(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '请求方式',
-                                 `operator_type` int NULL DEFAULT 0 COMMENT '操作类别（0其它 1后台用户 2手机端用户）',
-                                 `oper_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '操作人员',
-                                 `dept_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '部门名称',
-                                 `oper_url` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '请求URL',
-                                 `oper_ip` varchar(128) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '主机地址',
-                                 `oper_location` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '操作地点',
-                                 `oper_param` varchar(2000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '请求参数',
-                                 `json_result` varchar(2000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '返回参数',
-                                 `status` int NULL DEFAULT 0 COMMENT '操作状态（0正常 1异常）',
-                                 `error_msg` varchar(2000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '错误消息',
-                                 `oper_time` datetime NULL DEFAULT NULL COMMENT '操作时间',
-                                 `cost_time` bigint NULL DEFAULT 0 COMMENT '消耗时间',
-                                 PRIMARY KEY (`oper_id`) USING BTREE,
-                                 INDEX `idx_sys_oper_log_bt`(`business_type` ASC) USING BTREE,
-                                 INDEX `idx_sys_oper_log_s`(`status` ASC) USING BTREE,
-                                 INDEX `idx_sys_oper_log_ot`(`oper_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 256 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
+  `oper_id` bigint NOT NULL AUTO_INCREMENT COMMENT '日志主键',
+  `title` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '模块标题',
+  `business_type` int NULL DEFAULT 0 COMMENT '业务类型（0其它 1新增 2修改 3删除）',
+  `method` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '方法名称',
+  `request_method` varchar(10) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '请求方式',
+  `operator_type` int NULL DEFAULT 0 COMMENT '操作类别（0其它 1后台用户 2手机端用户）',
+  `oper_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '操作人员',
+  `dept_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '部门名称',
+  `oper_url` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '请求URL',
+  `oper_ip` varchar(128) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '主机地址',
+  `oper_location` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '操作地点',
+  `oper_param` varchar(2000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '请求参数',
+  `json_result` varchar(2000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '返回参数',
+  `status` int NULL DEFAULT 0 COMMENT '操作状态（0正常 1异常）',
+  `error_msg` varchar(2000) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '错误消息',
+  `oper_time` datetime NULL DEFAULT NULL COMMENT '操作时间',
+  `cost_time` bigint NULL DEFAULT 0 COMMENT '消耗时间',
+  PRIMARY KEY (`oper_id`) USING BTREE,
+  INDEX `idx_sys_oper_log_bt`(`business_type` ASC) USING BTREE,
+  INDEX `idx_sys_oper_log_s`(`status` ASC) USING BTREE,
+  INDEX `idx_sys_oper_log_ot`(`oper_time` ASC) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 329 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_oper_log
@@ -1240,23 +1502,96 @@ INSERT INTO `sys_oper_log` VALUES (252, '菜单管理', 2, 'com.ruoyi.web.contro
 INSERT INTO `sys_oper_log` VALUES (253, '社团管理', 3, 'com.ruoyi.campus.controller.CampusClubController.remove()', 'DELETE', 1, 'admin', '研发部门', '/campus/club/1', '127.0.0.1', '内网IP', '[1]', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-10-26 23:52:33', 7);
 INSERT INTO `sys_oper_log` VALUES (254, '社团管理', 1, 'com.ruoyi.campus.controller.CampusClubController.add()', 'POST', 1, 'admin', '研发部门', '/campus/club', '127.0.0.1', '内网IP', '{\"clubId\":2,\"clubName\":\"漫画社\",\"createTime\":\"2025-10-26 23:52:56\",\"description\":\"123\",\"logo\":\"/profile/upload/2025/10/26/Screenshot 2025-09-09 184854_20251026235246A002.png\",\"params\":{},\"presidentName\":\"stan\",\"presidentUserId\":123,\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-10-26 23:52:56', 5);
 INSERT INTO `sys_oper_log` VALUES (255, '菜单管理', 1, 'com.ruoyi.web.controller.system.SysMenuController.add()', 'POST', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"campus/admin/activity/index\",\"createBy\":\"admin\",\"icon\":\"list\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuName\":\"活动管理\",\"menuType\":\"C\",\"orderNum\":0,\"params\":{},\"parentId\":1,\"path\":\"activity\",\"status\":\"0\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-10-26 23:57:39', 8);
+INSERT INTO `sys_oper_log` VALUES (256, '社团活动', 1, 'com.ruoyi.campus.controller.CampusActivityController.add()', 'POST', 1, 'admin', '研发部门', '/campus/activity', '127.0.0.1', '内网IP', '{\"activityId\":1,\"clubId\":123,\"content\":\"<p>ttt</p>\",\"createTime\":\"2025-10-27 18:08:08\",\"endTime\":\"2025-10-28\",\"location\":\"杏园\",\"params\":{},\"remark\":\"ttt\",\"startTime\":\"2025-10-02\",\"status\":\"1\",\"title\":\"ttt\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-10-27 18:08:08', 16);
+INSERT INTO `sys_oper_log` VALUES (257, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"campus/admin/activity/index\",\"createTime\":\"2025-10-26 23:57:39\",\"icon\":\"list\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2020,\"menuName\":\"活动管理（管理员）\",\"menuType\":\"C\",\"orderNum\":0,\"params\":{},\"parentId\":1,\"path\":\"activity\",\"perms\":\"\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-11 14:34:41', 19);
+INSERT INTO `sys_oper_log` VALUES (258, '代码生成', 6, 'com.ruoyi.generator.controller.GenController.importTableSave()', 'POST', 1, 'admin', '研发部门', '/tool/gen/importTable', '127.0.0.1', '内网IP', '{\"tables\":\"campus_product,campus_order,campus_order_item\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-11 14:35:46', 120);
+INSERT INTO `sys_oper_log` VALUES (259, '字典类型', 1, 'com.ruoyi.web.controller.system.SysDictTypeController.add()', 'POST', 1, 'admin', '研发部门', '/system/dict/type', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"dictName\":\"商品状态\",\"dictType\":\"campus_product_status\",\"params\":{},\"remark\":\"二手商品的在售/已售/下架\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-11 14:39:18', 12);
+INSERT INTO `sys_oper_log` VALUES (260, '字典类型', 1, 'com.ruoyi.web.controller.system.SysDictTypeController.add()', 'POST', 1, 'admin', '研发部门', '/system/dict/type', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"dictName\":\"订单状态\",\"dictType\":\"campus_order_status\",\"params\":{},\"remark\":\"二手交易的订单状态\",\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-11 14:39:38', 8);
+INSERT INTO `sys_oper_log` VALUES (261, '字典数据', 1, 'com.ruoyi.web.controller.system.SysDictDataController.add()', 'POST', 1, 'admin', '研发部门', '/system/dict/data', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"default\":false,\"dictLabel\":\"在售\",\"dictSort\":1,\"dictType\":\"campus_product_status\",\"dictValue\":\"0\",\"listClass\":\"default\",\"params\":{},\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-11 14:40:29', 9);
+INSERT INTO `sys_oper_log` VALUES (262, '字典数据', 1, 'com.ruoyi.web.controller.system.SysDictDataController.add()', 'POST', 1, 'admin', '研发部门', '/system/dict/data', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"default\":false,\"dictLabel\":\"已售\",\"dictSort\":2,\"dictType\":\"campus_product_status\",\"dictValue\":\"1\",\"listClass\":\"default\",\"params\":{},\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-11 14:40:39', 8);
+INSERT INTO `sys_oper_log` VALUES (263, '字典数据', 1, 'com.ruoyi.web.controller.system.SysDictDataController.add()', 'POST', 1, 'admin', '研发部门', '/system/dict/data', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"default\":false,\"dictLabel\":\"下架\",\"dictSort\":3,\"dictType\":\"campus_product_status\",\"dictValue\":\"2\",\"listClass\":\"default\",\"params\":{},\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-11 14:40:48', 9);
+INSERT INTO `sys_oper_log` VALUES (264, '字典数据', 1, 'com.ruoyi.web.controller.system.SysDictDataController.add()', 'POST', 1, 'admin', '研发部门', '/system/dict/data', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"default\":false,\"dictLabel\":\"待支付\",\"dictSort\":1,\"dictType\":\"campus_order_status\",\"dictValue\":\"0\",\"listClass\":\"default\",\"params\":{},\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-11 14:41:15', 8);
+INSERT INTO `sys_oper_log` VALUES (265, '字典数据', 1, 'com.ruoyi.web.controller.system.SysDictDataController.add()', 'POST', 1, 'admin', '研发部门', '/system/dict/data', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"default\":false,\"dictLabel\":\"待发货\",\"dictSort\":2,\"dictType\":\"campus_order_status\",\"dictValue\":\"1\",\"listClass\":\"default\",\"params\":{},\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-11 14:41:25', 9);
+INSERT INTO `sys_oper_log` VALUES (266, '字典数据', 1, 'com.ruoyi.web.controller.system.SysDictDataController.add()', 'POST', 1, 'admin', '研发部门', '/system/dict/data', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"default\":false,\"dictLabel\":\"待收货\",\"dictSort\":3,\"dictType\":\"campus_order_status\",\"dictValue\":\"2\",\"listClass\":\"default\",\"params\":{},\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-11 14:41:35', 8);
+INSERT INTO `sys_oper_log` VALUES (267, '字典数据', 1, 'com.ruoyi.web.controller.system.SysDictDataController.add()', 'POST', 1, 'admin', '研发部门', '/system/dict/data', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"default\":false,\"dictLabel\":\"已取消\",\"dictSort\":5,\"dictType\":\"campus_order_status\",\"dictValue\":\"4\",\"listClass\":\"default\",\"params\":{},\"status\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-11 14:45:23', 10);
+INSERT INTO `sys_oper_log` VALUES (268, '代码生成', 2, 'com.ruoyi.generator.controller.GenController.editSave()', 'PUT', 1, 'admin', '研发部门', '/tool/gen', '127.0.0.1', '内网IP', '{\"businessName\":\"product\",\"className\":\"CampusProduct\",\"columns\":[{\"capJavaField\":\"ProductId\",\"columnComment\":\"商品ID\",\"columnId\":71,\"columnName\":\"product_id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":false,\"htmlType\":\"input\",\"increment\":true,\"insert\":true,\"isIncrement\":\"1\",\"isInsert\":\"1\",\"isPk\":\"1\",\"isRequired\":\"0\",\"javaField\":\"productId\",\"javaType\":\"Long\",\"list\":false,\"params\":{},\"pk\":true,\"query\":false,\"queryType\":\"EQ\",\"required\":false,\"sort\":1,\"superColumn\":false,\"tableId\":7,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"UserId\",\"columnComment\":\"卖家用户ID\",\"columnId\":72,\"columnName\":\"user_id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"userId\",\"javaType\":\"Long\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":2,\"superColumn\":false,\"tableId\":7,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"Title\",\"columnComment\":\"商品标题\",\"columnId\":73,\"columnName\":\"title\",\"columnType\":\"varchar(255)\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"title\",\"javaType\":\"String\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":3,\"superColumn\":false,\"tableId\":7,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"Description\",\"columnComment\":\"商品描述\",\"columnId\":74,\"columnName\":\"description\",\"columnType\":\"text\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"textarea\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"0\",\"', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-11 14:47:52', 27);
+INSERT INTO `sys_oper_log` VALUES (269, '代码生成', 2, 'com.ruoyi.generator.controller.GenController.editSave()', 'PUT', 1, 'admin', '研发部门', '/tool/gen', '127.0.0.1', '内网IP', '{\"businessName\":\"order\",\"className\":\"CampusOrder\",\"columns\":[{\"capJavaField\":\"OrderId\",\"columnComment\":\"订单ID\",\"columnId\":49,\"columnName\":\"order_id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":false,\"htmlType\":\"input\",\"increment\":true,\"insert\":true,\"isIncrement\":\"1\",\"isInsert\":\"1\",\"isPk\":\"1\",\"isRequired\":\"0\",\"javaField\":\"orderId\",\"javaType\":\"Long\",\"list\":false,\"params\":{},\"pk\":true,\"query\":false,\"queryType\":\"EQ\",\"required\":false,\"sort\":1,\"superColumn\":false,\"tableId\":5,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"OrderSn\",\"columnComment\":\"订单编号 (唯一)\",\"columnId\":50,\"columnName\":\"order_sn\",\"columnType\":\"varchar(64)\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"orderSn\",\"javaType\":\"String\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":2,\"superColumn\":false,\"tableId\":5,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"BuyerId\",\"columnComment\":\"买家ID\",\"columnId\":51,\"columnName\":\"buyer_id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"buyerId\",\"javaType\":\"Long\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":3,\"superColumn\":false,\"tableId\":5,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"SellerId\",\"columnComment\":\"卖家ID\",\"columnId\":52,\"columnName\":\"seller_id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"java', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-11 14:49:32', 27);
+INSERT INTO `sys_oper_log` VALUES (270, '代码生成', 2, 'com.ruoyi.generator.controller.GenController.editSave()', 'PUT', 1, 'admin', '研发部门', '/tool/gen', '127.0.0.1', '内网IP', '{\"businessName\":\"product\",\"className\":\"CampusProduct\",\"columns\":[{\"capJavaField\":\"ProductId\",\"columnComment\":\"商品ID\",\"columnId\":71,\"columnName\":\"product_id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":false,\"htmlType\":\"input\",\"increment\":true,\"insert\":true,\"isIncrement\":\"1\",\"isInsert\":\"1\",\"isPk\":\"1\",\"isRequired\":\"0\",\"javaField\":\"productId\",\"javaType\":\"Long\",\"list\":false,\"params\":{},\"pk\":true,\"query\":false,\"queryType\":\"EQ\",\"required\":false,\"sort\":1,\"superColumn\":false,\"tableId\":7,\"updateBy\":\"\",\"updateTime\":\"2025-11-11 14:47:52\",\"usableColumn\":false},{\"capJavaField\":\"UserId\",\"columnComment\":\"卖家用户ID\",\"columnId\":72,\"columnName\":\"user_id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"userId\",\"javaType\":\"Long\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":2,\"superColumn\":false,\"tableId\":7,\"updateBy\":\"\",\"updateTime\":\"2025-11-11 14:47:52\",\"usableColumn\":false},{\"capJavaField\":\"Title\",\"columnComment\":\"商品标题\",\"columnId\":73,\"columnName\":\"title\",\"columnType\":\"varchar(255)\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"title\",\"javaType\":\"String\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":3,\"superColumn\":false,\"tableId\":7,\"updateBy\":\"\",\"updateTime\":\"2025-11-11 14:47:52\",\"usableColumn\":false},{\"capJavaField\":\"Description\",\"columnComment\":\"商品描述\",\"columnId\":74,\"columnName\":\"description\",\"columnType\":\"text\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"textarea\",\"increment\":false,\"insert\":tr', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-11 14:49:35', 39);
+INSERT INTO `sys_oper_log` VALUES (271, '代码生成', 2, 'com.ruoyi.generator.controller.GenController.editSave()', 'PUT', 1, 'admin', '研发部门', '/tool/gen', '127.0.0.1', '内网IP', '{\"businessName\":\"order\",\"className\":\"CampusOrder\",\"columns\":[{\"capJavaField\":\"OrderId\",\"columnComment\":\"订单ID\",\"columnId\":49,\"columnName\":\"order_id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":false,\"htmlType\":\"input\",\"increment\":true,\"insert\":true,\"isIncrement\":\"1\",\"isInsert\":\"1\",\"isPk\":\"1\",\"isRequired\":\"0\",\"javaField\":\"orderId\",\"javaType\":\"Long\",\"list\":false,\"params\":{},\"pk\":true,\"query\":false,\"queryType\":\"EQ\",\"required\":false,\"sort\":1,\"superColumn\":false,\"tableId\":5,\"updateBy\":\"\",\"updateTime\":\"2025-11-11 14:49:32\",\"usableColumn\":false},{\"capJavaField\":\"OrderSn\",\"columnComment\":\"订单编号 (唯一)\",\"columnId\":50,\"columnName\":\"order_sn\",\"columnType\":\"varchar(64)\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"orderSn\",\"javaType\":\"String\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":2,\"superColumn\":false,\"tableId\":5,\"updateBy\":\"\",\"updateTime\":\"2025-11-11 14:49:32\",\"usableColumn\":false},{\"capJavaField\":\"BuyerId\",\"columnComment\":\"买家ID\",\"columnId\":51,\"columnName\":\"buyer_id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"buyerId\",\"javaType\":\"Long\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":3,\"superColumn\":false,\"tableId\":5,\"updateBy\":\"\",\"updateTime\":\"2025-11-11 14:49:32\",\"usableColumn\":false},{\"capJavaField\":\"SellerId\",\"columnComment\":\"卖家ID\",\"columnId\":52,\"columnName\":\"seller_id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-11 14:50:04', 34);
+INSERT INTO `sys_oper_log` VALUES (272, '代码生成', 2, 'com.ruoyi.generator.controller.GenController.editSave()', 'PUT', 1, 'admin', '研发部门', '/tool/gen', '127.0.0.1', '内网IP', '{\"businessName\":\"product\",\"className\":\"CampusProduct\",\"columns\":[{\"capJavaField\":\"ProductId\",\"columnComment\":\"商品ID\",\"columnId\":71,\"columnName\":\"product_id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":false,\"htmlType\":\"input\",\"increment\":true,\"insert\":true,\"isIncrement\":\"1\",\"isInsert\":\"1\",\"isPk\":\"1\",\"isRequired\":\"0\",\"javaField\":\"productId\",\"javaType\":\"Long\",\"list\":false,\"params\":{},\"pk\":true,\"query\":false,\"queryType\":\"EQ\",\"required\":false,\"sort\":1,\"superColumn\":false,\"tableId\":7,\"updateBy\":\"\",\"updateTime\":\"2025-11-11 14:49:35\",\"usableColumn\":false},{\"capJavaField\":\"UserId\",\"columnComment\":\"卖家用户ID\",\"columnId\":72,\"columnName\":\"user_id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"userId\",\"javaType\":\"Long\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":2,\"superColumn\":false,\"tableId\":7,\"updateBy\":\"\",\"updateTime\":\"2025-11-11 14:49:35\",\"usableColumn\":false},{\"capJavaField\":\"Title\",\"columnComment\":\"商品标题\",\"columnId\":73,\"columnName\":\"title\",\"columnType\":\"varchar(255)\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"title\",\"javaType\":\"String\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":3,\"superColumn\":false,\"tableId\":7,\"updateBy\":\"\",\"updateTime\":\"2025-11-11 14:49:35\",\"usableColumn\":false},{\"capJavaField\":\"Description\",\"columnComment\":\"商品描述\",\"columnId\":74,\"columnName\":\"description\",\"columnType\":\"text\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"textarea\",\"increment\":false,\"insert\":tr', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-11 14:50:17', 22);
+INSERT INTO `sys_oper_log` VALUES (273, '代码生成', 2, 'com.ruoyi.generator.controller.GenController.editSave()', 'PUT', 1, 'admin', '研发部门', '/tool/gen', '127.0.0.1', '内网IP', '{\"businessName\":\"item\",\"className\":\"CampusOrderItem\",\"columns\":[{\"capJavaField\":\"ItemId\",\"columnComment\":\"订单项ID\",\"columnId\":63,\"columnName\":\"item_id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":false,\"htmlType\":\"input\",\"increment\":true,\"insert\":true,\"isIncrement\":\"1\",\"isInsert\":\"1\",\"isPk\":\"1\",\"isRequired\":\"0\",\"javaField\":\"itemId\",\"javaType\":\"Long\",\"list\":false,\"params\":{},\"pk\":true,\"query\":false,\"queryType\":\"EQ\",\"required\":false,\"sort\":1,\"superColumn\":false,\"tableId\":6,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"OrderId\",\"columnComment\":\"订单ID\",\"columnId\":64,\"columnName\":\"order_id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"orderId\",\"javaType\":\"Long\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":2,\"superColumn\":false,\"tableId\":6,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"ProductId\",\"columnComment\":\"商品ID\",\"columnId\":65,\"columnName\":\"product_id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"productId\",\"javaType\":\"Long\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":3,\"superColumn\":false,\"tableId\":6,\"updateBy\":\"\",\"usableColumn\":false},{\"capJavaField\":\"ProductTitle\",\"columnComment\":\"商品标题(快照)\",\"columnId\":66,\"columnName\":\"product_title\",\"columnType\":\"varchar(255)\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequir', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-11 14:52:07', 107);
+INSERT INTO `sys_oper_log` VALUES (274, '代码生成', 8, 'com.ruoyi.generator.controller.GenController.batchGenCode()', 'GET', 1, 'admin', '研发部门', '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{\"tables\":\"campus_order,campus_order_item,campus_product\"}', NULL, 0, NULL, '2025-11-11 14:52:17', 184);
+INSERT INTO `sys_oper_log` VALUES (275, '代码生成', 2, 'com.ruoyi.generator.controller.GenController.editSave()', 'PUT', 1, 'admin', '研发部门', '/tool/gen', '127.0.0.1', '内网IP', '{\"businessName\":\"product\",\"className\":\"CampusProduct\",\"columns\":[{\"capJavaField\":\"ProductId\",\"columnComment\":\"商品ID\",\"columnId\":71,\"columnName\":\"product_id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":false,\"htmlType\":\"input\",\"increment\":true,\"insert\":true,\"isIncrement\":\"1\",\"isInsert\":\"1\",\"isPk\":\"1\",\"isRequired\":\"0\",\"javaField\":\"productId\",\"javaType\":\"Long\",\"list\":false,\"params\":{},\"pk\":true,\"query\":false,\"queryType\":\"EQ\",\"required\":false,\"sort\":1,\"superColumn\":false,\"tableId\":7,\"updateBy\":\"\",\"updateTime\":\"2025-11-11 14:50:17\",\"usableColumn\":false},{\"capJavaField\":\"UserId\",\"columnComment\":\"卖家用户ID\",\"columnId\":72,\"columnName\":\"user_id\",\"columnType\":\"bigint\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"userId\",\"javaType\":\"Long\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":2,\"superColumn\":false,\"tableId\":7,\"updateBy\":\"\",\"updateTime\":\"2025-11-11 14:50:17\",\"usableColumn\":false},{\"capJavaField\":\"Title\",\"columnComment\":\"商品标题\",\"columnId\":73,\"columnName\":\"title\",\"columnType\":\"varchar(255)\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"input\",\"increment\":false,\"insert\":true,\"isEdit\":\"1\",\"isIncrement\":\"0\",\"isInsert\":\"1\",\"isList\":\"1\",\"isPk\":\"0\",\"isQuery\":\"1\",\"isRequired\":\"1\",\"javaField\":\"title\",\"javaType\":\"String\",\"list\":true,\"params\":{},\"pk\":false,\"query\":true,\"queryType\":\"EQ\",\"required\":true,\"sort\":3,\"superColumn\":false,\"tableId\":7,\"updateBy\":\"\",\"updateTime\":\"2025-11-11 14:50:17\",\"usableColumn\":false},{\"capJavaField\":\"Description\",\"columnComment\":\"商品描述\",\"columnId\":74,\"columnName\":\"description\",\"columnType\":\"text\",\"createBy\":\"admin\",\"createTime\":\"2025-11-11 14:35:46\",\"dictType\":\"\",\"edit\":true,\"htmlType\":\"textarea\",\"increment\":false,\"insert\":tr', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-11 14:54:00', 20);
+INSERT INTO `sys_oper_log` VALUES (276, '代码生成', 8, 'com.ruoyi.generator.controller.GenController.batchGenCode()', 'GET', 1, 'admin', '研发部门', '/tool/gen/batchGenCode', '127.0.0.1', '内网IP', '{\"tables\":\"campus_order,campus_order_item,campus_product\"}', NULL, 0, NULL, '2025-11-11 14:54:16', 67);
+INSERT INTO `sys_oper_log` VALUES (277, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"campus/admin/order/index\",\"createTime\":\"2025-11-11 15:07:12\",\"icon\":\"skill\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2027,\"menuName\":\"校园订单\",\"menuType\":\"C\",\"orderNum\":0,\"params\":{},\"parentId\":1,\"path\":\"order\",\"perms\":\"campus:order:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-11 15:10:02', 21);
+INSERT INTO `sys_oper_log` VALUES (278, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"campus/admin/order/index\",\"createTime\":\"2025-11-11 15:07:12\",\"icon\":\"skill\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2027,\"menuName\":\"校园订单管理（管理员）\",\"menuType\":\"C\",\"orderNum\":0,\"params\":{},\"parentId\":1,\"path\":\"order\",\"perms\":\"campus:order:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-11 15:10:59', 10);
+INSERT INTO `sys_oper_log` VALUES (279, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"campus/admin/product/index\",\"createTime\":\"2025-11-11 15:07:18\",\"icon\":\"tool\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2033,\"menuName\":\"校园二手商品\",\"menuType\":\"C\",\"orderNum\":1,\"params\":{},\"parentId\":0,\"path\":\"product\",\"perms\":\"campus:product:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-11 15:12:36', 9);
+INSERT INTO `sys_oper_log` VALUES (280, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"campus/admin/product/index\",\"createTime\":\"2025-11-11 15:07:18\",\"icon\":\"tool\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2033,\"menuName\":\"校园二手商品\",\"menuType\":\"C\",\"orderNum\":0,\"params\":{},\"parentId\":1,\"path\":\"product\",\"perms\":\"campus:product:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-11 15:13:11', 7);
+INSERT INTO `sys_oper_log` VALUES (281, '菜单管理', 2, 'com.ruoyi.web.controller.system.SysMenuController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/menu', '127.0.0.1', '内网IP', '{\"children\":[],\"component\":\"campus/admin/product/index\",\"createTime\":\"2025-11-11 15:07:18\",\"icon\":\"tool\",\"isCache\":\"0\",\"isFrame\":\"1\",\"menuId\":2033,\"menuName\":\"校园二手商品管理（管理员）\",\"menuType\":\"C\",\"orderNum\":0,\"params\":{},\"parentId\":1,\"path\":\"product\",\"perms\":\"campus:product:list\",\"routeName\":\"\",\"status\":\"0\",\"updateBy\":\"admin\",\"visible\":\"0\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-11 15:14:13', 9);
+INSERT INTO `sys_oper_log` VALUES (282, '校园话题', 3, 'com.ruoyi.campus.controller.CampusTopicController.remove()', 'DELETE', 1, 'admin', '研发部门', '/campus/topic/108', '127.0.0.1', '内网IP', '[108]', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-12 15:59:54', 22);
+INSERT INTO `sys_oper_log` VALUES (283, '校园话题', 3, 'com.ruoyi.campus.controller.CampusTopicController.remove()', 'DELETE', 1, 'admin', '研发部门', '/campus/topic/107', '127.0.0.1', '内网IP', '[107]', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-12 16:00:00', 4);
+INSERT INTO `sys_oper_log` VALUES (284, '参数管理', 2, 'com.ruoyi.web.controller.system.SysConfigController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/config', '127.0.0.1', '内网IP', '{\"configId\":5,\"configKey\":\"sys.account.registerUser\",\"configName\":\"账号自助-是否开启用户注册功能\",\"configType\":\"Y\",\"configValue\":\"true\",\"createBy\":\"admin\",\"createTime\":\"2025-09-21 20:04:51\",\"params\":{},\"remark\":\"是否开启注册用户功能（true开启，false关闭）\",\"updateBy\":\"admin\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-13 14:56:40', 64);
+INSERT INTO `sys_oper_log` VALUES (285, '参数管理', 2, 'com.ruoyi.web.controller.system.SysConfigController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/config', '127.0.0.1', '内网IP', '{\"configId\":5,\"configKey\":\"sys.account.registerUser\",\"configName\":\"账号自助-是否开启用户注册功能\",\"configType\":\"Y\",\"configValue\":\"true\",\"createBy\":\"admin\",\"createTime\":\"2025-09-21 20:04:51\",\"params\":{},\"remark\":\"是否开启注册用户功能（true开启，false关闭）\",\"updateBy\":\"admin\",\"updateTime\":\"2025-11-13 14:56:39\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-13 15:05:23', 10);
+INSERT INTO `sys_oper_log` VALUES (286, '参数管理', 9, 'com.ruoyi.web.controller.system.SysConfigController.refreshCache()', 'DELETE', 1, 'admin', '研发部门', '/system/config/refreshCache', '127.0.0.1', '内网IP', '', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-13 15:08:10', 14);
+INSERT INTO `sys_oper_log` VALUES (287, '参数管理', 9, 'com.ruoyi.web.controller.system.SysConfigController.refreshCache()', 'DELETE', 1, 'admin', '研发部门', '/system/config/refreshCache', '127.0.0.1', '内网IP', '', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-13 15:08:11', 10);
+INSERT INTO `sys_oper_log` VALUES (288, '参数管理', 9, 'com.ruoyi.web.controller.system.SysConfigController.refreshCache()', 'DELETE', 1, 'admin', '研发部门', '/system/config/refreshCache', '127.0.0.1', '内网IP', '', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-13 15:08:12', 8);
+INSERT INTO `sys_oper_log` VALUES (289, '参数管理', 9, 'com.ruoyi.web.controller.system.SysConfigController.refreshCache()', 'DELETE', 1, 'admin', '研发部门', '/system/config/refreshCache', '127.0.0.1', '内网IP', '', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-13 15:08:12', 9);
+INSERT INTO `sys_oper_log` VALUES (290, '参数管理', 9, 'com.ruoyi.web.controller.system.SysConfigController.refreshCache()', 'DELETE', 1, 'admin', '研发部门', '/system/config/refreshCache', '127.0.0.1', '内网IP', '', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-13 15:08:12', 7);
+INSERT INTO `sys_oper_log` VALUES (291, '参数管理', 9, 'com.ruoyi.web.controller.system.SysConfigController.refreshCache()', 'DELETE', 1, 'admin', '研发部门', '/system/config/refreshCache', '127.0.0.1', '内网IP', '', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-13 15:08:12', 7);
+INSERT INTO `sys_oper_log` VALUES (292, '参数管理', 2, 'com.ruoyi.web.controller.system.SysConfigController.edit()', 'PUT', 1, 'admin', '研发部门', '/system/config', '127.0.0.1', '内网IP', '{\"configId\":5,\"configKey\":\"sys.account.registerUser\",\"configName\":\"账号自助-是否开启用户注册功能\",\"configType\":\"Y\",\"configValue\":\"true\",\"createBy\":\"admin\",\"createTime\":\"2025-09-21 20:04:51\",\"params\":{},\"remark\":\"是否开启注册用户功能（true开启，false关闭）\",\"updateBy\":\"admin\",\"updateTime\":\"2025-11-13 15:05:23\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-13 15:08:53', 13);
+INSERT INTO `sys_oper_log` VALUES (293, '参数管理', 9, 'com.ruoyi.web.controller.system.SysConfigController.refreshCache()', 'DELETE', 1, 'admin', '研发部门', '/system/config/refreshCache', '127.0.0.1', '内网IP', '', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-13 15:08:54', 15);
+INSERT INTO `sys_oper_log` VALUES (294, '参数管理', 9, 'com.ruoyi.web.controller.system.SysConfigController.refreshCache()', 'DELETE', 1, 'admin', '研发部门', '/system/config/refreshCache', '127.0.0.1', '内网IP', '', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-13 15:08:55', 5);
+INSERT INTO `sys_oper_log` VALUES (295, '校园二手商品', 1, 'com.ruoyi.campus.controller.CampusProductController.add()', 'POST', 1, 'admin', '研发部门', '/campus/product', '127.0.0.1', '内网IP', '{\"createTime\":\"2025-11-13 15:58:38\",\"imageUrls\":\"/profile/upload/2025/11/13/Grounded_2025.09.22-19.53.20_20251113155835A001.png\",\"params\":{},\"price\":0.01,\"status\":\"0\",\"title\":\"111\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\r\n### The error may exist in file [C:\\Users\\stan0930\\Desktop\\our-awesome-project\\ruoyi-system\\target\\classes\\mapper\\campus\\CampusProductMapper.xml]\r\n### The error may involve com.ruoyi.campus.mapper.CampusProductMapper.insertCampusProduct-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into campus_product          ( title,                          image_urls,             price,             status,                                       create_time )           values ( ?,                          ?,             ?,             ?,                                       ? )\r\n### Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\n; Field \'user_id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'user_id\' doesn\'t have a default value', '2025-11-13 15:58:38', 101);
+INSERT INTO `sys_oper_log` VALUES (296, '校园二手商品', 1, 'com.ruoyi.campus.controller.CampusProductController.add()', 'POST', 1, 'admin', '研发部门', '/campus/product', '127.0.0.1', '内网IP', '{\"createTime\":\"2025-11-13 15:58:43\",\"imageUrls\":\"/profile/upload/2025/11/13/Grounded_2025.09.22-19.53.20_20251113155835A001.png\",\"params\":{},\"price\":0.01,\"status\":\"0\",\"title\":\"111\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\r\n### The error may exist in file [C:\\Users\\stan0930\\Desktop\\our-awesome-project\\ruoyi-system\\target\\classes\\mapper\\campus\\CampusProductMapper.xml]\r\n### The error may involve com.ruoyi.campus.mapper.CampusProductMapper.insertCampusProduct-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into campus_product          ( title,                          image_urls,             price,             status,                                       create_time )           values ( ?,                          ?,             ?,             ?,                                       ? )\r\n### Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\n; Field \'user_id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'user_id\' doesn\'t have a default value', '2025-11-13 15:58:43', 4);
+INSERT INTO `sys_oper_log` VALUES (297, '校园二手商品', 1, 'com.ruoyi.campus.controller.CampusProductController.add()', 'POST', 1, 'admin', '研发部门', '/campus/product', '127.0.0.1', '内网IP', '{\"createTime\":\"2025-11-13 16:01:40\",\"imageUrls\":\"/profile/upload/2025/11/13/Grounded_2025.09.22-19.53.20_20251113160136A002.png\",\"params\":{},\"price\":0.01,\"status\":\"0\",\"title\":\"11\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\r\n### The error may exist in file [C:\\Users\\stan0930\\Desktop\\our-awesome-project\\ruoyi-system\\target\\classes\\mapper\\campus\\CampusProductMapper.xml]\r\n### The error may involve com.ruoyi.campus.mapper.CampusProductMapper.insertCampusProduct-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into campus_product          ( title,                          image_urls,             price,             status,                                       create_time )           values ( ?,                          ?,             ?,             ?,                                       ? )\r\n### Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\n; Field \'user_id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'user_id\' doesn\'t have a default value', '2025-11-13 16:01:40', 2);
+INSERT INTO `sys_oper_log` VALUES (298, '校园二手商品', 1, 'com.ruoyi.campus.controller.CampusProductController.add()', 'POST', 1, 'admin', '研发部门', '/campus/product', '127.0.0.1', '内网IP', '{\"createTime\":\"2025-11-13 16:03:18\",\"description\":\"sss\",\"imageUrls\":\"/profile/upload/2025/11/13/Grounded_2025.09.22-19.53.20_20251113160136A002.png\",\"params\":{},\"price\":0.01,\"status\":\"0\",\"title\":\"11\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\r\n### The error may exist in file [C:\\Users\\stan0930\\Desktop\\our-awesome-project\\ruoyi-system\\target\\classes\\mapper\\campus\\CampusProductMapper.xml]\r\n### The error may involve com.ruoyi.campus.mapper.CampusProductMapper.insertCampusProduct-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into campus_product          ( title,             description,             image_urls,             price,             status,                                       create_time )           values ( ?,             ?,             ?,             ?,             ?,                                       ? )\r\n### Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\n; Field \'user_id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'user_id\' doesn\'t have a default value', '2025-11-13 16:03:18', 10);
+INSERT INTO `sys_oper_log` VALUES (299, '校园二手商品', 1, 'com.ruoyi.campus.controller.CampusProductController.add()', 'POST', 1, 'admin', '研发部门', '/campus/product', '192.168.1.105', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-11-13 16:08:00\",\"description\":\"ss\",\"imageUrls\":\"/profile/upload/2025/11/13/Grounded_2025.09.22-19.53.20_20251113160800A001.png\",\"params\":{},\"price\":0.01,\"productId\":1,\"status\":\"0\",\"title\":\"ss\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-13 16:08:00', 17);
+INSERT INTO `sys_oper_log` VALUES (300, '校园话题', 1, 'com.ruoyi.campus.controller.CampusTopicController.add()', 'POST', 1, 'admin', '研发部门', '/campus/topic', '127.0.0.1', '内网IP', '{\"content\":\"<h1>ok</h1><h1><img src=\\\"/dev-api/profile/upload/2025/11/16/Grounded_2025.09.22-19.53.20_20251116201631A001.png\\\"></h1>\",\"createBy\":\"admin\",\"createTime\":\"2025-11-16 20:16:41\",\"favorited\":false,\"liked\":false,\"params\":{},\"topicId\":117,\"topicType\":\"daily\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-16 20:16:41', 22);
+INSERT INTO `sys_oper_log` VALUES (301, '校园话题', 3, 'com.ruoyi.campus.controller.CampusTopicController.remove()', 'DELETE', 1, 'admin', '研发部门', '/campus/topic/117', '127.0.0.1', '内网IP', '[117]', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-16 21:43:08', 24);
+INSERT INTO `sys_oper_log` VALUES (302, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:16:01\",\"day\":2,\"id\":1,\"location\":\"t\",\"name\":\"t\",\"params\":{},\"section\":1,\"teacher\":\"t\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:16:01', 20);
+INSERT INTO `sys_oper_log` VALUES (303, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:16:08\",\"day\":2,\"id\":2,\"location\":\"t\",\"name\":\"t\",\"params\":{},\"section\":1,\"teacher\":\"t\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:16:08', 7);
+INSERT INTO `sys_oper_log` VALUES (304, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:16:13\",\"day\":2,\"id\":3,\"location\":\"t\",\"name\":\"t\",\"params\":{},\"section\":1,\"teacher\":\"t\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:16:13', 8);
+INSERT INTO `sys_oper_log` VALUES (305, '课程表', 3, 'com.ruoyi.web.controller.app.ScheduleController.remove()', 'DELETE', 1, 'admin', '研发部门', '/app/schedule/1', '127.0.0.1', '内网IP', '[1]', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:16:20', 8);
+INSERT INTO `sys_oper_log` VALUES (306, '课程表', 3, 'com.ruoyi.web.controller.app.ScheduleController.remove()', 'DELETE', 1, 'admin', '研发部门', '/app/schedule/2', '127.0.0.1', '内网IP', '[2]', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:16:26', 5);
+INSERT INTO `sys_oper_log` VALUES (307, '课程表', 3, 'com.ruoyi.web.controller.app.ScheduleController.remove()', 'DELETE', 1, 'admin', '研发部门', '/app/schedule/3', '127.0.0.1', '内网IP', '[3]', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:18:38', 4);
+INSERT INTO `sys_oper_log` VALUES (308, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:18:44\",\"day\":2,\"id\":4,\"location\":\"t\",\"name\":\"t\",\"params\":{},\"section\":1,\"teacher\":\"t\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:18:44', 6);
+INSERT INTO `sys_oper_log` VALUES (309, '课程表', 3, 'com.ruoyi.web.controller.app.ScheduleController.remove()', 'DELETE', 1, 'admin', '研发部门', '/app/schedule/4', '127.0.0.1', '内网IP', '[4]', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:19:19', 4);
+INSERT INTO `sys_oper_log` VALUES (310, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:19:33\",\"day\":2,\"id\":5,\"location\":\"204\",\"name\":\"高数\",\"params\":{},\"section\":1,\"teacher\":\"李\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:19:33', 7);
+INSERT INTO `sys_oper_log` VALUES (311, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:22:29\",\"day\":2,\"id\":6,\"location\":\"204\",\"name\":\"高数\",\"params\":{},\"section\":2,\"teacher\":\"李\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:22:29', 5);
+INSERT INTO `sys_oper_log` VALUES (312, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:22:31\",\"day\":2,\"id\":7,\"location\":\"204\",\"name\":\"高数\",\"params\":{},\"section\":2,\"teacher\":\"李\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:22:31', 4);
+INSERT INTO `sys_oper_log` VALUES (313, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:22:31\",\"day\":2,\"id\":8,\"location\":\"204\",\"name\":\"高数\",\"params\":{},\"section\":2,\"teacher\":\"李\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:22:31', 5);
+INSERT INTO `sys_oper_log` VALUES (314, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:22:32\",\"day\":2,\"id\":9,\"location\":\"204\",\"name\":\"高数\",\"params\":{},\"section\":2,\"teacher\":\"李\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:22:32', 10);
+INSERT INTO `sys_oper_log` VALUES (315, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:22:32\",\"day\":2,\"id\":10,\"location\":\"204\",\"name\":\"高数\",\"params\":{},\"section\":2,\"teacher\":\"李\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:22:32', 4);
+INSERT INTO `sys_oper_log` VALUES (316, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:22:32\",\"day\":2,\"id\":11,\"location\":\"204\",\"name\":\"高数\",\"params\":{},\"section\":2,\"teacher\":\"李\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:22:32', 4);
+INSERT INTO `sys_oper_log` VALUES (317, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:22:32\",\"day\":2,\"id\":12,\"location\":\"204\",\"name\":\"高数\",\"params\":{},\"section\":2,\"teacher\":\"李\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:22:32', 4);
+INSERT INTO `sys_oper_log` VALUES (318, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:22:32\",\"day\":2,\"id\":13,\"location\":\"204\",\"name\":\"高数\",\"params\":{},\"section\":2,\"teacher\":\"李\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:22:32', 5);
+INSERT INTO `sys_oper_log` VALUES (319, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:22:33\",\"day\":2,\"id\":14,\"location\":\"204\",\"name\":\"高数\",\"params\":{},\"section\":2,\"teacher\":\"李\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:22:33', 5);
+INSERT INTO `sys_oper_log` VALUES (320, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:22:33\",\"day\":2,\"id\":15,\"location\":\"204\",\"name\":\"高数\",\"params\":{},\"section\":2,\"teacher\":\"李\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:22:33', 4);
+INSERT INTO `sys_oper_log` VALUES (321, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:22:34\",\"day\":2,\"id\":16,\"location\":\"204\",\"name\":\"高数\",\"params\":{},\"section\":2,\"teacher\":\"李\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:22:34', 5);
+INSERT INTO `sys_oper_log` VALUES (322, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:22:34\",\"day\":2,\"id\":17,\"location\":\"204\",\"name\":\"高数\",\"params\":{},\"section\":2,\"teacher\":\"李\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:22:34', 4);
+INSERT INTO `sys_oper_log` VALUES (323, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:22:34\",\"day\":2,\"id\":18,\"location\":\"204\",\"name\":\"高数\",\"params\":{},\"section\":2,\"teacher\":\"李\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:22:34', 3);
+INSERT INTO `sys_oper_log` VALUES (324, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:22:34\",\"day\":2,\"id\":19,\"location\":\"204\",\"name\":\"高数\",\"params\":{},\"section\":2,\"teacher\":\"李\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:22:34', 5);
+INSERT INTO `sys_oper_log` VALUES (325, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:24:26\",\"day\":2,\"id\":20,\"location\":\"204\",\"name\":\"高数\",\"params\":{},\"section\":3,\"teacher\":\"李\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:24:26', 7);
+INSERT INTO `sys_oper_log` VALUES (326, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:24:26\",\"day\":2,\"id\":21,\"location\":\"204\",\"name\":\"高数\",\"params\":{},\"section\":3,\"teacher\":\"李\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:24:26', 6);
+INSERT INTO `sys_oper_log` VALUES (327, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:24:27\",\"day\":2,\"id\":22,\"location\":\"204\",\"name\":\"高数\",\"params\":{},\"section\":3,\"teacher\":\"李\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:24:27', 4);
+INSERT INTO `sys_oper_log` VALUES (328, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:27:30\",\"day\":2,\"id\":23,\"location\":\"204\",\"name\":\"高数\",\"params\":{},\"section\":4,\"teacher\":\"李\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200,\"data\":{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:27:30\",\"day\":2,\"id\":23,\"location\":\"204\",\"name\":\"高数\",\"params\":{},\"section\":4,\"teacher\":\"李\",\"userId\":1}}', 0, NULL, '2025-11-25 17:27:30', 21);
 
 -- ----------------------------
 -- Table structure for sys_post
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_post`;
 CREATE TABLE `sys_post`  (
-                             `post_id` bigint NOT NULL AUTO_INCREMENT COMMENT '岗位ID',
-                             `post_code` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '岗位编码',
-                             `post_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '岗位名称',
-                             `post_sort` int NOT NULL COMMENT '显示顺序',
-                             `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '状态（0正常 1停用）',
-                             `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
-                             `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                             `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
-                             `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                             `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
-                             PRIMARY KEY (`post_id`) USING BTREE
+  `post_id` bigint NOT NULL AUTO_INCREMENT COMMENT '岗位ID',
+  `post_code` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '岗位编码',
+  `post_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '岗位名称',
+  `post_sort` int NOT NULL COMMENT '显示顺序',
+  `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '状态（0正常 1停用）',
+  `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`post_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '岗位信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -1272,21 +1607,21 @@ INSERT INTO `sys_post` VALUES (4, 'user', '普通员工', 4, '0', 'admin', '2025
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE `sys_role`  (
-                             `role_id` bigint NOT NULL AUTO_INCREMENT COMMENT '角色ID',
-                             `role_name` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '角色名称',
-                             `role_key` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '角色权限字符串',
-                             `role_sort` int NOT NULL COMMENT '显示顺序',
-                             `data_scope` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '1' COMMENT '数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）',
-                             `menu_check_strictly` tinyint(1) NULL DEFAULT 1 COMMENT '菜单树选择项是否关联显示',
-                             `dept_check_strictly` tinyint(1) NULL DEFAULT 1 COMMENT '部门树选择项是否关联显示',
-                             `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '角色状态（0正常 1停用）',
-                             `del_flag` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
-                             `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
-                             `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                             `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
-                             `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                             `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
-                             PRIMARY KEY (`role_id`) USING BTREE
+  `role_id` bigint NOT NULL AUTO_INCREMENT COMMENT '角色ID',
+  `role_name` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '角色名称',
+  `role_key` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '角色权限字符串',
+  `role_sort` int NOT NULL COMMENT '显示顺序',
+  `data_scope` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '1' COMMENT '数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）',
+  `menu_check_strictly` tinyint(1) NULL DEFAULT 1 COMMENT '菜单树选择项是否关联显示',
+  `dept_check_strictly` tinyint(1) NULL DEFAULT 1 COMMENT '部门树选择项是否关联显示',
+  `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '角色状态（0正常 1停用）',
+  `del_flag` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
+  `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`role_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 100 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '角色信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -1300,9 +1635,9 @@ INSERT INTO `sys_role` VALUES (2, '普通角色', 'common', 2, '2', 1, 1, '0', '
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role_dept`;
 CREATE TABLE `sys_role_dept`  (
-                                  `role_id` bigint NOT NULL COMMENT '角色ID',
-                                  `dept_id` bigint NOT NULL COMMENT '部门ID',
-                                  PRIMARY KEY (`role_id`, `dept_id`) USING BTREE
+  `role_id` bigint NOT NULL COMMENT '角色ID',
+  `dept_id` bigint NOT NULL COMMENT '部门ID',
+  PRIMARY KEY (`role_id`, `dept_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '角色和部门关联表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -1315,9 +1650,9 @@ INSERT INTO `sys_role_dept` VALUES (2, 100);
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role_menu`;
 CREATE TABLE `sys_role_menu`  (
-                                  `role_id` bigint NOT NULL COMMENT '角色ID',
-                                  `menu_id` bigint NOT NULL COMMENT '菜单ID',
-                                  PRIMARY KEY (`role_id`, `menu_id`) USING BTREE
+  `role_id` bigint NOT NULL COMMENT '角色ID',
+  `menu_id` bigint NOT NULL COMMENT '菜单ID',
+  PRIMARY KEY (`role_id`, `menu_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '角色和菜单关联表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -1425,33 +1760,33 @@ INSERT INTO `sys_role_menu` VALUES (2, 2010);
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user`  (
-                             `user_id` bigint NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-                             `dept_id` bigint NULL DEFAULT NULL COMMENT '部门ID',
-                             `user_name` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '用户账号',
-                             `nick_name` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '用户昵称',
-                             `user_type` varchar(2) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '00' COMMENT '用户类型（00系统用户）',
-                             `email` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '用户邮箱',
-                             `phonenumber` varchar(11) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '手机号码',
-                             `sex` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '用户性别（0男 1女 2未知）',
-                             `avatar` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '头像地址',
-                             `password` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '密码',
-                             `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '账号状态（0正常 1停用）',
-                             `del_flag` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
-                             `login_ip` varchar(128) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '最后登录IP',
-                             `login_date` datetime NULL DEFAULT NULL COMMENT '最后登录时间',
-                             `pwd_update_date` datetime NULL DEFAULT NULL COMMENT '密码最后更新时间',
-                             `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
-                             `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                             `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
-                             `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                             `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
-                             PRIMARY KEY (`user_id`) USING BTREE
+  `user_id` bigint NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `dept_id` bigint NULL DEFAULT NULL COMMENT '部门ID',
+  `user_name` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '用户账号',
+  `nick_name` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL COMMENT '用户昵称',
+  `user_type` varchar(2) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '00' COMMENT '用户类型（00系统用户）',
+  `email` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '用户邮箱',
+  `phonenumber` varchar(11) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '手机号码',
+  `sex` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '用户性别（0男 1女 2未知）',
+  `avatar` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '头像地址',
+  `password` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '密码',
+  `status` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '账号状态（0正常 1停用）',
+  `del_flag` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '删除标志（0代表存在 2代表删除）',
+  `login_ip` varchar(128) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '最后登录IP',
+  `login_date` datetime NULL DEFAULT NULL COMMENT '最后登录时间',
+  `pwd_update_date` datetime NULL DEFAULT NULL COMMENT '密码最后更新时间',
+  `create_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`user_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 101 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '用户信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', 'stan', '00', 'trzrzzh@icloud.com', '15257942123', '0', '/profile/avatar/2025/09/21/f5748c03e0e4452887ac214017fe6a7d.jpg', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2025-10-26 23:38:28', '2025-09-21 20:04:51', 'admin', '2025-09-21 20:04:51', '', '2025-09-21 22:22:25', '管理员');
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', 'stan', '00', 'trzrzzh@icloud.com', '15257942123', '0', '/profile/avatar/2025/09/21/f5748c03e0e4452887ac214017fe6a7d.jpg', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2025-11-25 20:26:35', '2025-09-21 20:04:51', 'admin', '2025-09-21 20:04:51', '', '2025-09-21 22:22:25', '管理员');
 INSERT INTO `sys_user` VALUES (2, 105, 'ry', 'ry', '00', 'ry@qq.com', '15666666666', '1', '/profile/avatar/2025/09/22/2cd6efbe672645258a4eac4cea69e045.JPG', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2025-10-10 16:34:29', '2025-09-21 20:04:51', 'admin', '2025-09-21 20:04:51', 'admin', '2025-10-09 13:30:19', '测试员');
 INSERT INTO `sys_user` VALUES (100, 100, 'stany', 'stany', '00', '3403368487@qq.com', '', '0', '/profile/avatar/2025/09/21/0b6194a629154a9aad6c1687e253f53a.JPG', '$2a$10$oed/BoxvGYRe69eCf0zZKOZGgY4iKtev2ODIHu3RoZESOPTvOfJxe', '0', '0', '127.0.0.1', '2025-09-21 22:19:17', NULL, 'admin', '2025-09-21 21:29:53', '', '2025-09-21 21:30:41', NULL);
 
@@ -1460,9 +1795,9 @@ INSERT INTO `sys_user` VALUES (100, 100, 'stany', 'stany', '00', '3403368487@qq.
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user_post`;
 CREATE TABLE `sys_user_post`  (
-                                  `user_id` bigint NOT NULL COMMENT '用户ID',
-                                  `post_id` bigint NOT NULL COMMENT '岗位ID',
-                                  PRIMARY KEY (`user_id`, `post_id`) USING BTREE
+  `user_id` bigint NOT NULL COMMENT '用户ID',
+  `post_id` bigint NOT NULL COMMENT '岗位ID',
+  PRIMARY KEY (`user_id`, `post_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '用户与岗位关联表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -1476,9 +1811,9 @@ INSERT INTO `sys_user_post` VALUES (2, 2);
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user_role`;
 CREATE TABLE `sys_user_role`  (
-                                  `user_id` bigint NOT NULL COMMENT '用户ID',
-                                  `role_id` bigint NOT NULL COMMENT '角色ID',
-                                  PRIMARY KEY (`user_id`, `role_id`) USING BTREE
+  `user_id` bigint NOT NULL COMMENT '用户ID',
+  `role_id` bigint NOT NULL COMMENT '角色ID',
+  PRIMARY KEY (`user_id`, `role_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '用户和角色关联表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
