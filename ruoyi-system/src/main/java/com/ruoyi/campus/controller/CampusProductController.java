@@ -29,8 +29,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  */
 @RestController
 @RequestMapping("/campus/product")
-public class CampusProductController extends BaseController
-{
+public class CampusProductController extends BaseController {
     @Autowired
     private ICampusProductService campusProductService;
 
@@ -39,8 +38,7 @@ public class CampusProductController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('campus:product:list')")
     @GetMapping("/list")
-    public TableDataInfo list(CampusProduct campusProduct)
-    {
+    public TableDataInfo list(CampusProduct campusProduct) {
         startPage();
         List<CampusProduct> list = campusProductService.selectCampusProductList(campusProduct);
         return getDataTable(list);
@@ -52,8 +50,7 @@ public class CampusProductController extends BaseController
     @PreAuthorize("@ss.hasPermi('campus:product:export')")
     @Log(title = "校园二手商品", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, CampusProduct campusProduct)
-    {
+    public void export(HttpServletResponse response, CampusProduct campusProduct) {
         List<CampusProduct> list = campusProductService.selectCampusProductList(campusProduct);
         ExcelUtil<CampusProduct> util = new ExcelUtil<CampusProduct>(CampusProduct.class);
         util.exportExcel(response, list, "校园二手商品数据");
@@ -64,8 +61,7 @@ public class CampusProductController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('campus:product:query')")
     @GetMapping(value = "/{productId}")
-    public AjaxResult getInfo(@PathVariable("productId") Long productId)
-    {
+    public AjaxResult getInfo(@PathVariable("productId") Long productId) {
         return success(campusProductService.selectCampusProductByProductId(productId));
     }
 
@@ -75,8 +71,8 @@ public class CampusProductController extends BaseController
     @PreAuthorize("@ss.hasPermi('campus:product:add')")
     @Log(title = "校园二手商品", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody CampusProduct campusProduct)
-    {
+    public AjaxResult add(@RequestBody CampusProduct campusProduct) {
+        campusProduct.setUserId(getUserId());
         return toAjax(campusProductService.insertCampusProduct(campusProduct));
     }
 
@@ -86,8 +82,7 @@ public class CampusProductController extends BaseController
     @PreAuthorize("@ss.hasPermi('campus:product:edit')")
     @Log(title = "校园二手商品", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody CampusProduct campusProduct)
-    {
+    public AjaxResult edit(@RequestBody CampusProduct campusProduct) {
         return toAjax(campusProductService.updateCampusProduct(campusProduct));
     }
 
@@ -96,9 +91,55 @@ public class CampusProductController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('campus:product:remove')")
     @Log(title = "校园二手商品", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{productIds}")
-    public AjaxResult remove(@PathVariable Long[] productIds)
-    {
+    @DeleteMapping("/{productIds}")
+    public AjaxResult remove(@PathVariable Long[] productIds) {
         return toAjax(campusProductService.deleteCampusProductByProductIds(productIds));
+    }
+
+    /**
+     * 【新增】获取商品详情(增加浏览次数)
+     */
+    @GetMapping("/detail/{productId}")
+    public AjaxResult getDetail(@PathVariable("productId") Long productId) {
+        return success(campusProductService.selectProductDetail(productId, getUserId()));
+    }
+
+    /**
+     * 【新增】更新商品状态
+     */
+    @PutMapping("/status/{productId}")
+    public AjaxResult updateStatus(@PathVariable("productId") Long productId,
+            @RequestBody CampusProduct campusProduct) {
+        return toAjax(campusProductService.updateProductStatus(productId, campusProduct.getStatus(), getUserId()));
+    }
+
+    /**
+     * 【新增】切换收藏状态
+     */
+    @PutMapping("/toggle-favorite/{productId}")
+    public AjaxResult toggleFavorite(@PathVariable("productId") Long productId) {
+        boolean isFavorited = campusProductService.toggleFavorite(productId, getUserId());
+        return AjaxResult.success("操作成功", isFavorited);
+    }
+
+    /**
+     * 【新增】查询我的商品列表
+     */
+    @GetMapping("/my-products")
+    public TableDataInfo myProducts(CampusProduct campusProduct) {
+        startPage();
+        campusProduct.setUserId(getUserId());
+        List<CampusProduct> list = campusProductService.selectMyProducts(campusProduct);
+        return getDataTable(list);
+    }
+
+    /**
+     * 【新增】查询我的收藏列表
+     */
+    @GetMapping("/my-favorites")
+    public TableDataInfo myFavorites() {
+        startPage();
+        List<CampusProduct> list = campusProductService.selectMyFavoriteProducts(getUserId());
+        return getDataTable(list);
     }
 }

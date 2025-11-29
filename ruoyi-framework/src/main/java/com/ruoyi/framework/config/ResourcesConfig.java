@@ -19,8 +19,7 @@ import com.ruoyi.framework.interceptor.RepeatSubmitInterceptor;
  * @author ruoyi
  */
 @Configuration
-public class ResourcesConfig implements WebMvcConfigurer
-{
+public class ResourcesConfig implements WebMvcConfigurer {
     @Autowired
     private RepeatSubmitInterceptor repeatSubmitInterceptor;
 
@@ -28,11 +27,15 @@ public class ResourcesConfig implements WebMvcConfigurer
      * 静态资源映射
      */
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry)
-    {
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
         /** 本地文件上传路径 */
+        String profile = RuoYiConfig.getProfile();
+        // 如果是相对路径，转换为绝对路径
+        if (profile.startsWith("./")) {
+            profile = System.getProperty("user.dir") + profile.substring(1);
+        }
         registry.addResourceHandler(Constants.RESOURCE_PREFIX + "/**")
-                .addResourceLocations("file:///" + RuoYiConfig.getProfile().replace("\\", "/") + "/");
+                .addResourceLocations("file:///" + profile.replace("\\", "/") + "/");
 
         /** swagger配置 */
         registry.addResourceHandler("/swagger-ui/**")
@@ -43,8 +46,7 @@ public class ResourcesConfig implements WebMvcConfigurer
      * 自定义拦截规则
      */
     @Override
-    public void addInterceptors(InterceptorRegistry registry)
-    {
+    public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(repeatSubmitInterceptor).addPathPatterns("/**").excludePathPatterns("/profile/**");
     }
 
@@ -52,8 +54,7 @@ public class ResourcesConfig implements WebMvcConfigurer
      * 跨域配置
      */
     @Bean
-    public CorsFilter corsFilter()
-    {
+    public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
         config.addAllowedOriginPattern("*");
         config.addAllowedHeader("*");

@@ -9,8 +9,7 @@ import com.ruoyi.campus.domain.CampusProduct;
  * @author ruoyi
  * @date 2025-11-11
  */
-public interface ICampusProductService 
-{
+public interface ICampusProductService {
     /**
      * 查询校园二手商品
      * 
@@ -58,4 +57,48 @@ public interface ICampusProductService
      * @return 结果
      */
     public int deleteCampusProductByProductId(Long productId);
+
+    /**
+     * 【新增】切换收藏状态
+     * 
+     * @param productId 商品ID
+     * @param userId    用户ID
+     * @return 是否已收藏
+     */
+    public boolean toggleFavorite(Long productId, Long userId);
+
+    /**
+     * 【新增】查询我的商品列表
+     * 
+     * @param campusProduct 商品
+     * @return 商品列表
+     */
+    public List<CampusProduct> selectMyProducts(CampusProduct campusProduct);
+
+    /**
+     * 【新增】查询我的收藏列表
+     * 
+     * @param userId 用户ID
+     * @return 商品列表
+     */
+    public List<CampusProduct> selectMyFavoriteProducts(Long userId);
+
+    /**
+     * 【新增】更新商品状态
+     * 
+     * @param productId 商品ID
+     * @param status    状态
+     * @param userId    当前用户ID(用于权限验证)
+     * @return 结果
+     */
+    public int updateProductStatus(Long productId, String status, Long userId);
+
+    /**
+     * 【新增】查询商品详情(并增加浏览次数)
+     * 
+     * @param productId 商品ID
+     * @param userId    当前用户ID(用于判断收藏状态)
+     * @return 商品详情
+     */
+    public CampusProduct selectProductDetail(Long productId, Long userId);
 }
