@@ -1,6 +1,7 @@
 package com.ruoyi.system.service;
 
 import com.ruoyi.system.domain.ChatMessage;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.List;
 
@@ -16,6 +17,14 @@ public interface IChatService {
      * @return 智能体回复
      */
     String sendMessageToDify(String message);
+
+    /**
+     * (新方法) 流式向Dify发送消息，并注入业务上下文
+     *
+     * @param message 用户消息
+     * @param emitter SSE发射器，用于实时推送数据给前端
+     */
+    void streamMessage(String message, SseEmitter emitter);
 
     /**
      * 获取当前用户的最近聊天历史
