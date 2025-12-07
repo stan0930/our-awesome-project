@@ -28,8 +28,8 @@ import com.ruoyi.common.exception.ServiceException;
 
 /**
  * 校园订单Controller
- * * @author ruoyi
  * 
+ * @author ruoyi
  * @date (你的生成日期)
  */
 @RestController
@@ -64,7 +64,7 @@ public class CampusOrderController extends BaseController {
     /**
      * 获取校园订单详细信息
      */
-    @PreAuthorize("@ss.hasPermi('campus:order:query')")
+    // @PreAuthorize("@ss.hasPermi('campus:order:query')") // 【修改】允许用户查看自己的订单
     @GetMapping(value = "/{orderId}")
     public AjaxResult getInfo(@PathVariable("orderId") Long orderId) {
         return success(campusOrderService.selectCampusOrderByOrderId(orderId));

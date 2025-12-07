@@ -36,7 +36,7 @@ public class CampusProductController extends BaseController {
     /**
      * 查询校园二手商品列表
      */
-    @PreAuthorize("@ss.hasPermi('campus:product:list')")
+    // @PreAuthorize("@ss.hasPermi('campus:product:list')") // 【修改】允许所有登录用户访问
     @GetMapping("/list")
     public TableDataInfo list(CampusProduct campusProduct) {
         startPage();
@@ -59,7 +59,7 @@ public class CampusProductController extends BaseController {
     /**
      * 获取校园二手商品详细信息
      */
-    @PreAuthorize("@ss.hasPermi('campus:product:query')")
+    // @PreAuthorize("@ss.hasPermi('campus:product:query')") // 【修改】允许所有登录用户访问
     @GetMapping(value = "/{productId}")
     public AjaxResult getInfo(@PathVariable("productId") Long productId) {
         return success(campusProductService.selectCampusProductByProductId(productId));
@@ -68,7 +68,7 @@ public class CampusProductController extends BaseController {
     /**
      * 新增校园二手商品
      */
-    @PreAuthorize("@ss.hasPermi('campus:product:add')")
+    // @PreAuthorize("@ss.hasPermi('campus:product:add')") // 【修改】允许所有登录用户发布商品
     @Log(title = "校园二手商品", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody CampusProduct campusProduct) {
@@ -79,7 +79,7 @@ public class CampusProductController extends BaseController {
     /**
      * 修改校园二手商品
      */
-    @PreAuthorize("@ss.hasPermi('campus:product:edit')")
+    // @PreAuthorize("@ss.hasPermi('campus:product:edit')") // 【修改】允许所有登录用户编辑自己的商品
     @Log(title = "校园二手商品", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody CampusProduct campusProduct) {
