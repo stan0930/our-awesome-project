@@ -82,4 +82,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{itemId}
         </foreach>
     </delete>
+
+    <!-- 【新增】根据订单ID查询订单项 -->
+    <select id="selectByOrderId" parameterType="Long" resultMap="CampusOrderItemResult">
+        <include refid="selectCampusOrderItemVo"/>
+        where order_id = #{orderId}
+        limit 1
+    </select>
 </mapper>

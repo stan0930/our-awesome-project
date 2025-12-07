@@ -23,11 +23,11 @@ import com.ruoyi.campus.service.ICampusOrderService;
 /**
  * 校园订单Service业务层处理
  * * @author ruoyi
+ * 
  * @date (你的生成日期)
  */
 @Service
-public class CampusOrderServiceImpl implements ICampusOrderService
-{
+public class CampusOrderServiceImpl implements ICampusOrderService {
     @Autowired
     private CampusOrderMapper campusOrderMapper;
 
@@ -42,8 +42,7 @@ public class CampusOrderServiceImpl implements ICampusOrderService
      * 查询校园订单
      */
     @Override
-    public CampusOrder selectCampusOrderByOrderId(Long orderId)
-    {
+    public CampusOrder selectCampusOrderByOrderId(Long orderId) {
         return campusOrderMapper.selectCampusOrderByOrderId(orderId);
     }
 
@@ -51,8 +50,7 @@ public class CampusOrderServiceImpl implements ICampusOrderService
      * 查询校园订单列表
      */
     @Override
-    public List<CampusOrder> selectCampusOrderList(CampusOrder campusOrder)
-    {
+    public List<CampusOrder> selectCampusOrderList(CampusOrder campusOrder) {
         return campusOrderMapper.selectCampusOrderList(campusOrder);
     }
 
@@ -60,8 +58,7 @@ public class CampusOrderServiceImpl implements ICampusOrderService
      * 新增校园订单 (这是后台管理用的)
      */
     @Override
-    public int insertCampusOrder(CampusOrder campusOrder)
-    {
+    public int insertCampusOrder(CampusOrder campusOrder) {
         campusOrder.setCreateTime(DateUtils.getNowDate());
         return campusOrderMapper.insertCampusOrder(campusOrder);
     }
@@ -70,8 +67,7 @@ public class CampusOrderServiceImpl implements ICampusOrderService
      * 修改校园订单
      */
     @Override
-    public int updateCampusOrder(CampusOrder campusOrder)
-    {
+    public int updateCampusOrder(CampusOrder campusOrder) {
         campusOrder.setUpdateTime(DateUtils.getNowDate());
         return campusOrderMapper.updateCampusOrder(campusOrder);
     }
@@ -80,8 +76,7 @@ public class CampusOrderServiceImpl implements ICampusOrderService
      * 批量删除校园订单
      */
     @Override
-    public int deleteCampusOrderByOrderIds(Long[] orderIds)
-    {
+    public int deleteCampusOrderByOrderIds(Long[] orderIds) {
         return campusOrderMapper.deleteCampusOrderByOrderIds(orderIds);
     }
 
@@ -89,8 +84,7 @@ public class CampusOrderServiceImpl implements ICampusOrderService
      * 删除校园订单信息
      */
     @Override
-    public int deleteCampusOrderByOrderId(Long orderId)
-    {
+    public int deleteCampusOrderByOrderId(Long orderId) {
         return campusOrderMapper.deleteCampusOrderByOrderId(orderId);
     }
 
@@ -100,14 +94,13 @@ public class CampusOrderServiceImpl implements ICampusOrderService
      */
     @Override
     @Transactional
-    public Long createOrder(CreateOrderDto createOrderDto)
-    {
+    public Long createOrder(CreateOrderDto createOrderDto) {
         // 获取当前登录的用户ID，即买家ID
         Long buyerId = SecurityUtils.getUserId();
         Long productId = createOrderDto.getProductId();
 
         // 1. 【核心】锁定商品：查询商品并使用悲观锁，防止多人同时购买
-        //    这个方法是我们在 CampusProductMapper.xml 里新增的
+        // 这个方法是我们在 CampusProductMapper.xml 里新增的
         CampusProduct product = campusProductMapper.selectCampusProductByProductIdForUpdate(productId);
 
         // 2. 检查商品状态
@@ -122,8 +115,8 @@ public class CampusOrderServiceImpl implements ICampusOrderService
         }
 
         // 3. 更新商品状态为“已售” (状态 1)
-        //    这个方法是我们在 CampusProductMapper.xml 里新增的
-        //    它会检查 status = '0'，作为乐观锁
+        // 这个方法是我们在 CampusProductMapper.xml 里新增的
+        // 它会检查 status = '0'，作为乐观锁
         int rows = campusProductMapper.updateCampusProductStatus(productId, "1"); // '1' 是 "已售"
         if (rows == 0) {
             // 如果更新失败 (rows=0)，说明在第1步查完后，商品状态被改了 (被别人买走了)
@@ -165,5 +158,74 @@ public class CampusOrderServiceImpl implements ICampusOrderService
 
         // 6. 返回订单ID
         return order.getOrderId();
+    }
+
+    /**
+     * 【新增】取消订单
+     */
+    @Override
+    public void cancelOrder(Long orderId, Long userId) {
+        // 1. 查询订单
+        CampusOrder order = campusOrderMapper.selectCampusOrderByOrderId(orderId);
+        if (order == null) {
+            throw new ServiceException("订单不存在");
+        }
+
+        // 2. 权限校验：只有买家可以取消
+        if (!order.getBuyerId().equals(userId)) {
+            throw new ServiceException("无权操作此订单");
+        }
+
+        // 3. 状态校验：只有待发货状态可以取消
+        if (!"1".equals(order.getStatus())) {
+            throw new ServiceException("当前订单状态不允许取消");
+        }
+
+        // 4. 更新订单状态为已取消
+        order.setStatus("4");
+        order.setUpdateTime(DateUtils.getNowDate());
+        campusOrderMapper.updateCampusOrder(order);
+
+        // 5. 恢复商品状态为在售
+        Long productId = getProductIdFromOrder(orderId);
+        if (productId != null) {
+            campusProductMapper.updateCampusProductStatus(productId, "0");
+        }
+    }
+
+    /**
+     * 【新增】确认收货
+     */
+    @Override
+    public void confirmReceipt(Long orderId, Long userId) {
+        // 1. 查询订单
+        CampusOrder order = campusOrderMapper.selectCampusOrderByOrderId(orderId);
+        if (order == null) {
+            throw new ServiceException("订单不存在");
+        }
+
+        // 2. 权限校验：只有买家可以确认收货
+        if (!order.getBuyerId().equals(userId)) {
+            throw new ServiceException("无权操作此订单");
+        }
+
+        // 3. 状态校验：只有待收货状态可以确认
+        if (!"2".equals(order.getStatus())) {
+            throw new ServiceException("当前订单状态不允许确认收货");
+        }
+
+        // 4. 更新订单状态为已完成
+        order.setStatus("3");
+        order.setUpdateTime(DateUtils.getNowDate());
+        campusOrderMapper.updateCampusOrder(order);
+    }
+
+    /**
+     * 辅助方法：从订单中获取商品ID
+     */
+    private Long getProductIdFromOrder(Long orderId) {
+        // 通过订单项表查询商品ID
+        CampusOrderItem item = campusOrderItemMapper.selectByOrderId(orderId);
+        return item != null ? item.getProductId() : null;
     }
 }

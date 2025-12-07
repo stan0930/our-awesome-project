@@ -11,7 +11,7 @@
  Target Server Version : 80041 (8.0.41)
  File Encoding         : 65001
 
- Date: 29/11/2025 10:19:15
+ Date: 07/12/2025 14:32:28
 */
 
 SET NAMES utf8mb4;
@@ -84,7 +84,7 @@ CREATE TABLE `campus_comment`  (
   INDEX `user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `campus_comment_ibfk_1` FOREIGN KEY (`topic_id`) REFERENCES `campus_topic` (`topic_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `campus_comment_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `sys_user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '12. 帖子评论表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '12. 帖子评论表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of campus_comment
@@ -189,12 +189,13 @@ CREATE TABLE `campus_product`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`product_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '校园二手商品表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '校园二手商品表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of campus_product
 -- ----------------------------
-INSERT INTO `campus_product` VALUES (1, 1, 'ss', 'ss', 'other', '/profile/upload/2025/11/13/Grounded_2025.09.22-19.53.20_20251113160800A001.png', 0.01, '', 0, '0', '0', 'admin', '2025-11-13 16:08:01', '', NULL, NULL);
+INSERT INTO `campus_product` VALUES (1, 1, 'ss', 'ss', 'other', '/profile/upload/2025/11/13/Grounded_2025.09.22-19.53.20_20251113160800A001.png', 0.01, '', 2, '0', '0', 'admin', '2025-11-13 16:08:01', '', NULL, NULL);
+INSERT INTO `campus_product` VALUES (2, 1, '海水', '很贵的海水', 'daily', 'http://127.0.0.1:8080/profile/upload/2025/11/29/image_20251129211339A002.png', 114514.00, '15257942123', 10, '0', '0', '', '2025-11-29 21:16:49', '', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for campus_product_favorite
@@ -209,7 +210,7 @@ CREATE TABLE `campus_product_favorite`  (
   UNIQUE INDEX `uk_user_product`(`user_id` ASC, `product_id` ASC) USING BTREE,
   INDEX `idx_product_id`(`product_id` ASC) USING BTREE,
   INDEX `idx_user_id`(`user_id` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品收藏表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品收藏表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of campus_product_favorite
@@ -721,7 +722,7 @@ CREATE TABLE `schedule_course`  (
   UNIQUE INDEX `uk_user_day_section_name`(`user_id` ASC, `day` ASC, `section` ASC, `name` ASC) USING BTREE,
   INDEX `idx_user_id`(`user_id` ASC) USING BTREE,
   INDEX `idx_day_section`(`day` ASC, `section` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户课程表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户课程表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of schedule_course
@@ -730,6 +731,7 @@ INSERT INTO `schedule_course` VALUES (5, 1, 2, 1, '高数', '李', '204', '#4CAF
 INSERT INTO `schedule_course` VALUES (6, 1, 2, 2, '高数', '李', '204', '#4CAF50', '2025-11-25 17:22:30', NULL);
 INSERT INTO `schedule_course` VALUES (20, 1, 2, 3, '高数', '李', '204', '#4CAF50', '2025-11-25 17:24:26', NULL);
 INSERT INTO `schedule_course` VALUES (23, 1, 2, 4, '高数', '李', '204', '#4CAF50', '2025-11-25 17:27:31', NULL);
+INSERT INTO `schedule_course` VALUES (24, 1, 5, 5, '线代', '张', '108', '#FF5722', '2025-12-01 15:22:46', NULL);
 
 -- ----------------------------
 -- Table structure for sys_config
@@ -962,7 +964,7 @@ CREATE TABLE `sys_logininfor`  (
   PRIMARY KEY (`info_id`) USING BTREE,
   INDEX `idx_sys_logininfor_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_logininfor_lt`(`login_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 303 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 332 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_logininfor
@@ -1170,6 +1172,35 @@ INSERT INTO `sys_logininfor` VALUES (299, 'admin', '127.0.0.1', '内网IP', 'Chr
 INSERT INTO `sys_logininfor` VALUES (300, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-28 11:11:46');
 INSERT INTO `sys_logininfor` VALUES (301, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-28 11:35:26');
 INSERT INTO `sys_logininfor` VALUES (302, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-29 10:08:15');
+INSERT INTO `sys_logininfor` VALUES (303, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-29 13:56:04');
+INSERT INTO `sys_logininfor` VALUES (304, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-29 14:00:26');
+INSERT INTO `sys_logininfor` VALUES (305, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-29 14:04:59');
+INSERT INTO `sys_logininfor` VALUES (306, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-29 15:21:45');
+INSERT INTO `sys_logininfor` VALUES (307, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '1', '验证码已失效', '2025-11-29 15:32:39');
+INSERT INTO `sys_logininfor` VALUES (308, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-29 15:32:45');
+INSERT INTO `sys_logininfor` VALUES (309, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-29 15:50:32');
+INSERT INTO `sys_logininfor` VALUES (310, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-29 16:50:35');
+INSERT INTO `sys_logininfor` VALUES (311, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-29 17:42:17');
+INSERT INTO `sys_logininfor` VALUES (312, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-29 17:48:54');
+INSERT INTO `sys_logininfor` VALUES (313, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-29 17:52:16');
+INSERT INTO `sys_logininfor` VALUES (314, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-29 17:54:59');
+INSERT INTO `sys_logininfor` VALUES (315, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-29 18:11:06');
+INSERT INTO `sys_logininfor` VALUES (316, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-29 20:52:32');
+INSERT INTO `sys_logininfor` VALUES (317, 'admin', '127.0.0.1', '内网IP', 'Chrome Mobile', 'Android 6.x', '0', '登录成功', '2025-11-29 20:52:43');
+INSERT INTO `sys_logininfor` VALUES (318, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '1', '验证码错误', '2025-11-29 21:37:35');
+INSERT INTO `sys_logininfor` VALUES (319, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '1', '验证码错误', '2025-11-29 21:37:38');
+INSERT INTO `sys_logininfor` VALUES (320, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-11-29 21:37:42');
+INSERT INTO `sys_logininfor` VALUES (321, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '1', '验证码错误', '2025-12-01 11:56:58');
+INSERT INTO `sys_logininfor` VALUES (322, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '1', '验证码错误', '2025-12-01 11:57:00');
+INSERT INTO `sys_logininfor` VALUES (323, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-01 11:57:07');
+INSERT INTO `sys_logininfor` VALUES (324, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-01 11:58:28');
+INSERT INTO `sys_logininfor` VALUES (325, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-01 15:09:08');
+INSERT INTO `sys_logininfor` VALUES (326, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-01 15:10:08');
+INSERT INTO `sys_logininfor` VALUES (327, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-01 18:03:32');
+INSERT INTO `sys_logininfor` VALUES (328, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 13:46:51');
+INSERT INTO `sys_logininfor` VALUES (329, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 14:02:50');
+INSERT INTO `sys_logininfor` VALUES (330, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 14:22:03');
+INSERT INTO `sys_logininfor` VALUES (331, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 14:26:59');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -1298,7 +1329,6 @@ INSERT INTO `sys_menu` VALUES (2007, '跑腿代办导出', 2002, 5, '#', '', NUL
 INSERT INTO `sys_menu` VALUES (2008, '跑腿大厅', 0, 2, 'errand', 'campus/errand/index', NULL, '', 1, 0, 'C', '0', '0', '', 'shopping', 'admin', '2025-10-08 19:47:31', 'admin', '2025-10-09 15:55:18', '');
 INSERT INTO `sys_menu` VALUES (2009, '我的跑腿', 0, 3, 'my-errands', 'campus/profile/my-errands', NULL, '', 1, 0, 'C', '0', '0', '', 'shopping', 'admin', '2025-10-09 15:11:07', 'admin', '2025-10-09 15:56:12', '');
 INSERT INTO `sys_menu` VALUES (2010, '我的圈子', 0, 1, 'my-circle', 'campus/profile/index', NULL, '', 1, 0, 'C', '0', '0', '', 'international', 'admin', '2025-10-09 15:54:14', 'admin', '2025-10-09 15:55:04', '');
-INSERT INTO `sys_menu` VALUES (2017, '智能助手', 0, 3, 'assistant', 'assistant', NULL, '', 1, 0, 'C', '0', '0', '', 'message', 'admin', '2025-10-25 15:58:34', 'admin', '2025-10-25 16:02:38', '');
 INSERT INTO `sys_menu` VALUES (2018, '校园圈子管理（管理员）', 1, 0, 'topicAdmin', 'campus/admin/topic/index', NULL, '', 1, 0, 'C', '0', '0', '', 'international', 'admin', '2025-10-25 16:27:45', 'admin', '2025-10-25 16:28:54', '');
 INSERT INTO `sys_menu` VALUES (2019, '社团管理（管理员）', 1, 0, 'club', 'campus/admin/club/index', NULL, '', 1, 0, 'C', '0', '0', '', 'peoples', 'admin', '2025-10-26 23:43:22', 'admin', '2025-10-26 23:50:33', '');
 INSERT INTO `sys_menu` VALUES (2020, '活动管理（管理员）', 1, 0, 'activity', 'campus/admin/activity/index', NULL, '', 1, 0, 'C', '0', '0', '', 'list', 'admin', '2025-10-26 23:57:39', 'admin', '2025-11-11 14:34:41', '');
@@ -1371,7 +1401,7 @@ CREATE TABLE `sys_oper_log`  (
   INDEX `idx_sys_oper_log_bt`(`business_type` ASC) USING BTREE,
   INDEX `idx_sys_oper_log_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_oper_log_ot`(`oper_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 329 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 338 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_oper_log
@@ -1605,6 +1635,15 @@ INSERT INTO `sys_oper_log` VALUES (325, '课程表', 1, 'com.ruoyi.web.controlle
 INSERT INTO `sys_oper_log` VALUES (326, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:24:26\",\"day\":2,\"id\":21,\"location\":\"204\",\"name\":\"高数\",\"params\":{},\"section\":3,\"teacher\":\"李\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:24:26', 6);
 INSERT INTO `sys_oper_log` VALUES (327, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:24:27\",\"day\":2,\"id\":22,\"location\":\"204\",\"name\":\"高数\",\"params\":{},\"section\":3,\"teacher\":\"李\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-25 17:24:27', 4);
 INSERT INTO `sys_oper_log` VALUES (328, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:27:30\",\"day\":2,\"id\":23,\"location\":\"204\",\"name\":\"高数\",\"params\":{},\"section\":4,\"teacher\":\"李\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200,\"data\":{\"color\":\"#4CAF50\",\"createTime\":\"2025-11-25 17:27:30\",\"day\":2,\"id\":23,\"location\":\"204\",\"name\":\"高数\",\"params\":{},\"section\":4,\"teacher\":\"李\",\"userId\":1}}', 0, NULL, '2025-11-25 17:27:30', 21);
+INSERT INTO `sys_oper_log` VALUES (329, '菜单管理', 3, 'com.ruoyi.web.controller.system.SysMenuController.remove()', 'DELETE', 1, 'admin', '研发部门', '/system/menu/2017', '127.0.0.1', '内网IP', '2017', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-29 15:22:18', 28);
+INSERT INTO `sys_oper_log` VALUES (330, '校园二手商品', 1, 'com.ruoyi.campus.controller.CampusProductController.add()', 'POST', 1, 'admin', '研发部门', '/campus/product', '127.0.0.1', '内网IP', '{\"category\":\"daily\",\"contactInfo\":\"15257942123\",\"createTime\":\"2025-11-29 21:14:44\",\"description\":\"很贵的海水\",\"favorited\":false,\"imageUrls\":\"http://127.0.0.1:8080/profile/upload/2025/11/29/image_20251129211339A002.png\",\"params\":{},\"price\":114514,\"status\":\"0\",\"title\":\"海水\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\r\n### The error may exist in file [C:\\Users\\stan0930\\Desktop\\前台+后台后端\\our-awesome-project\\ruoyi-system\\target\\classes\\mapper\\campus\\CampusProductMapper.xml]\r\n### The error may involve com.ruoyi.campus.mapper.CampusProductMapper.insertCampusProduct-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into campus_product          ( title,             description,             category,             image_urls,             price,             contact_info,                          status,                                       create_time )           values ( ?,             ?,             ?,             ?,             ?,             ?,                          ?,                                       ? )\r\n### Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\n; Field \'user_id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'user_id\' doesn\'t have a default value', '2025-11-29 21:14:45', 204);
+INSERT INTO `sys_oper_log` VALUES (331, '校园二手商品', 1, 'com.ruoyi.campus.controller.CampusProductController.add()', 'POST', 1, 'admin', '研发部门', '/campus/product', '127.0.0.1', '内网IP', '{\"category\":\"daily\",\"contactInfo\":\"15257942123\",\"createTime\":\"2025-11-29 21:14:46\",\"description\":\"很贵的海水\",\"favorited\":false,\"imageUrls\":\"http://127.0.0.1:8080/profile/upload/2025/11/29/image_20251129211339A002.png\",\"params\":{},\"price\":114514,\"status\":\"0\",\"title\":\"海水\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\r\n### The error may exist in file [C:\\Users\\stan0930\\Desktop\\前台+后台后端\\our-awesome-project\\ruoyi-system\\target\\classes\\mapper\\campus\\CampusProductMapper.xml]\r\n### The error may involve com.ruoyi.campus.mapper.CampusProductMapper.insertCampusProduct-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into campus_product          ( title,             description,             category,             image_urls,             price,             contact_info,                          status,                                       create_time )           values ( ?,             ?,             ?,             ?,             ?,             ?,                          ?,                                       ? )\r\n### Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\n; Field \'user_id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'user_id\' doesn\'t have a default value', '2025-11-29 21:14:46', 3);
+INSERT INTO `sys_oper_log` VALUES (332, '校园二手商品', 1, 'com.ruoyi.campus.controller.CampusProductController.add()', 'POST', 1, 'admin', '研发部门', '/campus/product', '127.0.0.1', '内网IP', '{\"category\":\"daily\",\"contactInfo\":\"15257942123\",\"createTime\":\"2025-11-29 21:14:47\",\"description\":\"很贵的海水\",\"favorited\":false,\"imageUrls\":\"http://127.0.0.1:8080/profile/upload/2025/11/29/image_20251129211339A002.png\",\"params\":{},\"price\":114514,\"status\":\"0\",\"title\":\"海水\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\r\n### The error may exist in file [C:\\Users\\stan0930\\Desktop\\前台+后台后端\\our-awesome-project\\ruoyi-system\\target\\classes\\mapper\\campus\\CampusProductMapper.xml]\r\n### The error may involve com.ruoyi.campus.mapper.CampusProductMapper.insertCampusProduct-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into campus_product          ( title,             description,             category,             image_urls,             price,             contact_info,                          status,                                       create_time )           values ( ?,             ?,             ?,             ?,             ?,             ?,                          ?,                                       ? )\r\n### Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\n; Field \'user_id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'user_id\' doesn\'t have a default value', '2025-11-29 21:14:47', 4);
+INSERT INTO `sys_oper_log` VALUES (333, '校园二手商品', 1, 'com.ruoyi.campus.controller.CampusProductController.add()', 'POST', 1, 'admin', '研发部门', '/campus/product', '127.0.0.1', '内网IP', '{\"category\":\"daily\",\"contactInfo\":\"15257942123\",\"createTime\":\"2025-11-29 21:14:49\",\"description\":\"很贵的海水\",\"favorited\":false,\"imageUrls\":\"http://127.0.0.1:8080/profile/upload/2025/11/29/image_20251129211339A002.png\",\"params\":{},\"price\":114514,\"status\":\"0\",\"title\":\"海水\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\r\n### The error may exist in file [C:\\Users\\stan0930\\Desktop\\前台+后台后端\\our-awesome-project\\ruoyi-system\\target\\classes\\mapper\\campus\\CampusProductMapper.xml]\r\n### The error may involve com.ruoyi.campus.mapper.CampusProductMapper.insertCampusProduct-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into campus_product          ( title,             description,             category,             image_urls,             price,             contact_info,                          status,                                       create_time )           values ( ?,             ?,             ?,             ?,             ?,             ?,                          ?,                                       ? )\r\n### Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\n; Field \'user_id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'user_id\' doesn\'t have a default value', '2025-11-29 21:14:49', 3);
+INSERT INTO `sys_oper_log` VALUES (334, '校园二手商品', 1, 'com.ruoyi.campus.controller.CampusProductController.add()', 'POST', 1, 'admin', '研发部门', '/campus/product', '127.0.0.1', '内网IP', '{\"category\":\"daily\",\"contactInfo\":\"15257942123\",\"createTime\":\"2025-11-29 21:14:50\",\"description\":\"很贵的海水\",\"favorited\":false,\"imageUrls\":\"http://127.0.0.1:8080/profile/upload/2025/11/29/image_20251129211339A002.png\",\"params\":{},\"price\":114514,\"status\":\"0\",\"title\":\"海水\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\r\n### The error may exist in file [C:\\Users\\stan0930\\Desktop\\前台+后台后端\\our-awesome-project\\ruoyi-system\\target\\classes\\mapper\\campus\\CampusProductMapper.xml]\r\n### The error may involve com.ruoyi.campus.mapper.CampusProductMapper.insertCampusProduct-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into campus_product          ( title,             description,             category,             image_urls,             price,             contact_info,                          status,                                       create_time )           values ( ?,             ?,             ?,             ?,             ?,             ?,                          ?,                                       ? )\r\n### Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\n; Field \'user_id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'user_id\' doesn\'t have a default value', '2025-11-29 21:14:50', 4);
+INSERT INTO `sys_oper_log` VALUES (335, '校园二手商品', 1, 'com.ruoyi.campus.controller.CampusProductController.add()', 'POST', 1, 'admin', '研发部门', '/campus/product', '127.0.0.1', '内网IP', '{\"category\":\"daily\",\"contactInfo\":\"15257942123\",\"createTime\":\"2025-11-29 21:14:50\",\"description\":\"很贵的海水\",\"favorited\":false,\"imageUrls\":\"http://127.0.0.1:8080/profile/upload/2025/11/29/image_20251129211339A002.png\",\"params\":{},\"price\":114514,\"status\":\"0\",\"title\":\"海水\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\r\n### The error may exist in file [C:\\Users\\stan0930\\Desktop\\前台+后台后端\\our-awesome-project\\ruoyi-system\\target\\classes\\mapper\\campus\\CampusProductMapper.xml]\r\n### The error may involve com.ruoyi.campus.mapper.CampusProductMapper.insertCampusProduct-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into campus_product          ( title,             description,             category,             image_urls,             price,             contact_info,                          status,                                       create_time )           values ( ?,             ?,             ?,             ?,             ?,             ?,                          ?,                                       ? )\r\n### Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\n; Field \'user_id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'user_id\' doesn\'t have a default value', '2025-11-29 21:14:50', 3);
+INSERT INTO `sys_oper_log` VALUES (336, '校园二手商品', 1, 'com.ruoyi.campus.controller.CampusProductController.add()', 'POST', 1, 'admin', '研发部门', '/campus/product', '127.0.0.1', '内网IP', '{\"category\":\"daily\",\"contactInfo\":\"15257942123\",\"createTime\":\"2025-11-29 21:16:49\",\"description\":\"很贵的海水\",\"favorited\":false,\"imageUrls\":\"http://127.0.0.1:8080/profile/upload/2025/11/29/image_20251129211339A002.png\",\"params\":{},\"price\":114514,\"productId\":2,\"status\":\"0\",\"title\":\"海水\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-29 21:16:49', 16);
+INSERT INTO `sys_oper_log` VALUES (337, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#FF5722\",\"createTime\":\"2025-12-01 15:22:45\",\"day\":5,\"id\":24,\"location\":\"108\",\"name\":\"线代\",\"params\":{},\"section\":5,\"teacher\":\"张\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200,\"data\":{\"color\":\"#FF5722\",\"createTime\":\"2025-12-01 15:22:45\",\"day\":5,\"id\":24,\"location\":\"108\",\"name\":\"线代\",\"params\":{},\"section\":5,\"teacher\":\"张\",\"userId\":1}}', 0, NULL, '2025-12-01 15:22:45', 36);
 
 -- ----------------------------
 -- Table structure for sys_post
@@ -1816,7 +1855,7 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', 'stan', '00', 'trzrzzh@icloud.com', '15257942123', '0', '/profile/avatar/2025/09/21/f5748c03e0e4452887ac214017fe6a7d.jpg', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2025-11-29 10:08:16', '2025-09-21 20:04:51', 'admin', '2025-09-21 20:04:51', '', '2025-09-21 22:22:25', '管理员');
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', 'stan', '00', 'trzrzzh@icloud.com', '15257942123', '0', '/profile/avatar/2025/09/21/f5748c03e0e4452887ac214017fe6a7d.jpg', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2025-12-07 14:26:59', '2025-09-21 20:04:51', 'admin', '2025-09-21 20:04:51', '', '2025-09-21 22:22:25', '管理员');
 INSERT INTO `sys_user` VALUES (2, 105, 'ry', 'ry', '00', 'ry@qq.com', '15666666666', '1', '/profile/avatar/2025/09/22/2cd6efbe672645258a4eac4cea69e045.JPG', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2025-10-10 16:34:29', '2025-09-21 20:04:51', 'admin', '2025-09-21 20:04:51', 'admin', '2025-10-09 13:30:19', '测试员');
 INSERT INTO `sys_user` VALUES (100, 100, 'stany', 'stany', '00', '3403368487@qq.com', '', '0', '/profile/avatar/2025/09/21/0b6194a629154a9aad6c1687e253f53a.JPG', '$2a$10$oed/BoxvGYRe69eCf0zZKOZGgY4iKtev2ODIHu3RoZESOPTvOfJxe', '0', '0', '127.0.0.1', '2025-09-21 22:19:17', NULL, 'admin', '2025-09-21 21:29:53', '', '2025-09-21 21:30:41', NULL);
 

@@ -9,8 +9,7 @@ import com.ruoyi.campus.domain.CampusOrderItem;
  * @author ruoyi
  * @date 2025-11-11
  */
-public interface CampusOrderItemMapper 
-{
+public interface CampusOrderItemMapper {
     /**
      * 查询订单商品关联
      * 
@@ -58,4 +57,12 @@ public interface CampusOrderItemMapper
      * @return 结果
      */
     public int deleteCampusOrderItemByItemIds(Long[] itemIds);
+
+    /**
+     * 【新增】根据订单ID查询订单项
+     * 
+     * @param orderId 订单ID
+     * @return 订单项
+     */
+    public CampusOrderItem selectByOrderId(Long orderId);
 }

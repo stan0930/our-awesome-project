@@ -29,12 +29,12 @@ import com.ruoyi.common.exception.ServiceException;
 /**
  * 校园订单Controller
  * * @author ruoyi
+ * 
  * @date (你的生成日期)
  */
 @RestController
 @RequestMapping("/campus/order")
-public class CampusOrderController extends BaseController
-{
+public class CampusOrderController extends BaseController {
     @Autowired
     private ICampusOrderService campusOrderService;
 
@@ -43,8 +43,7 @@ public class CampusOrderController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('campus:order:list')")
     @GetMapping("/list")
-    public TableDataInfo list(CampusOrder campusOrder)
-    {
+    public TableDataInfo list(CampusOrder campusOrder) {
         startPage();
         List<CampusOrder> list = campusOrderService.selectCampusOrderList(campusOrder);
         return getDataTable(list);
@@ -56,8 +55,7 @@ public class CampusOrderController extends BaseController
     @PreAuthorize("@ss.hasPermi('campus:order:export')")
     @Log(title = "校园订单", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
-    public void export(HttpServletResponse response, CampusOrder campusOrder)
-    {
+    public void export(HttpServletResponse response, CampusOrder campusOrder) {
         List<CampusOrder> list = campusOrderService.selectCampusOrderList(campusOrder);
         ExcelUtil<CampusOrder> util = new ExcelUtil<CampusOrder>(CampusOrder.class);
         util.exportExcel(response, list, "校园订单数据");
@@ -68,8 +66,7 @@ public class CampusOrderController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('campus:order:query')")
     @GetMapping(value = "/{orderId}")
-    public AjaxResult getInfo(@PathVariable("orderId") Long orderId)
-    {
+    public AjaxResult getInfo(@PathVariable("orderId") Long orderId) {
         return success(campusOrderService.selectCampusOrderByOrderId(orderId));
     }
 
@@ -79,8 +76,7 @@ public class CampusOrderController extends BaseController
     @PreAuthorize("@ss.hasPermi('campus:order:add')")
     @Log(title = "校园订单", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody CampusOrder campusOrder)
-    {
+    public AjaxResult add(@RequestBody CampusOrder campusOrder) {
         return toAjax(campusOrderService.insertCampusOrder(campusOrder));
     }
 
@@ -90,8 +86,7 @@ public class CampusOrderController extends BaseController
     @PreAuthorize("@ss.hasPermi('campus:order:edit')")
     @Log(title = "校园订单", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody CampusOrder campusOrder)
-    {
+    public AjaxResult edit(@RequestBody CampusOrder campusOrder) {
         return toAjax(campusOrderService.updateCampusOrder(campusOrder));
     }
 
@@ -101,19 +96,16 @@ public class CampusOrderController extends BaseController
     @PreAuthorize("@ss.hasPermi('campus:order:remove')")
     @Log(title = "校园订单", businessType = BusinessType.DELETE)
     @DeleteMapping("/{orderIds}")
-    public AjaxResult remove(@PathVariable Long[] orderIds)
-    {
+    public AjaxResult remove(@PathVariable Long[] orderIds) {
         return toAjax(campusOrderService.deleteCampusOrderByOrderIds(orderIds));
     }
-
 
     /**
      * 【新增】用户创建订单
      * 这个接口是给前台用户用的，不需要权限
      */
     @PostMapping("/create")
-    public AjaxResult create(@RequestBody CreateOrderDto createOrderDto)
-    {
+    public AjaxResult create(@RequestBody CreateOrderDto createOrderDto) {
         if (createOrderDto.getProductId() == null) {
             return AjaxResult.error("商品ID不能为空");
         }
@@ -122,21 +114,53 @@ public class CampusOrderController extends BaseController
             return AjaxResult.error("收货地址不能为空");
         }
 
-        try
-        {
+        try {
             Long orderId = campusOrderService.createOrder(createOrderDto);
             return AjaxResult.success("订单创建成功", orderId);
-        }
-        catch (ServiceException e)
-        {
+        } catch (ServiceException e) {
             // 捕获业务异常 (比如 "商品已售出")
             return AjaxResult.error(e.getMessage());
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             // 捕获其他未知异常
             e.printStackTrace(); // 在后台打印详细错误
             return AjaxResult.error("创建订单失败，请联系管理员");
+        }
+    }
+
+    /**
+     * 【新增】查询我的订单列表（买家视角）
+     */
+    @GetMapping("/my-orders")
+    public TableDataInfo myOrders(CampusOrder campusOrder) {
+        startPage();
+        campusOrder.setBuyerId(getUserId());
+        List<CampusOrder> list = campusOrderService.selectCampusOrderList(campusOrder);
+        return getDataTable(list);
+    }
+
+    /**
+     * 【新增】取消订单
+     */
+    @PutMapping("/cancel/{orderId}")
+    public AjaxResult cancelOrder(@PathVariable("orderId") Long orderId) {
+        try {
+            campusOrderService.cancelOrder(orderId, getUserId());
+            return AjaxResult.success("订单已取消");
+        } catch (ServiceException e) {
+            return AjaxResult.error(e.getMessage());
+        }
+    }
+
+    /**
+     * 【新增】确认收货
+     */
+    @PutMapping("/confirm/{orderId}")
+    public AjaxResult confirmReceipt(@PathVariable("orderId") Long orderId) {
+        try {
+            campusOrderService.confirmReceipt(orderId, getUserId());
+            return AjaxResult.success("确认收货成功");
+        } catch (ServiceException e) {
+            return AjaxResult.error(e.getMessage());
         }
     }
 }
