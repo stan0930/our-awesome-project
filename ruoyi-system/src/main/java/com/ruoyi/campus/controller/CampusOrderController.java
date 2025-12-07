@@ -38,6 +38,9 @@ public class CampusOrderController extends BaseController {
     @Autowired
     private ICampusOrderService campusOrderService;
 
+    @Autowired
+    private com.ruoyi.campus.mapper.CampusOrderMapper campusOrderMapper;
+
     /**
      * 查询校园订单列表
      */
@@ -131,10 +134,9 @@ public class CampusOrderController extends BaseController {
      * 【新增】查询我的订单列表（买家视角）
      */
     @GetMapping("/my-orders")
-    public TableDataInfo myOrders(CampusOrder campusOrder) {
+    public TableDataInfo myOrders() {
         startPage();
-        campusOrder.setBuyerId(getUserId());
-        List<CampusOrder> list = campusOrderService.selectCampusOrderList(campusOrder);
+        List<com.ruoyi.campus.domain.dto.OrderListDto> list = campusOrderMapper.selectMyOrdersWithProduct(getUserId());
         return getDataTable(list);
     }
 

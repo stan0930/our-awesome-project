@@ -107,4 +107,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{orderId}
         </foreach>
     </delete>
+    
+    <!-- 查询我的订单列表（包含商品信息） -->
+    <select id="selectMyOrdersWithProduct" parameterType="Long" resultType="com.ruoyi.campus.domain.dto.OrderListDto">
+        SELECT 
+            o.order_id,
+            o.order_sn,
+            o.buyer_id,
+            o.seller_id,
+            o.total_amount,
+            o.status,
+            o.address,
+            o.pay_time,
+            o.create_time,
+            i.product_title as productTitle,
+            i.product_image as productImage
+        FROM campus_order o
+        LEFT JOIN campus_order_item i ON o.order_id = i.order_id
+        WHERE o.buyer_id = #{buyerId}
+        AND o.del_flag = '0'
+        ORDER BY o.create_time DESC
+    </select>
 </mapper>

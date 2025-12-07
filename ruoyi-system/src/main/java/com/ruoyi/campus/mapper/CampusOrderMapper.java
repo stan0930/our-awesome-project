@@ -9,8 +9,7 @@ import com.ruoyi.campus.domain.CampusOrder;
  * @author ruoyi
  * @date 2025-11-11
  */
-public interface CampusOrderMapper 
-{
+public interface CampusOrderMapper {
     /**
      * 查询校园订单
      * 
@@ -58,4 +57,12 @@ public interface CampusOrderMapper
      * @return 结果
      */
     public int deleteCampusOrderByOrderIds(Long[] orderIds);
+
+    /**
+     * 查询我的订单列表（包含商品信息）
+     * 
+     * @param buyerId 买家ID
+     * @return 订单列表
+     */
+    public List<com.ruoyi.campus.domain.dto.OrderListDto> selectMyOrdersWithProduct(Long buyerId);
 }

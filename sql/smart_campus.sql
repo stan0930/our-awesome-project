@@ -11,7 +11,7 @@
  Target Server Version : 80041 (8.0.41)
  File Encoding         : 65001
 
- Date: 07/12/2025 14:32:28
+ Date: 07/12/2025 16:59:39
 */
 
 SET NAMES utf8mb4;
@@ -110,7 +110,7 @@ CREATE TABLE `campus_errand_order`  (
   `create_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '创建者',
   `update_by` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '' COMMENT '更新者',
   PRIMARY KEY (`order_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '跑腿代办订单表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '跑腿代办订单表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of campus_errand_order
@@ -119,6 +119,7 @@ INSERT INTO `campus_errand_order` VALUES (1, 1, 2, '快递代取', 'test', '777'
 INSERT INTO `campus_errand_order` VALUES (2, 2, NULL, '快递代取', 'test', '11', 5.00, '11', '0', '2025-10-09 13:36:04', NULL, NULL, 'ry', '');
 INSERT INTO `campus_errand_order` VALUES (3, 1, NULL, '外卖代拿', 's', 's', 5.00, 's', '0', '2025-10-10 17:51:11', NULL, NULL, 'admin', '');
 INSERT INTO `campus_errand_order` VALUES (4, 1, NULL, '校园跑腿', '需要跑腿', '取件码1127  12.00之前', 20.00, '杏园408', '0', '2025-10-13 17:31:05', NULL, NULL, 'admin', '');
+INSERT INTO `campus_errand_order` VALUES (5, 1, NULL, '取快递', '取菜鸟驿站快递', '请帮忙到菜鸟驿站取一个快递，送到西区宿舍楼下。', 5.00, '西区宿舍楼下', '0', '2025-12-07 15:18:33', NULL, NULL, 'admin', '');
 
 -- ----------------------------
 -- Table structure for campus_order
@@ -141,11 +142,14 @@ CREATE TABLE `campus_order`  (
   `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`order_id`) USING BTREE,
   UNIQUE INDEX `uk_order_sn`(`order_sn` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '校园订单表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '校园订单表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of campus_order
 -- ----------------------------
+INSERT INTO `campus_order` VALUES (1, 'SN17650906786342', 2, 1, 0.01, '1', '114514', NULL, '0', 'ry', '2025-12-07 14:57:59', '', NULL, NULL);
+INSERT INTO `campus_order` VALUES (2, 'SN17650910931502', 2, 1, 114514.00, '1', '114514', NULL, '0', 'ry', '2025-12-07 15:04:53', '', NULL, NULL);
+INSERT INTO `campus_order` VALUES (3, 'SN17650955064411', 1, 2, 3000.00, '1', '111111', NULL, '0', 'admin', '2025-12-07 16:18:26', '', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for campus_order_item
@@ -161,11 +165,14 @@ CREATE TABLE `campus_order_item`  (
   `quantity` int NOT NULL DEFAULT 1 COMMENT '购买数量',
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`item_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '订单商品关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '订单商品关联表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of campus_order_item
 -- ----------------------------
+INSERT INTO `campus_order_item` VALUES (1, 1, 1, 'ss', '/profile/upload/2025/11/13/Grounded_2025.09.22-19.53.20_20251113160800A001.png', 0.01, 1, '2025-12-07 14:57:59');
+INSERT INTO `campus_order_item` VALUES (2, 2, 2, '海水', 'http://127.0.0.1:8080/profile/upload/2025/11/29/image_20251129211339A002.png', 114514.00, 1, '2025-12-07 15:04:53');
+INSERT INTO `campus_order_item` VALUES (3, 3, 5, '出售iPhone 13，9成新', '', 3000.00, 1, '2025-12-07 16:18:26');
 
 -- ----------------------------
 -- Table structure for campus_product
@@ -189,13 +196,18 @@ CREATE TABLE `campus_product`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `remark` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`product_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '校园二手商品表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '校园二手商品表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of campus_product
 -- ----------------------------
-INSERT INTO `campus_product` VALUES (1, 1, 'ss', 'ss', 'other', '/profile/upload/2025/11/13/Grounded_2025.09.22-19.53.20_20251113160800A001.png', 0.01, '', 2, '0', '0', 'admin', '2025-11-13 16:08:01', '', NULL, NULL);
-INSERT INTO `campus_product` VALUES (2, 1, '海水', '很贵的海水', 'daily', 'http://127.0.0.1:8080/profile/upload/2025/11/29/image_20251129211339A002.png', 114514.00, '15257942123', 10, '0', '0', '', '2025-11-29 21:16:49', '', NULL, NULL);
+INSERT INTO `campus_product` VALUES (1, 1, 'ss', 'ss', 'other', '/profile/upload/2025/11/13/Grounded_2025.09.22-19.53.20_20251113160800A001.png', 0.01, '', 5, '1', '0', 'admin', '2025-11-13 16:08:01', '', '2025-12-07 14:57:58', NULL);
+INSERT INTO `campus_product` VALUES (2, 1, '海水', '很贵的海水', 'daily', 'http://127.0.0.1:8080/profile/upload/2025/11/29/image_20251129211339A002.png', 114514.00, '15257942123', 15, '1', '0', '', '2025-11-29 21:16:49', '', '2025-12-07 15:04:53', NULL);
+INSERT INTO `campus_product` VALUES (3, 2, '测试', 'qqq', 'book', 'http://localhost:8080/profile/upload/2025/12/07/image_20251207150748A001.png', 222.00, '15257942123', 1, '0', '0', '', '2025-12-07 15:08:13', '', NULL, NULL);
+INSERT INTO `campus_product` VALUES (4, 1, '《高等数学》教材', '8成新', '图书教材', 'http://localhost:8080/profile/upload/2025/12/07/image_20251207165309A003.png', 30.00, 'QQ 123456', 3, '0', '0', '', '2025-12-07 15:30:39', '', '2025-12-07 16:53:11', NULL);
+INSERT INTO `campus_product` VALUES (5, 2, '出售iPhone 13，9成新', 'iPhone 13，9成新，功能完好，无重大损伤，附带原装充电器。', '数码产品', '', 3000.00, 'abc123', 5, '1', '0', '', '2025-12-07 15:39:22', '', '2025-12-07 16:18:26', NULL);
+INSERT INTO `campus_product` VALUES (6, 2, '出售吉他，7成新', '吉他，7成新，音准正常，适合初学者练习使用，琴弦已更换。', '生活用品', '', 200.00, '18888888888', 1, '0', '0', '', '2025-12-07 15:39:30', '', NULL, NULL);
+INSERT INTO `campus_product` VALUES (7, 1, '苹果出售', '新鲜的苹果，口感脆甜，产地优质。', '生活用品', 'http://localhost:8080/profile/upload/2025/12/07/image_20251207165235A002.png', 5.00, '微信: abc123', 3, '0', '0', '', '2025-12-07 15:44:49', '', '2025-12-07 16:52:37', NULL);
 
 -- ----------------------------
 -- Table structure for campus_product_favorite
@@ -210,11 +222,12 @@ CREATE TABLE `campus_product_favorite`  (
   UNIQUE INDEX `uk_user_product`(`user_id` ASC, `product_id` ASC) USING BTREE,
   INDEX `idx_product_id`(`product_id` ASC) USING BTREE,
   INDEX `idx_user_id`(`user_id` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品收藏表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品收藏表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of campus_product_favorite
 -- ----------------------------
+INSERT INTO `campus_product_favorite` VALUES (2, 2, 2, '2025-12-07 15:04:45');
 
 -- ----------------------------
 -- Table structure for campus_topic
@@ -235,12 +248,11 @@ CREATE TABLE `campus_topic`  (
   `topic_type` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT 'recommend',
   `comment_enabled` char(1) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NULL DEFAULT '0' COMMENT '是否允许评论 (0=允许, 1=禁止)',
   PRIMARY KEY (`topic_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 118 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '校园话题表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 119 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '校园话题表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of campus_topic
 -- ----------------------------
-INSERT INTO `campus_topic` VALUES (100, 1, '<p>test001哈哈哈666</p>', NULL, '0', '0', '', '2025-09-21 21:22:17', 'admin', '2025-09-29 20:10:18', NULL, 'recommend', '0');
 INSERT INTO `campus_topic` VALUES (102, 1, '<p><img src=\"/dev-api/profile/upload/2025/09/21/微信图片_20230823145137_20250921215308A002.jpg\"></p>', NULL, '0', '0', '', '2025-09-21 21:53:12', '', NULL, NULL, 'recommend', '0');
 INSERT INTO `campus_topic` VALUES (104, 1, '<p>1</p>', NULL, '0', '0', '', '2025-09-21 23:27:30', '', NULL, NULL, 'recommend', '0');
 INSERT INTO `campus_topic` VALUES (105, 1, '1', NULL, '0', '0', '', '2025-09-21 23:52:34', '', NULL, NULL, 'recommend', '0');
@@ -253,6 +265,7 @@ INSERT INTO `campus_topic` VALUES (113, 1, 's', NULL, '0', '0', 'admin', '2025-0
 INSERT INTO `campus_topic` VALUES (114, 1, '谭墨我爱你', NULL, '0', '0', 'admin', '2025-09-29 14:57:53', '', NULL, NULL, 'dating', '0');
 INSERT INTO `campus_topic` VALUES (115, 1, 'bot', '/profile/upload/2025/09/29/Screenshot 2025-09-07 151720_20250929210155A001.png,/profile/upload/2025/09/29/Screenshot 2025-08-29 190218_20250929210217A002.png', '0', '0', 'admin', '2025-09-29 21:02:21', '', NULL, NULL, 'qa', '0');
 INSERT INTO `campus_topic` VALUES (116, 1, '禁止评论', NULL, '0', '0', 'admin', '2025-10-08 16:12:04', '', NULL, NULL, 'recommend', '1');
+INSERT INTO `campus_topic` VALUES (118, 1, '请问图书馆几点关门？\n\n大家好，请问一下图书馆今天几点关门？想晚上去自习，谢谢！', NULL, '0', '0', 'admin', '2025-12-07 15:24:07', '', NULL, NULL, '求助板块', '0');
 
 -- ----------------------------
 -- Table structure for campus_topic_comment
@@ -964,7 +977,7 @@ CREATE TABLE `sys_logininfor`  (
   PRIMARY KEY (`info_id`) USING BTREE,
   INDEX `idx_sys_logininfor_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_logininfor_lt`(`login_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 332 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 368 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_logininfor
@@ -1201,6 +1214,42 @@ INSERT INTO `sys_logininfor` VALUES (328, 'admin', '127.0.0.1', '内网IP', 'Chr
 INSERT INTO `sys_logininfor` VALUES (329, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 14:02:50');
 INSERT INTO `sys_logininfor` VALUES (330, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 14:22:03');
 INSERT INTO `sys_logininfor` VALUES (331, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 14:26:59');
+INSERT INTO `sys_logininfor` VALUES (332, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '退出成功', '2025-12-07 14:34:04');
+INSERT INTO `sys_logininfor` VALUES (333, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 14:37:03');
+INSERT INTO `sys_logininfor` VALUES (334, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '退出成功', '2025-12-07 14:37:07');
+INSERT INTO `sys_logininfor` VALUES (335, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '1', '验证码已失效', '2025-12-07 14:43:01');
+INSERT INTO `sys_logininfor` VALUES (336, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 14:43:05');
+INSERT INTO `sys_logininfor` VALUES (337, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '退出成功', '2025-12-07 14:45:32');
+INSERT INTO `sys_logininfor` VALUES (338, 'test', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '1', '用户不存在/密码错误', '2025-12-07 14:45:41');
+INSERT INTO `sys_logininfor` VALUES (339, 'test', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '1', '用户不存在/密码错误', '2025-12-07 14:45:54');
+INSERT INTO `sys_logininfor` VALUES (340, 'test', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '1', '验证码错误', '2025-12-07 14:45:56');
+INSERT INTO `sys_logininfor` VALUES (341, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 14:47:40');
+INSERT INTO `sys_logininfor` VALUES (342, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '退出成功', '2025-12-07 14:48:42');
+INSERT INTO `sys_logininfor` VALUES (343, 'test', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '1', '用户不存在/密码错误', '2025-12-07 14:48:52');
+INSERT INTO `sys_logininfor` VALUES (344, 'test', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '1', '用户不存在/密码错误', '2025-12-07 14:48:55');
+INSERT INTO `sys_logininfor` VALUES (345, 'stany', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '1', '用户不存在/密码错误', '2025-12-07 14:49:15');
+INSERT INTO `sys_logininfor` VALUES (346, 'stany', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '1', '用户不存在/密码错误', '2025-12-07 14:49:21');
+INSERT INTO `sys_logininfor` VALUES (347, 'ry', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 14:51:10');
+INSERT INTO `sys_logininfor` VALUES (348, 'ry', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 14:57:44');
+INSERT INTO `sys_logininfor` VALUES (349, 'ry', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 15:03:13');
+INSERT INTO `sys_logininfor` VALUES (350, 'ry', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '退出成功', '2025-12-07 15:03:53');
+INSERT INTO `sys_logininfor` VALUES (351, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 15:03:57');
+INSERT INTO `sys_logininfor` VALUES (352, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '退出成功', '2025-12-07 15:04:32');
+INSERT INTO `sys_logininfor` VALUES (353, 'ry', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 15:04:39');
+INSERT INTO `sys_logininfor` VALUES (354, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 15:08:28');
+INSERT INTO `sys_logininfor` VALUES (355, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 15:18:11');
+INSERT INTO `sys_logininfor` VALUES (356, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 15:23:44');
+INSERT INTO `sys_logininfor` VALUES (357, 'ry', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 15:36:49');
+INSERT INTO `sys_logininfor` VALUES (358, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 15:43:53');
+INSERT INTO `sys_logininfor` VALUES (359, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 15:47:29');
+INSERT INTO `sys_logininfor` VALUES (360, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '1', '验证码错误', '2025-12-07 15:50:09');
+INSERT INTO `sys_logininfor` VALUES (361, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 15:50:13');
+INSERT INTO `sys_logininfor` VALUES (362, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 15:54:24');
+INSERT INTO `sys_logininfor` VALUES (363, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 16:04:52');
+INSERT INTO `sys_logininfor` VALUES (364, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 16:16:22');
+INSERT INTO `sys_logininfor` VALUES (365, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 16:18:49');
+INSERT INTO `sys_logininfor` VALUES (366, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 16:51:07');
+INSERT INTO `sys_logininfor` VALUES (367, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 16:53:17');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -1401,7 +1450,7 @@ CREATE TABLE `sys_oper_log`  (
   INDEX `idx_sys_oper_log_bt`(`business_type` ASC) USING BTREE,
   INDEX `idx_sys_oper_log_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_oper_log_ot`(`oper_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 338 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 348 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '操作日志记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_oper_log
@@ -1644,6 +1693,16 @@ INSERT INTO `sys_oper_log` VALUES (334, '校园二手商品', 1, 'com.ruoyi.camp
 INSERT INTO `sys_oper_log` VALUES (335, '校园二手商品', 1, 'com.ruoyi.campus.controller.CampusProductController.add()', 'POST', 1, 'admin', '研发部门', '/campus/product', '127.0.0.1', '内网IP', '{\"category\":\"daily\",\"contactInfo\":\"15257942123\",\"createTime\":\"2025-11-29 21:14:50\",\"description\":\"很贵的海水\",\"favorited\":false,\"imageUrls\":\"http://127.0.0.1:8080/profile/upload/2025/11/29/image_20251129211339A002.png\",\"params\":{},\"price\":114514,\"status\":\"0\",\"title\":\"海水\"}', NULL, 1, '\r\n### Error updating database.  Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\r\n### The error may exist in file [C:\\Users\\stan0930\\Desktop\\前台+后台后端\\our-awesome-project\\ruoyi-system\\target\\classes\\mapper\\campus\\CampusProductMapper.xml]\r\n### The error may involve com.ruoyi.campus.mapper.CampusProductMapper.insertCampusProduct-Inline\r\n### The error occurred while setting parameters\r\n### SQL: insert into campus_product          ( title,             description,             category,             image_urls,             price,             contact_info,                          status,                                       create_time )           values ( ?,             ?,             ?,             ?,             ?,             ?,                          ?,                                       ? )\r\n### Cause: java.sql.SQLException: Field \'user_id\' doesn\'t have a default value\n; Field \'user_id\' doesn\'t have a default value; nested exception is java.sql.SQLException: Field \'user_id\' doesn\'t have a default value', '2025-11-29 21:14:50', 3);
 INSERT INTO `sys_oper_log` VALUES (336, '校园二手商品', 1, 'com.ruoyi.campus.controller.CampusProductController.add()', 'POST', 1, 'admin', '研发部门', '/campus/product', '127.0.0.1', '内网IP', '{\"category\":\"daily\",\"contactInfo\":\"15257942123\",\"createTime\":\"2025-11-29 21:16:49\",\"description\":\"很贵的海水\",\"favorited\":false,\"imageUrls\":\"http://127.0.0.1:8080/profile/upload/2025/11/29/image_20251129211339A002.png\",\"params\":{},\"price\":114514,\"productId\":2,\"status\":\"0\",\"title\":\"海水\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-11-29 21:16:49', 16);
 INSERT INTO `sys_oper_log` VALUES (337, '课程表', 1, 'com.ruoyi.web.controller.app.ScheduleController.add()', 'POST', 1, 'admin', '研发部门', '/app/schedule', '127.0.0.1', '内网IP', '{\"color\":\"#FF5722\",\"createTime\":\"2025-12-01 15:22:45\",\"day\":5,\"id\":24,\"location\":\"108\",\"name\":\"线代\",\"params\":{},\"section\":5,\"teacher\":\"张\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200,\"data\":{\"color\":\"#FF5722\",\"createTime\":\"2025-12-01 15:22:45\",\"day\":5,\"id\":24,\"location\":\"108\",\"name\":\"线代\",\"params\":{},\"section\":5,\"teacher\":\"张\",\"userId\":1}}', 0, NULL, '2025-12-01 15:22:45', 36);
+INSERT INTO `sys_oper_log` VALUES (338, '校园二手商品', 1, 'com.ruoyi.campus.controller.CampusProductController.add()', 'POST', 1, 'ry', '测试部门', '/campus/product', '127.0.0.1', '内网IP', '{\"category\":\"book\",\"contactInfo\":\"15257942123\",\"createTime\":\"2025-12-07 15:08:13\",\"description\":\"qqq\",\"favorited\":false,\"imageUrls\":\"http://localhost:8080/profile/upload/2025/12/07/image_20251207150748A001.png\",\"params\":{},\"price\":222,\"productId\":3,\"status\":\"0\",\"title\":\"测试\",\"userId\":2}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-12-07 15:08:13', 27);
+INSERT INTO `sys_oper_log` VALUES (339, '跑腿订单', 1, 'com.ruoyi.campus.controller.CampusErrandOrderController.add()', 'POST', 1, 'admin', '研发部门', '/campus/errand', '127.0.0.1', '内网IP', '{\"createBy\":\"admin\",\"createTime\":\"2025-12-07 15:18:33\",\"deliveryAddress\":\"西区宿舍楼下\",\"detail\":\"请帮忙到菜鸟驿站取一个快递，送到西区宿舍楼下。\",\"orderId\":5,\"orderType\":\"取快递\",\"params\":{},\"publisherId\":1,\"reward\":5,\"status\":\"0\",\"title\":\"取菜鸟驿站快递\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-12-07 15:18:33', 17);
+INSERT INTO `sys_oper_log` VALUES (340, '校园话题', 1, 'com.ruoyi.campus.controller.CampusTopicController.add()', 'POST', 1, 'admin', '研发部门', '/campus/topic', '127.0.0.1', '内网IP', '{\"commentEnabled\":\"0\",\"content\":\"请问图书馆几点关门？\\n\\n大家好，请问一下图书馆今天几点关门？想晚上去自习，谢谢！\",\"createBy\":\"admin\",\"createTime\":\"2025-12-07 15:24:07\",\"favorited\":false,\"liked\":false,\"params\":{},\"status\":\"0\",\"topicId\":118,\"topicType\":\"求助板块\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-12-07 15:24:07', 39);
+INSERT INTO `sys_oper_log` VALUES (341, '校园二手商品', 1, 'com.ruoyi.campus.controller.CampusProductController.add()', 'POST', 1, 'admin', '研发部门', '/campus/product', '127.0.0.1', '内网IP', '{\"category\":\"图书教材\",\"contactInfo\":\"QQ 123456\",\"createTime\":\"2025-12-07 15:30:39\",\"description\":\"8成新\",\"favorited\":false,\"params\":{},\"price\":30,\"productId\":4,\"status\":\"0\",\"title\":\"《高等数学》教材\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-12-07 15:30:39', 106);
+INSERT INTO `sys_oper_log` VALUES (342, '校园二手商品', 1, 'com.ruoyi.campus.controller.CampusProductController.add()', 'POST', 1, 'ry', '测试部门', '/campus/product', '127.0.0.1', '内网IP', '{\"category\":\"数码产品\",\"contactInfo\":\"abc123\",\"createTime\":\"2025-12-07 15:39:21\",\"description\":\"iPhone 13，9成新，功能完好，无重大损伤，附带原装充电器。\",\"favorited\":false,\"params\":{},\"price\":3000,\"productId\":5,\"status\":\"0\",\"title\":\"出售iPhone 13，9成新\",\"userId\":2}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-12-07 15:39:21', 11);
+INSERT INTO `sys_oper_log` VALUES (343, '校园二手商品', 1, 'com.ruoyi.campus.controller.CampusProductController.add()', 'POST', 1, 'ry', '测试部门', '/campus/product', '127.0.0.1', '内网IP', '{\"category\":\"生活用品\",\"contactInfo\":\"18888888888\",\"createTime\":\"2025-12-07 15:39:30\",\"description\":\"吉他，7成新，音准正常，适合初学者练习使用，琴弦已更换。\",\"favorited\":false,\"params\":{},\"price\":200,\"productId\":6,\"status\":\"0\",\"title\":\"出售吉他，7成新\",\"userId\":2}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-12-07 15:39:30', 5);
+INSERT INTO `sys_oper_log` VALUES (344, '校园二手商品', 1, 'com.ruoyi.campus.controller.CampusProductController.add()', 'POST', 1, 'admin', '研发部门', '/campus/product', '127.0.0.1', '内网IP', '{\"category\":\"生活用品\",\"contactInfo\":\"微信: abc123\",\"createTime\":\"2025-12-07 15:44:49\",\"description\":\"新鲜的苹果，口感脆甜，产地优质。\",\"favorited\":false,\"params\":{},\"price\":5,\"productId\":7,\"status\":\"0\",\"title\":\"苹果出售\",\"userId\":1}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-12-07 15:44:49', 7);
+INSERT INTO `sys_oper_log` VALUES (345, '校园话题', 3, 'com.ruoyi.campus.controller.CampusTopicController.remove()', 'DELETE', 1, 'admin', '研发部门', '/campus/topic/100', '127.0.0.1', '内网IP', '[100]', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-12-07 16:02:13', 115);
+INSERT INTO `sys_oper_log` VALUES (346, '校园二手商品', 2, 'com.ruoyi.campus.controller.CampusProductController.edit()', 'PUT', 1, 'admin', '研发部门', '/campus/product', '127.0.0.1', '内网IP', '{\"category\":\"生活用品\",\"contactInfo\":\"微信: abc123\",\"description\":\"新鲜的苹果，口感脆甜，产地优质。\",\"favorited\":false,\"imageUrls\":\"http://localhost:8080/profile/upload/2025/12/07/image_20251207165235A002.png\",\"params\":{},\"price\":5,\"productId\":7,\"status\":\"0\",\"title\":\"苹果出售\",\"updateTime\":\"2025-12-07 16:52:36\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-12-07 16:52:36', 6);
+INSERT INTO `sys_oper_log` VALUES (347, '校园二手商品', 2, 'com.ruoyi.campus.controller.CampusProductController.edit()', 'PUT', 1, 'admin', '研发部门', '/campus/product', '127.0.0.1', '内网IP', '{\"category\":\"图书教材\",\"contactInfo\":\"QQ 123456\",\"description\":\"8成新\",\"favorited\":false,\"imageUrls\":\"http://localhost:8080/profile/upload/2025/12/07/image_20251207165309A003.png\",\"params\":{},\"price\":30,\"productId\":4,\"status\":\"0\",\"title\":\"《高等数学》教材\",\"updateTime\":\"2025-12-07 16:53:11\"}', '{\"msg\":\"操作成功\",\"code\":200}', 0, NULL, '2025-12-07 16:53:11', 6);
 
 -- ----------------------------
 -- Table structure for sys_post
@@ -1855,8 +1914,8 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', 'stan', '00', 'trzrzzh@icloud.com', '15257942123', '0', '/profile/avatar/2025/09/21/f5748c03e0e4452887ac214017fe6a7d.jpg', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2025-12-07 14:26:59', '2025-09-21 20:04:51', 'admin', '2025-09-21 20:04:51', '', '2025-09-21 22:22:25', '管理员');
-INSERT INTO `sys_user` VALUES (2, 105, 'ry', 'ry', '00', 'ry@qq.com', '15666666666', '1', '/profile/avatar/2025/09/22/2cd6efbe672645258a4eac4cea69e045.JPG', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2025-10-10 16:34:29', '2025-09-21 20:04:51', 'admin', '2025-09-21 20:04:51', 'admin', '2025-10-09 13:30:19', '测试员');
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', 'stan', '00', 'trzrzzh@icloud.com', '15257942123', '0', '/profile/avatar/2025/09/21/f5748c03e0e4452887ac214017fe6a7d.jpg', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2025-12-07 16:53:18', '2025-09-21 20:04:51', 'admin', '2025-09-21 20:04:51', '', '2025-09-21 22:22:25', '管理员');
+INSERT INTO `sys_user` VALUES (2, 105, 'ry', 'ry', '00', 'ry@qq.com', '15666666666', '1', '/profile/avatar/2025/09/22/2cd6efbe672645258a4eac4cea69e045.JPG', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2025-12-07 15:36:49', '2025-09-21 20:04:51', 'admin', '2025-09-21 20:04:51', 'admin', '2025-10-09 13:30:19', '测试员');
 INSERT INTO `sys_user` VALUES (100, 100, 'stany', 'stany', '00', '3403368487@qq.com', '', '0', '/profile/avatar/2025/09/21/0b6194a629154a9aad6c1687e253f53a.JPG', '$2a$10$oed/BoxvGYRe69eCf0zZKOZGgY4iKtev2ODIHu3RoZESOPTvOfJxe', '0', '0', '127.0.0.1', '2025-09-21 22:19:17', NULL, 'admin', '2025-09-21 21:29:53', '', '2025-09-21 21:30:41', NULL);
 
 -- ----------------------------
