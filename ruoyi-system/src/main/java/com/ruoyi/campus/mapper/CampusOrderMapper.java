@@ -65,4 +65,12 @@ public interface CampusOrderMapper {
      * @return 订单列表
      */
     public List<com.ruoyi.campus.domain.dto.OrderListDto> selectMyOrdersWithProduct(Long buyerId);
+
+    /**
+     * 查询卖家收到的订单列表（包含商品信息）
+     * 
+     * @param sellerId 卖家ID
+     * @return 订单列表
+     */
+    public List<com.ruoyi.campus.domain.dto.OrderListDto> selectSellerOrdersWithProduct(Long sellerId);
 }

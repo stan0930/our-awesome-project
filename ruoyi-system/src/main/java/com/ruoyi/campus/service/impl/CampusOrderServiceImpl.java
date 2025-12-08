@@ -228,4 +228,31 @@ public class CampusOrderServiceImpl implements ICampusOrderService {
         CampusOrderItem item = campusOrderItemMapper.selectByOrderId(orderId);
         return item != null ? item.getProductId() : null;
     }
+
+    /**
+     * 卖家发货
+     */
+    @Override
+    public void shipOrder(Long orderId, Long userId) {
+        // 1. 查询订单
+        CampusOrder order = campusOrderMapper.selectCampusOrderByOrderId(orderId);
+        if (order == null) {
+            throw new ServiceException("订单不存在");
+        }
+
+        // 2. 权限校验：只有卖家才能发货
+        if (!order.getSellerId().equals(userId)) {
+            throw new ServiceException("无权操作此订单");
+        }
+
+        // 3. 状态校验：只有待发货状态可以发货
+        if (!"1".equals(order.getStatus())) {
+            throw new ServiceException("当前订单状态不允许发货");
+        }
+
+        // 4. 更新订单状态为待收货
+        order.setStatus("2");
+        order.setUpdateTime(DateUtils.getNowDate());
+        campusOrderMapper.updateCampusOrder(order);
+    }
 }

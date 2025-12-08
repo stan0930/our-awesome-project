@@ -82,4 +82,12 @@ public interface ICampusOrderService {
      * @param userId  用户ID
      */
     public void confirmReceipt(Long orderId, Long userId);
+
+    /**
+     * 【新增】卖家发货
+     * 
+     * @param orderId 订单ID
+     * @param userId  卖家ID
+     */
+    public void shipOrder(Long orderId, Long userId);
 }

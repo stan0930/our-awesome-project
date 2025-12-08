@@ -165,4 +165,28 @@ public class CampusOrderController extends BaseController {
             return AjaxResult.error(e.getMessage());
         }
     }
+
+    /**
+     * 【新增】查询卖家收到的订单列表（卖家视角）
+     */
+    @GetMapping("/seller-orders")
+    public TableDataInfo sellerOrders() {
+        startPage();
+        List<com.ruoyi.campus.domain.dto.OrderListDto> list = campusOrderMapper
+                .selectSellerOrdersWithProduct(getUserId());
+        return getDataTable(list);
+    }
+
+    /**
+     * 【新增】卖家发货
+     */
+    @PutMapping("/ship/{orderId}")
+    public AjaxResult shipOrder(@PathVariable("orderId") Long orderId) {
+        try {
+            campusOrderService.shipOrder(orderId, getUserId());
+            return AjaxResult.success("发货成功");
+        } catch (ServiceException e) {
+            return AjaxResult.error(e.getMessage());
+        }
+    }
 }
