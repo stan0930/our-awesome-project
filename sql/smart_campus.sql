@@ -11,7 +11,7 @@
  Target Server Version : 80041 (8.0.41)
  File Encoding         : 65001
 
- Date: 07/12/2025 16:59:39
+ Date: 07/12/2025 22:37:22
 */
 
 SET NAMES utf8mb4;
@@ -207,7 +207,7 @@ INSERT INTO `campus_product` VALUES (3, 2, '测试', 'qqq', 'book', 'http://loca
 INSERT INTO `campus_product` VALUES (4, 1, '《高等数学》教材', '8成新', '图书教材', 'http://localhost:8080/profile/upload/2025/12/07/image_20251207165309A003.png', 30.00, 'QQ 123456', 3, '0', '0', '', '2025-12-07 15:30:39', '', '2025-12-07 16:53:11', NULL);
 INSERT INTO `campus_product` VALUES (5, 2, '出售iPhone 13，9成新', 'iPhone 13，9成新，功能完好，无重大损伤，附带原装充电器。', '数码产品', '', 3000.00, 'abc123', 5, '1', '0', '', '2025-12-07 15:39:22', '', '2025-12-07 16:18:26', NULL);
 INSERT INTO `campus_product` VALUES (6, 2, '出售吉他，7成新', '吉他，7成新，音准正常，适合初学者练习使用，琴弦已更换。', '生活用品', '', 200.00, '18888888888', 1, '0', '0', '', '2025-12-07 15:39:30', '', NULL, NULL);
-INSERT INTO `campus_product` VALUES (7, 1, '苹果出售', '新鲜的苹果，口感脆甜，产地优质。', '生活用品', 'http://localhost:8080/profile/upload/2025/12/07/image_20251207165235A002.png', 5.00, '微信: abc123', 3, '0', '0', '', '2025-12-07 15:44:49', '', '2025-12-07 16:52:37', NULL);
+INSERT INTO `campus_product` VALUES (7, 1, '苹果出售', '新鲜的苹果，口感脆甜，产地优质。', '生活用品', 'http://localhost:8080/profile/upload/2025/12/07/image_20251207165235A002.png', 5.00, '微信: abc123', 4, '0', '0', '', '2025-12-07 15:44:49', '', '2025-12-07 16:52:37', NULL);
 
 -- ----------------------------
 -- Table structure for campus_product_favorite
@@ -977,7 +977,7 @@ CREATE TABLE `sys_logininfor`  (
   PRIMARY KEY (`info_id`) USING BTREE,
   INDEX `idx_sys_logininfor_s`(`status` ASC) USING BTREE,
   INDEX `idx_sys_logininfor_lt`(`login_time` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 368 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 370 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_logininfor
@@ -1250,6 +1250,8 @@ INSERT INTO `sys_logininfor` VALUES (364, 'admin', '127.0.0.1', '内网IP', 'Chr
 INSERT INTO `sys_logininfor` VALUES (365, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 16:18:49');
 INSERT INTO `sys_logininfor` VALUES (366, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 16:51:07');
 INSERT INTO `sys_logininfor` VALUES (367, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 16:53:17');
+INSERT INTO `sys_logininfor` VALUES (368, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 17:01:09');
+INSERT INTO `sys_logininfor` VALUES (369, 'admin', '127.0.0.1', '内网IP', 'Chrome 14', 'Windows 10', '0', '登录成功', '2025-12-07 17:04:39');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -1914,7 +1916,7 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 103, 'admin', 'stan', '00', 'trzrzzh@icloud.com', '15257942123', '0', '/profile/avatar/2025/09/21/f5748c03e0e4452887ac214017fe6a7d.jpg', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2025-12-07 16:53:18', '2025-09-21 20:04:51', 'admin', '2025-09-21 20:04:51', '', '2025-09-21 22:22:25', '管理员');
+INSERT INTO `sys_user` VALUES (1, 103, 'admin', 'stan', '00', 'trzrzzh@icloud.com', '15257942123', '0', '/profile/avatar/2025/09/21/f5748c03e0e4452887ac214017fe6a7d.jpg', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2025-12-07 17:04:39', '2025-09-21 20:04:51', 'admin', '2025-09-21 20:04:51', '', '2025-09-21 22:22:25', '管理员');
 INSERT INTO `sys_user` VALUES (2, 105, 'ry', 'ry', '00', 'ry@qq.com', '15666666666', '1', '/profile/avatar/2025/09/22/2cd6efbe672645258a4eac4cea69e045.JPG', '$2a$10$7JB720yubVSZvUI0rEqK/.VqGOZTH.ulu33dHOiBE8ByOhJIrdAu2', '0', '0', '127.0.0.1', '2025-12-07 15:36:49', '2025-09-21 20:04:51', 'admin', '2025-09-21 20:04:51', 'admin', '2025-10-09 13:30:19', '测试员');
 INSERT INTO `sys_user` VALUES (100, 100, 'stany', 'stany', '00', '3403368487@qq.com', '', '0', '/profile/avatar/2025/09/21/0b6194a629154a9aad6c1687e253f53a.JPG', '$2a$10$oed/BoxvGYRe69eCf0zZKOZGgY4iKtev2ODIHu3RoZESOPTvOfJxe', '0', '0', '127.0.0.1', '2025-09-21 22:19:17', NULL, 'admin', '2025-09-21 21:29:53', '', '2025-09-21 21:30:41', NULL);
 

@@ -111,15 +111,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <!-- 查询我的订单列表（包含商品信息） -->
     <select id="selectMyOrdersWithProduct" parameterType="Long" resultType="com.ruoyi.campus.domain.dto.OrderListDto">
         SELECT 
-            o.order_id,
-            o.order_sn,
-            o.buyer_id,
-            o.seller_id,
-            o.total_amount,
+            o.order_id as orderId,
+            o.order_sn as orderSn,
+            o.buyer_id as buyerId,
+            o.seller_id as sellerId,
+            o.total_amount as totalAmount,
             o.status,
             o.address,
-            o.pay_time,
-            o.create_time,
+            o.pay_time as payTime,
+            o.create_time as createTime,
             i.product_title as productTitle,
             i.product_image as productImage
         FROM campus_order o
